@@ -1173,7 +1173,7 @@ export default async function handler(req, res) {
           analysis: aiResult.analysis,
           reason: aiResult.reason
         };
-        console.log('✅ AI selected:', selectedArtist);
+        console.log('✅✅✅ [V41-TEST-SUCCESS] AI selected:', selectedArtist);
         
         // ===== 디버그 시작 =====
         console.log('DEBUG: selectedArtist raw value:', selectedArtist);
