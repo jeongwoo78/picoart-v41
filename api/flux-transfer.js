@@ -219,38 +219,116 @@ function getRococoGuidelines() {
   return `
 Available Rococo Artists (2명):
 
-1. WATTEAU (와토) - Best for romantic outdoor scenes
+1. BOUCHER (부셰) ⭐⭐ STRONGEST for Rococo (70%)
+   - Specialty: Playful sensual charm, soft pink and blue pastels, ornate decoration
+   - Best for: Most photos - quintessential Rococo style
+   - Signature: Whimsical charm, light pastel palette, cherubs and cupids
+   - When to prioritize: Most cases (DEFAULT 70%)
+
+2. WATTEAU (와토) - Best for romantic outdoor scenes (30%)
    - Specialty: Fêtes galantes (elegant outdoor parties), romantic gardens
-   - Best for: Outdoor scenes, romantic atmosphere, leisure activities
-   - Signature: Dreamy pastoral elegance, soft romantic mood
-   - When to prioritize: Outdoor/garden/romantic settings (65%)
+   - Best for: Outdoor scenes specifically, romantic atmosphere, leisure activities
+   - Signature: Dreamy pastoral elegance, soft romantic mood, melancholic charm
+   - When to prioritize: Clear outdoor/garden/romantic settings (30%)
 
-2. BOUCHER (부셰) - Best for playful decorative scenes
-   - Specialty: Playful sensual charm, pastel colors, ornate decoration
-   - Best for: Indoor scenes, playful mood, decorative aesthetic
-   - Signature: Whimsical charm, light pastel palette
-   - When to prioritize: Indoor/playful/decorative mood (60%)
-
-Note: Both artists share Rococo's light elegant aesthetic.
-Choose based on indoor vs outdoor primarily.
+Note: Boucher is the quintessential Rococo artist.
 `;
 }
 
 function getRococoHints(photoAnalysis) {
   const { background, subject } = photoAnalysis;
   
-  if (background === 'outdoor' || subject === 'landscape') {
+  // 야외 정원만 → 와토
+  if (background === 'outdoor' || background === 'garden' || subject.includes('garden')) {
     return `
-🎯 RECOMMENDATION: WATTEAU (65%)
-Outdoor setting matches Watteau's fêtes galantes perfectly!
+🎯 RECOMMENDATION: WATTEAU (30%)
+Outdoor garden setting matches Watteau's fêtes galantes!
 Romantic garden atmosphere is his specialty.
 `;
   }
   
+  // 기본값 → 부셰 (70%)
   return `
-🎯 RECOMMENDATION: BOUCHER (60%)
-Indoor/decorative scene suits Boucher's playful charm.
-If outdoor, consider Watteau instead.
+🎯 STRONG: BOUCHER (70%) - DEFAULT for Rococo
+Quintessential Rococo playful charm and pastel colors.
+Unless clear outdoor garden → Watteau (30%)
+`;
+}
+
+// 중세 미술 (비잔틴·로마네스크·고딕·이슬람) ⭐ v42 NEW
+function getMedievalGuidelines() {
+  return `
+Available Medieval Art Styles (4 styles):
+
+⚠️ CRITICAL: Check if photo has PEOPLE (portraits/figures)
+
+📍 FOR PORTRAITS/PEOPLE (인물화):
+⚠️ NEVER use Islamic style - Islamic art prohibits human depiction!
+
+1. GOTHIC (고딕) ⭐⭐⭐ STRONGEST for people (45%)
+   - Specialty: Stained glass jewel colors, vertical elongated figures, heavenly light
+   - Best for: Most people photos
+   - Signature: Vibrant jewel-toned colors, Gothic cathedral atmosphere
+   - When to prioritize: Most portraits (DEFAULT 45%)
+
+2. BYZANTINE (비잔틴) ⭐⭐⭐ STRONG for formal/sacred mood (35%)
+   - Specialty: Golden mosaic backgrounds, flat iconic forms, sacred dignity
+   - Best for: Formal poses, dignified expressions, sacred atmosphere
+   - Signature: Gold leaf backgrounds, spiritual transcendent mood
+   - When to prioritize: Formal/sacred mood (35%)
+
+3. ROMANESQUE (로마네스크) - Solid/simple forms (20%)
+   - Specialty: Thick solid forms, round arches, simple sturdy beauty
+   - Best for: Simple compositions, solid stable feeling
+   - Signature: Solid massive forms, simple dignity
+   - When to prioritize: Simple/solid aesthetic (20%)
+
+📍 FOR NON-PORTRAITS (landscapes, objects, patterns):
+AI will choose among ALL 4 styles including Islamic:
+
+4. ISLAMIC - ONLY for non-human subjects
+   - Specialty: Geometric patterns, arabesque motifs, calligraphy
+   - Best for: Landscapes, objects, patterns (NO people!)
+   - Signature: Intricate geometric beauty, sacred geometry
+   - When to prioritize: NO人物 photos only
+
+🎯 CRITICAL DECISION LOGIC:
+IF photo has people:
+  → Choose from Gothic (45%), Byzantine (35%), Romanesque (20%)
+  → NEVER Islamic
+
+IF photo has NO people (landscape/objects):
+  → Choose from ALL 4 styles (including Islamic)
+`;
+}
+
+function getMedievalHints(photoAnalysis) {
+  const { count, subject } = photoAnalysis;
+  
+  // 인물 있으면 → 고딕 45%, 비잔틴 35%, 로마네스크 20% (이슬람 제외!)
+  if (count >= 1 || subject.includes('person') || subject.includes('people') || subject.includes('portrait')) {
+    return `
+⚠️ CRITICAL: This photo has PEOPLE
+→ NEVER use Islamic style (prohibits human depiction)
+
+🎯 STRONG: GOTHIC (45%) - DEFAULT for people
+Stained glass jewel tones and heavenly light.
+Unless:
+- Formal/sacred mood → Byzantine (35%)
+- Simple/solid → Romanesque (20%)
+`;
+  }
+  
+  // 인물 없으면 → 모든 스타일 가능 (이슬람 포함)
+  return `
+🎯 This photo has NO people
+→ All 4 Medieval styles available (including Islamic)
+
+Consider:
+- Geometric patterns → Islamic arabesque
+- Heavenly atmosphere → Gothic
+- Golden sacred → Byzantine
+- Solid simple → Romanesque
 `;
 }
 
@@ -403,30 +481,36 @@ function getImpressionismGuidelines() {
   return `
 Available Impressionism Artists (4명):
 
-1. MONET (모네) ⭐⭐⭐ STRONGEST for landscapes
-   - Specialty: Light effects on water, gardens, outdoor atmosphere
-   - Best for: Landscapes, water, gardens, outdoor scenes, natural settings
-   - Signature: Water Lilies, garden scenes - shimmering light effects
+1. MONET (모네) ⭐⭐⭐ STRONGEST for landscapes AND portraits
+   - Specialty: Light effects on water, gardens, outdoor atmosphere, AND luminous portraits
+   - Best for: Landscapes, water, gardens, outdoor scenes, AND people portraits
+   - Signature: Water Lilies for landscapes, Woman with a Parasol for portraits
    - Masterpiece: Impression, Sunrise
-   - When to prioritize: Landscape photos (STRONGEST 80%)
+   - When to prioritize: Landscapes (80%), People portraits (50%)
 
-2. RENOIR (르누아르) - Best for people, happy mood
-   - Specialty: Soft warm human figures, joyful atmosphere, luminous skin tones
+2. RENOIR (르누아르) - Best for warm happy people (50%)
+   - Specialty: SOFT WARM human figures, joyful atmosphere, gentle brushstrokes
    - Best for: People portraits, happy mood, social gatherings, warm feelings
    - Signature: Dance at Le Moulin de la Galette - joyful warmth
-   - When to prioritize: People-focused with positive/happy mood (70%)
+   - When to prioritize: People-focused with positive/happy mood (50%)
+   - CRITICAL: Use SOFTER less saturated colors, VISIBLE LOOSE BRUSHSTROKES with feathery edges
 
 3. DEGAS (드가) - Best for movement, dance, unusual angles
    - Specialty: Movement capture, ballet dancers, dynamic compositions
    - Best for: Action shots, dance, sports, movement, diagonal compositions
    - Signature: Ballet rehearsals - movement frozen in time
-   - When to prioritize: Clear movement/action/dance (70%)
+   - When to prioritize: Clear movement/action/dance (special case)
 
-4. PISSARRO (피사로) - Backup for gentle landscapes
+4. PISSARRO (피사로) - MINIMIZE
    - Specialty: Rural landscapes, market scenes, gentle brush touches
-   - Best for: Countryside, softer landscapes, market/village scenes
-   - Signature: Gentle pastoral impressionism
-   - When to prioritize: Only if landscape seems too gentle for Monet's boldness
+   - Best for: Minimize usage (개성 약함)
+   - When to prioritize: Minimize
+
+🎯 CRITICAL DECISION LOGIC:
+- Landscapes → MONET (80%) ⭐⭐⭐
+- People portraits → MONET (50%) or RENOIR (50%) equal
+- Movement/dance → DEGAS (special)
+- Minimize PISSARRO
 `;
 }
 
@@ -477,77 +561,79 @@ function getPostImpressionismGuidelines() {
   return `
 Available Post-Impressionism Artists (4명):
 
-1. VAN GOGH (반 고흐) - Good for emotional scenes
-   - Specialty: Swirling expressive brushstrokes, intense emotional colors
-   - Best for: Emotional subjects, starry skies, cypresses, emotional intensity
-   - Signature: Starry Night, Sunflowers - turbulent passionate energy
-   - When to prioritize: Emotional mood or night sky (50% - balanced with other artists)
+1. SEURAT (쇠라) ⭐⭐⭐ STRONGEST - Pointillism (기본값 45%)
+   - Specialty: POINTILLISM technique with thousands of tiny colored dots, scientific color theory
+   - Best for: Most photos - creates unique distinctive look
+   - Signature: A Sunday on La Grande Jatte - pointillist precision
+   - When to prioritize: Most cases (DEFAULT 45%)
+   - Note: 점묘법 = 초강력 개성! 일반인도 즉시 알아봄
 
-2. CÉZANNE (세잔) - Best for still life, geometric compositions
-   - Specialty: Geometric structured forms, solid volumes, analytical approach
-   - Best for: Still life, fruits, objects, architectural subjects
-   - Signature: Still Life with Apples - geometric analysis
-   - When to prioritize: Still life or geometric subjects (70%)
+2. VAN GOGH (반 고흐) ⭐⭐⭐ BEST for emotional/swirling ONLY (30%)
+   - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
+   - Best for: Emotional subjects, starry skies, cypresses, swirling forms
+   - Signature: Starry Night - turbulent passionate swirls
+   - When to prioritize: Clear emotional/swirling mood ONLY (30%)
+   - Note: Also available in Masters collection
 
-3. GAUGUIN (고갱) - Best for flat decorative, exotic/primitive
+3. GAUGUIN (고갱) - Best for flat decorative (20%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
    - Best for: Decorative aesthetic, simplified forms, exotic/tropical mood
    - Signature: Tahitian paintings - flat bold primitivism
-   - When to prioritize: Decorative/flat/exotic aesthetic desired
+   - When to prioritize: Clear flat/decorative aesthetic (20%)
 
-4. SEURAT (쇠라) - Best for pointillist technique, structured scenes
-   - Specialty: Pointillism (dots of color), scientific color theory, structured
-   - Best for: Structured compositions, outdoor leisure scenes
-   - Signature: A Sunday on La Grande Jatte - pointillist precision
-   - When to prioritize: If pointillist dot technique specifically desired
+4. CÉZANNE (세잔) - Best for still life ONLY (5%)
+   - Specialty: Geometric structured forms, solid volumes, analytical approach
+   - Best for: Still life, fruits, objects ONLY
+   - Signature: Still Life with Apples - geometric analysis
+   - When to prioritize: Clear still life photo ONLY (5%)
+
+🎯 CRITICAL DECISION LOGIC:
+- Most photos → SEURAT (DEFAULT 45%) ⭐⭐⭐ pointillism!
+- Emotional/swirling/starry ONLY → VAN GOGH (30%, also in Masters)
+- Flat/decorative → GAUGUIN (20%)
+- Still life ONLY → CÉZANNE (5%)
 `;
 }
 
 function getPostImpressionismHints(photoAnalysis) {
   const { subject, mood, composition } = photoAnalysis;
   
-  // 감정적/밤하늘 → 반 고흐 (50%)
-  if (mood === 'emotional' || mood === 'intense' || subject.includes('sky') || subject.includes('night')) {
-    return `
-🎯 RECOMMENDATION: VAN GOGH (50% - balanced)
-Emotional intensity or sky scenes suit Van Gogh's style.
-However, consider other artists equally:
-- Still life → Cézanne (70%)
-- Decorative → Gauguin (65%)
-Van Gogh available in Masters collection, so balanced approach here.
-`;
-  }
-  
-  // 정물 → 세잔 (70%)
+  // 정물만 → 세잔 (5%)
   if (subject === 'still_life' || subject.includes('object') || subject.includes('fruit')) {
     return `
-🎯 STRONG RECOMMENDATION: CÉZANNE (70%)
-Still life is Cézanne's specialty!
+🎯 SPECIAL CASE: CÉZANNE (5%)
+Still life ONLY = Cézanne specialty!
 His geometric analysis creates powerful structured beauty.
 `;
   }
   
-  // 평면적/장식적 → 고갱
+  // 감정적/소용돌이/밤하늘만 → 반 고흐 (30%)
+  if (mood === 'emotional' || mood === 'intense' || subject.includes('swirl') || subject.includes('night') || subject.includes('starry')) {
+    return `
+🎯 RECOMMENDATION: VAN GOGH (30%)
+Emotional/swirling mood suits Van Gogh's turbulent style.
+But SEURAT (45%) is stronger default for most photos.
+Van Gogh also available in Masters collection.
+`;
+  }
+  
+  // 평면적/장식적 → 고갱 (20%)
   if (composition === 'flat' || mood === 'decorative' || mood === 'exotic') {
     return `
-🎯 RECOMMENDATION: GAUGUIN (65%)
+🎯 RECOMMENDATION: GAUGUIN (20%)
 Flat/decorative aesthetic matches Gauguin's bold primitivism.
 `;
   }
   
-  // 점묘법 원하면 → 쇠라
-  if (composition === 'structured' || mood === 'scientific') {
-    return `
-🎯 RECOMMENDATION: SEURAT
-If you want pointillist dot technique specifically.
-Otherwise Van Gogh is stronger choice.
-`;
-  }
-  
+  // 기본값 → 쇠라 (45%)
   return `
-🎯 Default: Balanced approach for Post-Impressionism
-Van Gogh (50% - also in Masters), Cézanne (70% for still life)
-Consider: still life (Cézanne strongest), decorative (Gauguin), dots (Seurat)
+🎯 STRONG: SEURAT (45%) - DEFAULT for Post-Impressionism
+Pointillism = THE most distinctive technique!
+Thousands of tiny colored dots create unique look.
+Unless:
+- Still life ONLY → Cézanne (5%)
+- Emotional/swirling → Van Gogh (30%, also in Masters)
+- Flat/decorative → Gauguin (20%)
 `;
 }
 
@@ -622,102 +708,107 @@ function getExpressionismGuidelines() {
   return `
 Available Expressionism Artists (5명):
 
-1. MODIGLIANI (모딜리아니) ⭐⭐⭐ STRONGEST for portraits (기본값)
-   - Specialty: ELONGATED NECKS (instantly recognizable!), almond eyes, melancholic elegant beauty
-   - Best for: Most 1-person portraits, upper body shots, graceful to melancholic mood
-   - Signature: Long neck portraits - THE most distinctive Expressionist feature
-   - When to prioritize: Most portrait cases (DEFAULT 70%)
-   - Note: "긴 목" = 초강력 개성! 일반인도 즉시 알아봄
+1. MODIGLIANI (모딜리아니) ⭐⭐⭐ STRONGEST for elegant portraits (30%)
+   - Specialty: EXTREME ELONGATED NECKS (swan-like 1.8x length!), almond eyes with no pupils, melancholic elegant beauty
+   - Best for: Elegant graceful portraits, upper body shots, serene to melancholic mood
+   - Signature: Long neck portraits with blank almond eyes - most distinctive feature
+   - When to prioritize: Elegant/graceful portrait mood (30%)
+   - CRITICAL: FLUX must STRETCH neck to 1.8x and face to 1.5x vertically
 
-2. MUNCH (뭉크) ⭐⭐⭐ BEST for anxiety/scream expressions ONLY
+2. MUNCH (뭉크) ⭐⭐⭐ STRONG for anxiety/psychological (25%)
    - Specialty: Existential anxiety, psychological tension, swirling distorted forms
-   - Best for: Anxious expressions, screaming, psychological distress, The Scream-like mood
-   - Signature: The Scream - iconic anxiety expression
-   - When to prioritize: Clear anxiety/fear/scream expression ONLY (65%)
-   - Warning: Don't overuse - use ONLY for anxious mood
+   - Best for: Anxious expressions, dramatic emotions, psychological intensity
+   - Signature: The Scream - iconic anxiety and modern alienation
+   - When to prioritize: Emotional/anxious/dramatic expressions (25%)
+   - Note: Also available in Masters collection
 
-3. SCHIELE (에곤 실레) - Best for body emphasis, distorted poses
-   - Specialty: Distorted body, erotic tension, contorted limbs, raw emotion
-   - Best for: Full body with unusual poses, body-focused compositions
-   - Signature: Twisted nude self-portraits - erotic psychological tension
-   - When to prioritize: Full body with unusual/distorted pose (60%)
+3. EGON SCHIELE (에곤 실레) ⭐⭐⭐ STRONG for angular/distorted (20%)
+   - Specialty: SHARP ANGULAR DISTORTED BODIES, twisted limbs, raw erotic tension
+   - Best for: Full body, unusual poses, angular compositions, body emphasis
+   - Signature: Contorted self-portraits - angular psychological tension
+   - When to prioritize: Full body or angular aesthetic desired (20%)
+   - Strong individuality - distinctive distortion style!
 
-4. KIRCHNER (키르히너) - MINIMIZE (개성 약함)
-   - Specialty: Angular jagged forms, intense colors, urban anxiety
-   - Best for: Urban/city backgrounds ONLY
-   - When to prioritize: Clear urban/street setting (minimize usage)
+4. KIRCHNER (키르히너) ⭐⭐ STRONG for urban/bold colors (20%)
+   - Specialty: JAGGED ANGULAR FORMS, intense bold colors, urban anxiety, street energy
+   - Best for: Urban settings, bold color contrasts, geometric sharp compositions
+   - Signature: Street Scenes - angular urban life with vivid colors
+   - When to prioritize: Urban backgrounds or bold angular style (20%)
+   - Distinctive German Expressionism!
 
-5. KANDINSKY (칸딘스키) - MINIMIZE (개성 약함)
-   - Specialty: Abstract expressionism, spiritual composition
-   - Best for: Very unclear subjects ONLY
-   - When to prioritize: Subject very unclear (minimize usage)
+5. KANDINSKY (칸딘스키) ⭐ MINIMAL for abstract/spiritual (5%)
+   - Specialty: Abstract expressionism, spiritual compositions, musical forms
+   - Best for: Artistic abstract interpretation, spiritual atmosphere
+   - Signature: Compositions - non-representational color symphonies
+   - When to prioritize: Abstract artistic interpretation desired (5%)
+   - Warning: Reduces portrait recognition
 
 🎯 CRITICAL DECISION LOGIC:
-- Most 1-person portraits → MODIGLIANI (DEFAULT 70%) ⭐⭐⭐
-- Anxious/scream expression ONLY → MUNCH (65%)
-- Full body distorted pose → SCHIELE (60%)
-- Urban setting only → KIRCHNER (minimize)
-- Abstract only → KANDINSKY (minimize)
+- Elegant/graceful mood → MODIGLIANI (30%)
+- Emotional/anxious/dramatic → MUNCH (25%, also in Masters)
+- Full body/angular forms → EGON SCHIELE (20%)
+- Urban/bold colors/geometric → KIRCHNER (20%)
+- Abstract/spiritual mood → KANDINSKY (5%)
 `;
 }
 
 function getExpressionismHints(photoAnalysis) {
   const { count, shot_type, expression, background, subject } = photoAnalysis;
   
-  // 1명 초상 → 뭉크 (70-80%)
+  // 1명 초상 → 모딜리아니 또는 뭉크
   if (count === 1 && (shot_type === 'portrait' || shot_type === 'upper_body')) {
-    // 우아한 표정 → 모딜리아니 고려
-    if (expression === 'graceful' || expression === 'elegant' || expression === 'melancholic') {
+    // 불안/절규 표정 → 뭉크
+    if (expression === 'anxious' || expression === 'fearful' || expression === 'scream' || expression === 'distressed') {
       return `
-🎯 RECOMMENDATION: MODIGLIANI (60%)
-Graceful/elegant mood suits Modigliani's sad beauty.
-But MUNCH (70%) is stronger default for Expressionism.
-Modigliani also available in Masters collection.
+🎯 RECOMMENDATION: MUNCH (25%)
+Anxious/fearful/dramatic expression = Munch specialty!
+The Scream-like psychological intensity.
+Munch also available in Masters collection.
 `;
     }
     
-    // 기본 초상 → 뭉크
+    // 우아한 표정 → 모딜리아니
     return `
-🎯 STRONG RECOMMENDATION: MUNCH (70-80%)
-Portrait is Munch's STRONGEST specialty for Expressionism!
-The Scream-like psychological intensity creates 
-the most iconic Expressionist portraits.
-Unless:
-- Graceful/elegant mood (→ Modigliani 60%, also in Masters)
-- Full body unusual pose (→ Schiele 65%)
+🎯 RECOMMENDATION: MODIGLIANI (30%)
+Elegant portrait suits Modigliani's elongated neck style.
+Long swan-like neck creates distinctive look.
+But consider mood:
+- Dramatic/anxious → Munch (25%)
+- Angular pose → Egon Schiele (20%)
 `;
   }
   
-  // 전신 + 특이한 포즈 → 에곤 실레 (65%)
+  // 전신 + 특이한 포즈 → 에곤 실레 (20%)
   if (shot_type === 'full_body' || subject.includes('body')) {
     return `
-🎯 RECOMMENDATION: EGON SCHIELE (65%)
+🎯 RECOMMENDATION: EGON SCHIELE (20%)
 Full body/body emphasis matches Schiele's distorted anatomy.
 His twisted poses create powerful psychological tension.
 `;
   }
   
-  // 도시 배경 → 키르히너
+  // 도시 배경 → 키르히너 (최소화)
   if (background === 'urban' || background === 'city' || subject.includes('street')) {
     return `
-🎯 RECOMMENDATION: KIRCHNER (60%)
+🎯 RECOMMENDATION: KIRCHNER (20%)
 Urban/city setting matches Kirchner's angular street scenes.
+Kirchner specialty for urban Expressionism!
 `;
   }
   
-  // 추상적 → 칸딘스키
+  // 추상적 → 칸딘스키 (최소화)
   if (subject === 'abstract' || subject === 'unclear') {
     return `
-🎯 RECOMMENDATION: KANDINSKY
+🎯 RECOMMENDATION: KANDINSKY (5%)
 Abstract/unclear subject suits Kandinsky's non-representational approach.
 `;
   }
   
   return `
-🎯 Default: MUNCH (70%) for most Expressionist works
-Munch's psychological intensity is strongest.
-Consider: elegant (Modigliani 60%, also in Masters), 
-body (Schiele), urban (Kirchner), abstract (Kandinsky)
+🎯 Default: MODIGLIANI (30%) for most Expressionist portraits
+Long neck = THE most distinctive feature.
+Consider: anxious (Munch 25%, also in Masters), 
+body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 `;
 }
 
@@ -732,7 +823,7 @@ const fallbackPrompts = {
   
   medieval: {
     name: '중세 미술',
-    prompt: 'Medieval art style combining Byzantine golden mosaics, Romanesque solid forms, Gothic vertical grandeur, and Islamic geometric patterns, flat symbolic sacred imagery, rich jewel colors, gold leaf backgrounds, spiritual transcendent atmosphere, architectural elements, decorative ornamental details, single unified composition with all figures together in one cohesive scene NOT separated into multiple groups, painted in Medieval masterpiece quality'
+    prompt: 'Medieval art painting in Gothic style (45%) with vibrant stained glass jewel colors (ruby red, sapphire blue, emerald green), vertical elongated graceful figures, heavenly divine light filtering through, sacred spiritual atmosphere, gold halos and decorative details, flat symbolic forms, rich ornamental patterns, architectural Gothic elements, Byzantine golden mosaic influence (35%), or Romanesque solid simple forms (20%), single unified composition with all figures together in one harmonious sacred scene, painted in Medieval illuminated manuscript quality'
   },
   
   renaissance: {
@@ -772,7 +863,7 @@ const fallbackPrompts = {
   
   expressionism: {
     name: '표현주의',
-    prompt: 'Expressionist painting style by Modigliani, elongated forms, intense emotional colors, psychological depth, melancholic elegant beauty, inner feelings externalized, painted in Expressionist masterpiece quality'
+    prompt: 'Expressionist painting by Amedeo Modigliani with EXTREME CRITICAL elongation features: STRETCH the neck vertically to 1.8x normal length creating swan-like elongated neck, STRETCH the face vertically to 1.5x creating oval elongated face, ALMOND-SHAPED eyes with NO PUPILS (blank dark outlined eyes), TILT the head slightly to emphasize neck length, SIMPLIFIED smooth contours with no facial details, MUTED earth tones (ochre, sienna, grey-blue palette), melancholic elegant mood, this elongation is MANDATORY for Modigliani signature style, painted in the style of Portrait of Jeanne Hébuterne'
   },
   
   // ========================================
@@ -1043,6 +1134,9 @@ Keep it concise and accurate.`;
       } else if (categoryType === 'rococo') {
         guidelines = getRococoGuidelines();
         hints = getRococoHints(photoAnalysis);
+      } else if (categoryType === 'medieval') {
+        guidelines = getMedievalGuidelines();
+        hints = getMedievalHints(photoAnalysis);
       } else if (categoryType === 'neoclassicism_vs_romanticism_vs_realism') {
         guidelines = getNeoclassicismVsRomanticismVsRealismGuidelines();
         hints = getNeoclassicismVsRomanticismVsRealismHints(photoAnalysis);
