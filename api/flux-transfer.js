@@ -1256,11 +1256,11 @@ export default async function handler(req, res) {
           }
         }
         
-        // 티치아노 선택시 베네치아 황금빛 강화
+        // 티치아노 선택시 베네치아 색채와 티치아노 레드 강화
         if (selectedArtist.toUpperCase().trim().includes('TITIAN')) {
-          if (!finalPrompt.includes('luminous golden')) {
-            finalPrompt = finalPrompt + ', painting by Titian, Venetian masterpiece-style luminous golden atmosphere with radiant glowing skies, rich warm tones of gold orange and crimson in the heavens, thick layered glazing technique creating depth, sensuous fluid brushwork, sumptuous glowing colors, light emanating from within like stained glass';
-            console.log('✅ Enhanced Titian Venetian glow');
+          if (!finalPrompt.includes('Titian red')) {
+            finalPrompt = finalPrompt + ', painting by Titian, Venetian painting-style with rich luminous colors and signature Titian red tones, thick layered glazing technique creating depth and luminosity, warm golden-amber atmosphere, sensuous fluid brushwork, sumptuous color harmonies with radiant warm palette, glowing flesh tones and rich drapery';
+            console.log('✅ Enhanced Titian Venetian colors');
           }
         }
         
