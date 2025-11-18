@@ -863,7 +863,7 @@ const fallbackPrompts = {
   
   expressionism: {
     name: '표현주의',
-    prompt: 'Expressionist painting by Amedeo Modigliani: STRETCH neck vertically to 1.8-2.0x DOUBLE the normal length, STRETCH face vertically to 1.5x elongated oval, ALMOND-SHAPED eyes ABSOLUTELY NO PUPILS NO iris (completely blank dark outlined), TILT head slightly, simplified smooth contours, DESATURATED muted earth tones (ochre sienna grey-blue), dark shadowy background, NOT photographic preserve facial identity'
+    prompt: 'Expressionist painting by Amedeo Modigliani: STRETCH neck vertically to 1.8-2.0x DOUBLE normal length, elongated oval face with NARROW POINTED CHIN, lowered sloping shoulders, STRETCH face vertically to 1.5x, almond-shaped eyes (minimal or no pupils), SLENDER GRACEFUL LINES throughout, simplified smooth contours, DESATURATED muted earth tones (ochre sienna grey-blue), dark shadowy background, NOT photographic preserve facial identity'
   },
   
   // ========================================
