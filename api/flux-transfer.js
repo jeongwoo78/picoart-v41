@@ -708,25 +708,25 @@ function getExpressionismGuidelines() {
   return `
 Available Expressionism Artists (5명):
 
-1. MODIGLIANI (모딜리아니) ⭐⭐⭐ for serene elegant portraits (25%)
+1. MODIGLIANI (모딜리아니) ⭐⭐⭐ for elegant portraits (25%)
    - Specialty: EXTREME ELONGATED NECKS (swan-like 1.8x length!), almond eyes with no pupils, melancholic elegant beauty
-   - Best for: SERENE/PEACEFUL/MELANCHOLIC elegant portraits, calm graceful mood, contemplative expression
+   - Best for: Elegant graceful portraits, upper body shots, serene to melancholic mood
    - Signature: Long neck portraits with blank almond eyes - most distinctive feature
-   - When to prioritize: SERENE elegant mood with peaceful/contemplative expression (25%)
+   - When to prioritize: Elegant/graceful portrait mood (25%)
    - CRITICAL: FLUX must STRETCH neck to 1.8x and face to 1.5x vertically
 
-2. MUNCH (뭉크) ⭐⭐⭐ STRONG for anxiety/psychological (25%)
+2. MUNCH (뭉크) ⭐⭐⭐ STRONGEST for anxiety/psychological (30%)
    - Specialty: Existential anxiety, psychological tension, swirling distorted forms
-   - Best for: Anxious expressions, dramatic emotions, psychological intensity, fearful mood
+   - Best for: Anxious expressions, dramatic emotions, psychological intensity
    - Signature: The Scream - iconic anxiety and modern alienation
-   - When to prioritize: Emotional/anxious/dramatic/fearful expressions (25%)
+   - When to prioritize: Emotional/anxious/dramatic expressions (30%)
    - Note: Also available in Masters collection
 
-3. EGON SCHIELE (에곤 실레) ⭐⭐⭐ STRONG for angular/expressive (25%)
-   - Specialty: SHARP ANGULAR DISTORTED BODIES, twisted limbs, raw expressive tension
-   - Best for: Angular forms, expressive gestures, body emphasis, dynamic poses, intense gaze
+3. EGON SCHIELE (에곤 실레) ⭐⭐⭐ STRONG for angular/distorted (20%)
+   - Specialty: SHARP ANGULAR DISTORTED BODIES, twisted limbs, raw erotic tension
+   - Best for: Full body, unusual poses, angular compositions, body emphasis
    - Signature: Contorted self-portraits - angular psychological tension
-   - When to prioritize: Angular aesthetic OR expressive body language OR intense portraits (25%)
+   - When to prioritize: Full body or angular aesthetic desired (20%)
    - Strong individuality - distinctive distortion style!
 
 4. KIRCHNER (키르히너) ⭐⭐ STRONG for urban/bold colors (20%)
@@ -744,9 +744,9 @@ Available Expressionism Artists (5명):
    - Warning: Reduces portrait recognition
 
 🎯 CRITICAL DECISION LOGIC:
-- SERENE/PEACEFUL/MELANCHOLIC elegant mood → MODIGLIANI (25%)
-- ANXIOUS/FEARFUL/DRAMATIC expression → MUNCH (25%, also in Masters)
-- ANGULAR/EXPRESSIVE/INTENSE or body emphasis → EGON SCHIELE (25%)
+- Elegant/graceful mood → MODIGLIANI (25%)
+- Emotional/anxious/dramatic → MUNCH (30%, also in Masters)
+- Full body/angular forms → EGON SCHIELE (20%)
 - Urban/bold colors/geometric → KIRCHNER (20%)
 - Abstract/spiritual mood → KANDINSKY (5%)
 `;
@@ -863,7 +863,7 @@ const fallbackPrompts = {
   
   expressionism: {
     name: '표현주의',
-    prompt: 'Expressionist painting by Amedeo Modigliani: ELONGATED SWAN-LIKE NECK stretched to 1.8-2.0x normal length, LONG OVAL FACE with ELONGATED NARROW CHIN stretched vertically to 1.5x, SMALL almond-shaped eyes (minimal or no pupils), lowered sloping shoulders, painted with VERY THIN DELICATE BRUSH creating slender graceful lines, simplified smooth contours, DESATURATED muted earth tones (ochre sienna grey-blue), dark shadowy background, NOT photographic preserve facial identity'
+    prompt: 'Expressionist painting by Amedeo Modigliani: ELONGATED SWAN-LIKE NECK stretched to 1.8-2.0x normal length, LONG OVAL FACE with ELONGATED NARROW CHIN stretched vertically to 1.5x, almond-shaped eyes (minimal or no pupils), lowered sloping shoulders, painted with VERY THIN DELICATE BRUSH creating slender graceful lines, simplified smooth contours, DESATURATED muted earth tones (ochre sienna grey-blue), dark shadowy background, NOT photographic preserve facial identity'
   },
   
   // ========================================
