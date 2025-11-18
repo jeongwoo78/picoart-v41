@@ -14,7 +14,7 @@ const StyleSelection = ({ onSelect }) => {
     renaissance: { name: '르네상스', period: '14-16세기' },
     baroque: { name: '바로크', period: '17세기' },
     rococo: { name: '로코코', period: '18세기' },
-    romanticism: { name: '낭만주의', period: '19세기 전반' },
+    neoclassicism_vs_romanticism: { name: '신고전주의 vs 낭만주의', period: '1770-1850' },
     realism: { name: '사실주의', period: '19세기 중반' },
     impressionism: { name: '인상주의', period: '1860-1890' },
     postImpressionism: { name: '후기인상주의', period: '1880-1910' },
@@ -35,7 +35,7 @@ const StyleSelection = ({ onSelect }) => {
     { id: 'renaissance', name: '르네상스', category: 'renaissance', icon: '🎭', description: '인간 중심의 이상적 아름다움' },
     { id: 'baroque', name: '바로크', category: 'baroque', icon: '👑', description: '극적이고 웅장한 표현' },
     { id: 'rococo', name: '로코코', category: 'rococo', icon: '🌸', description: '우아하고 장식적인 취향' },
-    { id: 'romanticism', name: '낭만주의', category: 'romanticism', icon: '🌊', description: '감정과 자연의 숭고함' },
+    { id: 'neoclassicism_vs_romanticism', name: '신고전주의 vs 낭만주의', category: 'neoclassicism_vs_romanticism', icon: '⚖️', description: '이성 vs 감성의 대립' },
     { id: 'realism', name: '사실주의', category: 'realism', icon: '👨‍🌾', description: '있는 그대로의 현실' },
     { id: 'impressionism', name: '인상주의', category: 'impressionism', icon: '🌅', description: '빛의 순간을 포착' },
     { id: 'postImpressionism', name: '후기인상주의', category: 'postImpressionism', icon: '🌻', description: '감정과 구조의 탐구' },
@@ -61,7 +61,7 @@ const StyleSelection = ({ onSelect }) => {
       name: '미술사조',
       icon: '🎨',
       description: '서양 미술의 흐름',
-      subcategories: ['ancient', 'byzantineIslamic', 'renaissance', 'baroque', 'rococo', 'romanticism', 'realism', 'impressionism', 'postImpressionism', 'expressionism']
+      subcategories: ['ancient', 'byzantineIslamic', 'renaissance', 'baroque', 'rococo', 'neoclassicism_vs_romanticism', 'realism', 'impressionism', 'postImpressionism', 'expressionism']
     },
     masters: {
       name: '거장 컬렉션',
