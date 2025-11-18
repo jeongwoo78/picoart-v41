@@ -561,25 +561,25 @@ function getPostImpressionismGuidelines() {
   return `
 Available Post-Impressionism Artists (4명):
 
-1. SEURAT (쇠라) ⭐⭐⭐ for unique pointillism (30%)
+1. SEURAT (쇠라) ⭐⭐⭐ for unique pointillism (25%)
    - Specialty: POINTILLISM technique with thousands of tiny colored dots, scientific color theory
    - Best for: Creating distinctive pointillist look
    - Signature: A Sunday on La Grande Jatte - pointillist precision
-   - When to prioritize: Most cases (30%)
+   - When to prioritize: Pointillist aesthetic (25%)
    - Note: 점묘법 = 초강력 개성! 일반인도 즉시 알아봄
 
-2. VAN GOGH (반 고흐) ⭐⭐⭐ for emotional/expressive (30%)
+2. VAN GOGH (반 고흐) ⭐⭐⭐⭐ STRONGEST for emotional/expressive (33%)
    - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
    - Best for: Emotional subjects, starry skies, cypresses, swirling forms
    - Signature: Starry Night - turbulent passionate swirls
-   - When to prioritize: Emotional/expressive mood (30%)
+   - When to prioritize: Emotional/expressive mood (33%)
    - Note: Also available in Masters collection
 
-3. GAUGUIN (고갱) ⭐⭐⭐ for flat decorative (30%)
+3. GAUGUIN (고갱) ⭐⭐⭐ for flat decorative (32%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
    - Best for: Decorative aesthetic, simplified forms, exotic/tropical mood
    - Signature: Tahitian paintings - flat bold primitivism
-   - When to prioritize: Flat/decorative aesthetic (30%)
+   - When to prioritize: Flat/decorative aesthetic (32%)
 
 4. CÉZANNE (세잔) ⭐ for still life/geometric (10%)
    - Specialty: Geometric structured forms, solid volumes, analytical approach
@@ -588,9 +588,9 @@ Available Post-Impressionism Artists (4명):
    - When to prioritize: Still life or geometric forms (10%)
 
 🎯 CRITICAL DECISION LOGIC:
-- Pointillist unique look → SEURAT (30%)
-- Emotional/expressive/passionate → VAN GOGH (30%, also in Masters)
-- Flat/decorative/primitive → GAUGUIN (30%)
+- Emotional/expressive/passionate → VAN GOGH (33%, also in Masters)
+- Flat/decorative/primitive → GAUGUIN (32%)
+- Pointillist unique look → SEURAT (25%)
 - Still life/geometric forms → CÉZANNE (10%)
 `;
 }
