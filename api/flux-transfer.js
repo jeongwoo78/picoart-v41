@@ -1408,6 +1408,268 @@ export default async function handler(req, res) {
             console.log('ℹ️ Schiele distortion already in prompt (AI included it)');
           }
         }
+        
+        // ========================================
+        // v35 추가: 21명 화가 FLUX 최적화
+        // ========================================
+        
+        // 다비드 선택시 신고전주의 명확성 강화
+        if (selectedArtist.toUpperCase().trim().includes('DAVID') || 
+            selectedArtist.toUpperCase().trim().includes('JACQUES-LOUIS')) {
+          console.log('🎯 David detected');
+          if (!finalPrompt.includes('Neoclassical grandeur')) {
+            finalPrompt = finalPrompt + ', painting by Jacques-Louis David, Oath of the Horatii-style Neoclassical grandeur with SHARP CLEAR OUTLINES and precise linear definition throughout every form, perfect symmetrical classical composition with strong geometric structure, cool refined color palette dominated by stone grays slate blues and muted earth tones, heroic dignified poses with noble gestures frozen in timeless moment, meticulous detailed rendering of drapery and anatomy, cold rational perfection with dramatic theatrical lighting, severe architectural clarity and moral grandeur';
+            console.log('✅ Enhanced David Neoclassical clarity added');
+          } else {
+            console.log('ℹ️ David clarity already in prompt (AI included it)');
+          }
+        }
+        
+        // 앵그르 선택시 완벽한 윤곽선 강화
+        if (selectedArtist.toUpperCase().trim().includes('INGRES')) {
+          console.log('🎯 Ingres detected');
+          if (!finalPrompt.includes('La Grande Odalisque')) {
+            finalPrompt = finalPrompt + ', painting by Jean-Auguste-Dominique Ingres, La Grande Odalisque-style with PERFECTLY SMOOTH FLOWING CONTOURS like polished marble surface, porcelain-smooth skin with not a single visible brushstroke anywhere, elegant sinuous curves and graceful elongated forms, idealized classical beauty with refined aristocratic elegance, meticulous precise detail in every element, cool serene color palette with subtle flesh tones, flawless enamel-like finish with absolute technical perfection, linear purity and smooth transitions';
+            console.log('✅ Enhanced Ingres smooth perfection added');
+          } else {
+            console.log('ℹ️ Ingres perfection already in prompt (AI included it)');
+          }
+        }
+        
+        // 프리드리히 선택시 숭고한 풍경 강화
+        if (selectedArtist.toUpperCase().trim().includes('FRIEDRICH') || 
+            selectedArtist.toUpperCase().trim().includes('CASPAR DAVID')) {
+          console.log('🎯 Friedrich detected');
+          if (!finalPrompt.includes('Wanderer above')) {
+            finalPrompt = finalPrompt + ', painting by Caspar David Friedrich, Wanderer above the Sea of Fog-style with SUBLIME VAST LANDSCAPE stretching to infinite horizon, mysterious atmospheric mist enveloping mountains and valleys, solitary contemplative figure viewed from behind gazing into immensity with back to viewer, spiritual sense of awe and insignificance before nature, cool somber palette of grays blues and muted greens, dramatic lighting breaking through clouds creating transcendent atmosphere, profound melancholic loneliness and romantic yearning, metaphysical depth and eternal silence';
+            console.log('✅ Enhanced Friedrich sublime landscape added');
+          } else {
+            console.log('ℹ️ Friedrich sublime already in prompt (AI included it)');
+          }
+        }
+        
+        // 밀레 선택시 전원의 존엄성 강화
+        if (selectedArtist.toUpperCase().trim().includes('MILLET') || 
+            selectedArtist.toUpperCase().trim().includes('JEAN-FRANCOIS') ||
+            selectedArtist.toUpperCase().trim().includes('JEAN-FRANÇOIS')) {
+          console.log('🎯 Millet detected');
+          if (!finalPrompt.includes('The Angelus')) {
+            finalPrompt = finalPrompt + ', painting by Jean-François Millet, The Angelus-style depicting DIGNIFIED PEASANT LABOR in golden rural landscape, warm earthy palette of rich browns deep ochres and muted golden yellows, solid monumental figures bent in humble toil with sculptural weight, peaceful countryside bathed in soft evening light with horizontal calm, poetic serenity and quiet reverence for simple rural life, robust painterly brushwork with thick impasto, timeless pastoral dignity with profound humanity and spiritual grace';
+            console.log('✅ Enhanced Millet pastoral dignity added');
+          } else {
+            console.log('ℹ️ Millet dignity already in prompt (AI included it)');
+          }
+        }
+        
+        // 마네 선택시 현대 파리 사실주의 강화
+        if (selectedArtist.toUpperCase().trim().includes('MANET') || 
+            selectedArtist.toUpperCase().trim().includes('EDOUARD') ||
+            selectedArtist.toUpperCase().trim().includes('ÉDOUARD')) {
+          console.log('🎯 Manet detected');
+          if (!finalPrompt.includes('Olympia-style')) {
+            finalPrompt = finalPrompt + ', painting by Édouard Manet, Olympia-style MODERN PARIS REALISM with bold flat composition and striking contrasts, dramatic blacks and pure whites with minimal mid-tones creating graphic impact, sophisticated urban atmosphere of café society and contemporary life, frank direct confrontational gaze meeting viewer, loose confident brushwork with visible energetic strokes, elimination of traditional modeling through strong light-dark opposition, metropolitan elegance and modern audacity';
+            console.log('✅ Enhanced Manet modern realism added');
+          } else {
+            console.log('ℹ️ Manet realism already in prompt (AI included it)');
+          }
+        }
+        
+        // 라파엘로 선택시 조화로운 우아함 강화
+        if (selectedArtist.toUpperCase().trim().includes('RAPHAEL') || 
+            selectedArtist.toUpperCase().trim().includes('RAFFAELLO')) {
+          console.log('🎯 Raphael detected');
+          if (!finalPrompt.includes('Madonna')) {
+            finalPrompt = finalPrompt + ', painting by Raphael, Madonna-style with PERFECT HARMONIOUS COMPOSITION and graceful balanced arrangement, serene gentle beauty with sweet tender expressions, soft rounded forms with fluid elegant contours, warm glowing colors with delicate flesh tones and rich drapery, classical Renaissance perfection with ideal proportions, peaceful tranquil atmosphere radiating divine grace, smooth refined brushwork with seamless transitions, sublime unity and lyrical beauty';
+            console.log('✅ Enhanced Raphael harmony added');
+          } else {
+            console.log('ℹ️ Raphael harmony already in prompt (AI included it)');
+          }
+        }
+        
+        // 미켈란젤로 선택시 조각적 힘 강화
+        if (selectedArtist.toUpperCase().trim().includes('MICHELANGELO') || 
+            selectedArtist.toUpperCase().trim().includes('BUONARROTI')) {
+          console.log('🎯 Michelangelo detected');
+          if (!finalPrompt.includes('Sistine')) {
+            finalPrompt = finalPrompt + ', painting by Michelangelo, Sistine Chapel-style with SCULPTURAL MUSCULAR ANATOMY and heroic monumental figures, powerful athletic bodies with exaggerated musculature and anatomical perfection, dynamic twisting poses (contrapposto) with dramatic foreshortening, intense physical energy and spiritual tension, bold confident modeling with strong chiaroscuro, terribilità with awesome grandeur and sublime power, every form carved from living stone';
+            console.log('✅ Enhanced Michelangelo sculptural power added');
+          } else {
+            console.log('ℹ️ Michelangelo power already in prompt (AI included it)');
+          }
+        }
+        
+        // 루벤스 선택시 바로크 역동성 강화
+        if (selectedArtist.toUpperCase().trim().includes('RUBENS') || 
+            selectedArtist.toUpperCase().trim().includes('PETER PAUL')) {
+          console.log('🎯 Rubens detected');
+          if (!finalPrompt.includes('Baroque dynamism')) {
+            finalPrompt = finalPrompt + ', painting by Peter Paul Rubens, DYNAMIC BAROQUE ENERGY with swirling diagonal compositions full of turbulent cascading movement, voluptuous fleshy figures with robust sensuous vitality and full-bodied forms, rich saturated colors of deep crimson reds luxurious golds and warm glowing flesh tones, dramatic passionate gestures and exuberant expressions, flowing billowing drapery in constant motion, exuberant vitality and monumental grandeur, lush painterly technique with thick fluid brushwork';
+            console.log('✅ Enhanced Rubens dynamism added');
+          } else {
+            console.log('ℹ️ Rubens dynamism already in prompt (AI included it)');
+          }
+        }
+        
+        // 벨라스케스 선택시 궁정 품격 강화
+        if (selectedArtist.toUpperCase().trim().includes('VELAZQUEZ') || 
+            selectedArtist.toUpperCase().trim().includes('VELÁZQUEZ') ||
+            selectedArtist.toUpperCase().trim().includes('DIEGO')) {
+          console.log('🎯 Velázquez detected');
+          if (!finalPrompt.includes('Las Meninas')) {
+            finalPrompt = finalPrompt + ', painting by Diego Velázquez, Las Meninas-style with MASTERFUL SPATIAL DEPTH and atmospheric perspective, courtly dignity and aristocratic refinement, subtle silvery-gray tonalities with sophisticated neutral palette, loose virtuoso brushwork with alla prima technique, mysterious ambiguous composition with multiple layers of reality, regal elegant bearing and Spanish formality, penetrating psychological insight with restrained nobility';
+            console.log('✅ Enhanced Velázquez courtly mastery added');
+          } else {
+            console.log('ℹ️ Velázquez mastery already in prompt (AI included it)');
+          }
+        }
+        
+        // 와토 선택시 로코코 우아함 강화
+        if (selectedArtist.toUpperCase().trim().includes('WATTEAU') || 
+            selectedArtist.toUpperCase().trim().includes('JEAN-ANTOINE')) {
+          console.log('🎯 Watteau detected');
+          if (!finalPrompt.includes('fêtes galantes')) {
+            finalPrompt = finalPrompt + ', painting by Jean-Antoine Watteau, fêtes galantes-style with ELEGANT OUTDOOR LEISURE in dreamy romantic garden settings, aristocratic figures in graceful refined poses and delicate gestures, soft shimmering colors with pearly iridescent quality and silvery atmospheric haze, wistful melancholic mood beneath surface gaiety, feathery delicate brushwork with gossamer lightness, poetic nostalgia and fleeting beauty, enchanted parkland with theatrical artifice';
+            console.log('✅ Enhanced Watteau elegance added');
+          } else {
+            console.log('ℹ️ Watteau elegance already in prompt (AI included it)');
+          }
+        }
+        
+        // 부셰 선택시 로코코 관능미 강화
+        if (selectedArtist.toUpperCase().trim().includes('BOUCHER') || 
+            selectedArtist.toUpperCase().trim().includes('FRANÇOIS') ||
+            selectedArtist.toUpperCase().trim().includes('FRANCOIS')) {
+          console.log('🎯 Boucher detected');
+          if (!finalPrompt.includes('Rococo charm')) {
+            finalPrompt = finalPrompt + ', painting by François Boucher, ROCOCO SENSUAL CHARM with playful frivolous eroticism and decorative prettiness, pastel colors of soft pinks delicate blues and creamy whites, voluptuous curvaceous forms with porcelain-like skin, whimsical ornamental details and elaborate accessories, frothy confectionery atmosphere with sugary sweetness, seductive coquettish mood and courtly flirtation, luxurious textures and sumptuous fabrics';
+            console.log('✅ Enhanced Boucher Rococo charm added');
+          } else {
+            console.log('ℹ️ Boucher charm already in prompt (AI included it)');
+          }
+        }
+        
+        // 르누아르 선택시 따뜻한 인물화 강화
+        if (selectedArtist.toUpperCase().trim().includes('RENOIR') || 
+            selectedArtist.toUpperCase().trim().includes('PIERRE-AUGUSTE')) {
+          console.log('🎯 Renoir detected');
+          if (!finalPrompt.includes('Dance at')) {
+            finalPrompt = finalPrompt + ', painting by Pierre-Auguste Renoir, Dance at Le Moulin de la Galette-style with SOFT LUMINOUS HUMAN FIGURES bathed in dappled sunlight, glowing pearly skin tones with rosy cheeks and warm flesh, feathery loose brushstrokes creating shimmering atmosphere, joyful celebration of leisure and pleasure with smiling faces, warm harmonious colors of pinks peaches and golden light, figures dissolving into radiant vibrant atmosphere, sensuous beauty and carefree happiness, Impressionist light filtering through trees';
+            console.log('✅ Enhanced Renoir warmth added');
+          } else {
+            console.log('ℹ️ Renoir warmth already in prompt (AI included it)');
+          }
+        }
+        
+        // 피사로 선택시 온화한 풍경 강화
+        if (selectedArtist.toUpperCase().trim().includes('PISSARRO') || 
+            selectedArtist.toUpperCase().trim().includes('CAMILLE')) {
+          console.log('🎯 Pissarro detected');
+          if (!finalPrompt.includes('gentle rural')) {
+            finalPrompt = finalPrompt + ', painting by Camille Pissarro, GENTLE RURAL LANDSCAPE with soft diffused Impressionist light, quiet countryside or village scenes with humble everyday subjects, muted harmonious colors with atmospheric unity, short delicate brushstrokes creating textured surface, peaceful pastoral mood with democratic vision, subtle tonal variations and gentle transitions, unpretentious natural beauty captured with patient observation';
+            console.log('✅ Enhanced Pissarro gentle landscape added');
+          } else {
+            console.log('ℹ️ Pissarro landscape already in prompt (AI included it)');
+          }
+        }
+        
+        // 드랭 선택시 야수파 강렬함 강화
+        if (selectedArtist.toUpperCase().trim().includes('DERAIN') || 
+            selectedArtist.toUpperCase().trim().includes('ANDRÉ') ||
+            selectedArtist.toUpperCase().trim().includes('ANDRE')) {
+          console.log('🎯 Derain detected');
+          if (!finalPrompt.includes('Fauvist intensity')) {
+            finalPrompt = finalPrompt + ', painting by André Derain, FAUVIST INTENSITY with vivid unmixed pure colors at maximum saturation, bold arbitrary color choices liberated from reality with reds greens blues oranges, flat decorative areas of color with simplified forms, strong graphic contours outlining color zones, elimination of subtle modeling for pure chromatic impact, vibrant energetic brushwork with spontaneous directness, landscape transformed into explosive color symphony';
+            console.log('✅ Enhanced Derain Fauvist intensity added');
+          } else {
+            console.log('ℹ️ Derain intensity already in prompt (AI included it)');
+          }
+        }
+        
+        // 블라맹크 선택시 폭발적 색채 강화
+        if (selectedArtist.toUpperCase().trim().includes('VLAMINCK') || 
+            selectedArtist.toUpperCase().trim().includes('MAURICE')) {
+          console.log('🎯 Vlaminck detected');
+          if (!finalPrompt.includes('explosive colors')) {
+            finalPrompt = finalPrompt + ', painting by Maurice de Vlaminck, EXPLOSIVE VIOLENT COLORS with most intense Fauvist palette, thick aggressive brushstrokes applied with passionate fury, pure unmixed pigments squeezed directly from tube, turbulent swirling compositions with dramatic movement, raw primitive energy and instinctive expression, volcanic eruption of reds blues greens yellows, landscape convulsed with emotional intensity';
+            console.log('✅ Enhanced Vlaminck explosive colors added');
+          } else {
+            console.log('ℹ️ Vlaminck colors already in prompt (AI included it)');
+          }
+        }
+        
+        // 키르히너 선택시 도시 표현주의 강화
+        if (selectedArtist.toUpperCase().trim().includes('KIRCHNER') || 
+            selectedArtist.toUpperCase().trim().includes('ERNST LUDWIG')) {
+          console.log('🎯 Kirchner detected');
+          if (!finalPrompt.includes('Street Scene')) {
+            finalPrompt = finalPrompt + ', painting by Ernst Ludwig Kirchner, Street Scene-style with ANGULAR JAGGED FORMS and sharp splintered shapes, harsh acidic colors of strident greens poisonous pinks and electric blues, elongated distorted figures with mask-like faces, urban anxiety and metropolitan alienation, aggressive slashing brushstrokes with nervous energy, psychological tension and modern neurosis, fragmented space with Cubist influence, raw primitive power meets city chaos';
+            console.log('✅ Enhanced Kirchner urban angst added');
+          } else {
+            console.log('ℹ️ Kirchner angst already in prompt (AI included it)');
+          }
+        }
+        
+        // 반 고흐 선택시 소용돌이 강화 (거장)
+        if (selectedArtist.toUpperCase().trim().includes('VAN GOGH') || 
+            selectedArtist.toUpperCase().trim().includes('VINCENT') ||
+            selectedArtist.toUpperCase().trim().includes('GOGH')) {
+          console.log('🎯 Van Gogh detected');
+          if (!finalPrompt.includes('Starry Night')) {
+            finalPrompt = finalPrompt + ', painting by Vincent van Gogh, Starry Night-style with SWIRLING TURBULENT BRUSHSTROKES creating rhythmic cyclonic movement throughout entire composition, THICK IMPASTO with paint applied in bold visible ridges and sculptural texture, intense vibrant colors with emotional expressiveness and symbolic meaning, cypress trees and wheat fields rendered in passionate energetic strokes, stars and sky exploding with dynamic circular motion, every element alive with pulsating energy and inner spiritual turmoil';
+            console.log('✅ Enhanced Van Gogh swirls added');
+          } else {
+            console.log('ℹ️ Van Gogh swirls already in prompt (AI included it)');
+          }
+        }
+        
+        // 뭉크 선택시 실존적 불안 강화 (거장)
+        if (selectedArtist.toUpperCase().trim().includes('MUNCH') || 
+            selectedArtist.toUpperCase().trim().includes('EDVARD')) {
+          console.log('🎯 Munch detected');
+          if (!finalPrompt.includes('The Scream')) {
+            finalPrompt = finalPrompt + ', painting by Edvard Munch, The Scream-style with DISTORTED ANGUISHED FORMS expressing existential dread and psychological horror, wavy undulating backgrounds radiating outward with oppressive tension, lurid unnatural colors of blood reds sickly yellows and ominous blues, elongated screaming figures with hands clutching face in terror, swirling sky and landscape pulsating with anxiety and cosmic despair, every line trembling with inner torment and profound isolation, raw emotional nakedness';
+            console.log('✅ Enhanced Munch anguish added');
+          } else {
+            console.log('ℹ️ Munch anguish already in prompt (AI included it)');
+          }
+        }
+        
+        // 마티스 선택시 순수 색채 강화 (거장)
+        if (selectedArtist.toUpperCase().trim().includes('MATISSE') || 
+            selectedArtist.toUpperCase().trim().includes('HENRI')) {
+          console.log('🎯 Matisse detected');
+          if (!finalPrompt.includes('The Dance')) {
+            finalPrompt = finalPrompt + ', painting by Henri Matisse, The Dance-style with PURE UNMIXED VIBRANT COLORS at maximum intensity and saturation, flat decorative patterns with bold arabesques and flowing curves, elimination of all modeling and shading for pure color planes, joyful rhythmic compositions celebrating life movement and vitality, daring color combinations of brilliant reds blues greens yellows, complete liberation of color from reality, every area a pure saturated hue singing with chromatic joy';
+            console.log('✅ Enhanced Matisse pure color added');
+          } else {
+            console.log('ℹ️ Matisse color already in prompt (AI included it)');
+          }
+        }
+        
+        // 클림트 선택시 황금 장식 강화 (거장)
+        if (selectedArtist.toUpperCase().trim().includes('KLIMT') || 
+            selectedArtist.toUpperCase().trim().includes('GUSTAV')) {
+          console.log('🎯 Klimt detected');
+          if (!finalPrompt.includes('The Kiss')) {
+            finalPrompt = finalPrompt + ', painting by Gustav Klimt, The Kiss-style with ELABORATE GOLDEN PATTERNS and Byzantine mosaic decorative elements, flat ornamental backgrounds covered with geometric spirals circles and rectangular motifs in shimmering gold leaf, sensuous organic forms emerging from abstract decorative fields, Art Nouveau flowing curves combined with geometric precision, rich textures of gold silver and precious jewel-like colors, erotic intimate mood within sacred ornamental splendor';
+            console.log('✅ Enhanced Klimt golden patterns added');
+          } else {
+            console.log('ℹ️ Klimt patterns already in prompt (AI included it)');
+          }
+        }
+        
+        // 피카소 선택시 입체주의 강화 (거장 - 선택적)
+        if (selectedArtist.toUpperCase().trim().includes('PICASSO') || 
+            selectedArtist.toUpperCase().trim().includes('PABLO')) {
+          console.log('🎯 Picasso detected');
+          if (!finalPrompt.includes('Cubist')) {
+            finalPrompt = finalPrompt + ', painting by Pablo Picasso, CUBIST GEOMETRIC DECONSTRUCTION with multiple simultaneous viewpoints, fragmented forms broken into angular geometric planes, monochromatic or limited palette of grays browns and ochres, flattened picture space with overlapping transparent planes, analytical dissection of three-dimensional forms into two-dimensional facets, subject shown from front profile and back simultaneously, revolutionary dismantling and restructuring of reality';
+            console.log('✅ Enhanced Picasso Cubist deconstruction added');
+          } else {
+            console.log('ℹ️ Picasso Cubism already in prompt (AI included it)');
+          }
+        }
+        
       } else {
         // AI 실패 → Fallback
         console.log('⚠️ AI failed, using fallback');
