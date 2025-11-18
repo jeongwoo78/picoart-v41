@@ -225,7 +225,7 @@ const ResultScreen = ({
     if (category === 'impressionism' || category === 'postImpressionism' || 
         category === 'fauvism' || category === 'expressionism' || 
         category === 'renaissance' || category === 'baroque' || 
-        category === 'rococo' || category === 'romanticism') {
+        category === 'rococo' || category === 'neoclassicism_vs_romanticism' || category === 'realism') {
       return `당신은 미술사 전문가입니다.
 사용자가 선택한 미술사조는 "${selectedStyle.name}"이고, 
 당신이 선택한 화가는 "${aiSelectedArtist || selectedStyle.name}"입니다.
