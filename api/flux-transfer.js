@@ -1,25 +1,29 @@
-// PicoArt v33 - Art Movements with Detailed Artist Selection
-// v33: 8개 미술사조 화가별 가이드라인 + 힌트 시스템 추가
+// PicoArt v42 - Art Movements with Detailed Artist Selection
+// v42: 10개 미술사조 + 야수파 추가 + 6번 사조 통합 + 야수파/달리 최적화
 //
 // 미술사조 10개 (시간순):
-//   1. 고대 그리스-로마 (BC 800~AD 400) - 유지
-//   2. 비잔틴·이슬람 (4~15세기) - 유지
+//   1. 고대 그리스-로마 (BC 800~AD 500) - 유지
+//   2. 중세 미술 (4~15세기) - 비잔틴·로마네스크·고딕·이슬람 확장
 //   3. 르네상스 (1400~1600) - 5명 화가 선택
 //   4. 바로크 (1600~1750) - 5명 화가 선택
 //   5. 로코코 (1720~1780) - 2명 화가 선택
-//   6. 신고전주의 vs 낭만주의 (1770~1850) - 6명 화가 선택 (AI가 vs 선택)
-//   7. 사실주의 (1840~1870) - 3명 화가 선택
-//   8. 인상주의 (1860~1890) - 4명 화가 선택
-//   9. 후기인상주의 (1880~1910) - 4명 화가 선택
+//   6. 신고전주의 vs 낭만주의 vs 사실주의 (1770~1870) - 7명 화가 선택 (AI가 3개 중 선택) ⭐
+//      → David, Ingres (신고전주의)
+//      → Turner, Friedrich, Delacroix (낭만주의)
+//      → Millet, Manet (사실주의)
+//   7. 인상주의 (1860~1890) - 4명 화가 선택
+//   8. 후기인상주의 (1880~1910) - 4명 화가 선택
+//   9. 야수파 (1905~1908) - 3명 화가 선택 ⭐ NEW
 //  10. 표현주의 (1905~1920) - 5명 화가 선택
 //
 // 거장 6명 (시간순 + 생사연도):
 //   1. 반 고흐 (1853-1890, 후기인상주의)
 //   2. 클림트 (1862-1918, 아르누보)
-//   3. 마티스 (1869-1954, 야수파)
-//   4. 뭉크 (1863-1944, 표현주의)
+//   3. 뭉크 (1863-1944, 표현주의)
+//   4. 마티스 (1869-1954, 야수파) ⭐ 최적화
 //   5. 피카소 (1881-1973, 입체주의)
-//   6. 달리 (1904-1989, 초현실주의)
+//   6. 달리 (1904-1989, 초현실주의) ⭐ 최적화
+
 
 // ========================================
 // 사조별 화가 가이드라인 함수
@@ -250,10 +254,10 @@ If outdoor, consider Watteau instead.
 `;
 }
 
-// 신고전주의 vs 낭만주의 (6명)
-function getNeoclassicismVsRomanticismGuidelines() {
+// 신고전주의 vs 낭만주의 vs 사실주의 (7명) ⭐ v42 통합
+function getNeoclassicismVsRomanticismVsRealismGuidelines() {
   return `
-Available Artists (6명) - AI will choose BEST style (Neoclassicism vs Romanticism):
+Available Artists (7명) - AI will choose BEST style (Neoclassicism vs Romanticism vs Realism):
 
 ⚖️ NEOCLASSICISM (신고전주의) - Reason and Order:
 
@@ -289,21 +293,50 @@ Available Artists (6명) - AI will choose BEST style (Neoclassicism vs Romantici
    - Signature: Liberty Leading the People - passionate drama
    - When to prioritize: Action/drama/multiple people in motion (70%)
 
-6. GÉRICAULT (제리코) - BEST for horses, dramatic tragedy
-   - Specialty: Horses in motion, tragic dramatic scenes, muscular anatomy
-   - Best for: Animals (especially horses), tragic mood, physical intensity
-   - Signature: Raft of the Medusa - tragic power
-   - When to prioritize: Animals or tragic dramatic mood (65%)
+🎨 REALISM (사실주의) - Honest Truth:
+
+6. MILLET (밀레) ⭐ STRONGEST for rural/peaceful scenes
+   - Specialty: Peasant life, rural landscapes, dignified labor, poetic serenity
+   - Best for: Rural settings, peaceful countryside, farming/labor themes
+   - Signature: The Gleaners, The Angelus - serene rural dignity
+   - When to prioritize: Rural/peaceful/countryside settings (STRONG 80%)
+
+7. MANET (마네) - BEST for urban/modern scenes
+   - Specialty: Modern Paris life, café scenes, urban sophistication
+   - Best for: Urban settings, modern atmosphere, café/city backgrounds
+   - Signature: Olympia, A Bar at the Folies-Bergère - modern realism
+   - When to prioritize: Clear urban/modern/city context (70%)
 
 🎯 CRITICAL DECISION LOGIC:
 - Photo is STATIC, BALANCED, FORMAL → Choose Neoclassicism (David or Ingres)
-- Photo is DYNAMIC, EMOTIONAL, DRAMATIC → Choose Romanticism (Turner/Friedrich/Delacroix/Géricault)
+- Photo is DYNAMIC, EMOTIONAL, DRAMATIC → Choose Romanticism (Turner/Friedrich/Delacroix)
+- Photo is RURAL, PEACEFUL → Choose Realism - Millet (80%)
+- Photo is URBAN, MODERN → Choose Realism - Manet (70%)
 - Landscape → ALWAYS Romanticism (Turner 75% or Friedrich 70%)
 `;
 }
 
-function getNeoclassicismVsRomanticismHints(photoAnalysis) {
+function getNeoclassicismVsRomanticismVsRealismHints(photoAnalysis) {
   const { subject, count, mood, composition, shot_type } = photoAnalysis;
+  
+  // 시골/농촌 → 사실주의 (밀레)
+  if (subject.includes('rural') || subject.includes('countryside') || subject.includes('farm')) {
+    return `
+🎯 STRONG: REALISM - MILLET (80%)
+Rural/countryside = Realism territory!
+Millet's serene rural dignity is supreme.
+NEVER use Neoclassicism or Romanticism for rural scenes.
+`;
+  }
+  
+  // 도시/현대 → 사실주의 (마네)
+  if (subject.includes('urban') || subject.includes('city') || subject.includes('café')) {
+    return `
+🎯 STRONG: REALISM - MANET (70%)
+Urban/modern = Realism!
+Manet's modern Paris sophistication perfect.
+`;
+  }
   
   // 풍경 → 항상 낭만주의 (터너/프리드리히)
   if (subject === 'landscape') {
@@ -323,14 +356,6 @@ NEVER use Neoclassicism for landscapes.
 Mountains/nature = Romanticism!
 Friedrich's sublime contemplation perfect.
 Turner also great for atmospheric effects.
-`;
-  }
-  
-  // 동물 → 낭만주의 (제리코)
-  if (subject.includes('animal') || subject.includes('horse')) {
-    return `
-🎯 ROMANTICISM - GÉRICAULT (65%)
-Animals (especially horses) = Romanticism!
 `;
   }
   
@@ -365,72 +390,11 @@ But if dramatic mood → Delacroix Romanticism.
   
   return `
 🎯 DECISION GUIDE:
+- Rural/Countryside → REALISM (Millet 80%)
+- Urban/Modern → REALISM (Manet 70%)
 - Static/Balanced/Formal → NEOCLASSICISM (David/Ingres)
-- Dynamic/Emotional/Dramatic → ROMANTICISM (Turner/Friedrich/Delacroix/Géricault)
+- Dynamic/Emotional/Dramatic → ROMANTICISM (Turner/Friedrich/Delacroix)
 - Landscape → ALWAYS Romanticism (Turner 75%)
-- Most photos → Romanticism (more versatile)
-`;
-}
-
-// 사실주의 (3명)
-function getRealismGuidelines() {
-  return `
-Available Realism Artists (3명):
-
-1. MILLET (밀레) ⭐ STRONGEST for rural/peaceful scenes
-   - Specialty: Peasant life, rural landscapes, dignified labor, poetic serenity
-   - Best for: Rural settings, peaceful countryside, farming/labor themes
-   - Signature: The Gleaners, The Angelus - serene rural dignity
-   - When to prioritize: Rural/peaceful/countryside settings (STRONG 80%)
-
-2. MANET (마네) - Best for urban/modern scenes
-   - Specialty: Modern Paris life, café scenes, urban sophistication
-   - Best for: Urban settings, modern atmosphere, café/city backgrounds
-   - Signature: Olympia, A Bar at the Folies-Bergère - modern realism
-   - When to prioritize: Clear urban/modern/city context (70%)
-
-3. COURBET (쿠르베) - Best for raw powerful realism, workers
-   - Specialty: Unidealized working class, raw honest depiction, physical labor
-   - Best for: Labor scenes, working people, raw unvarnished reality
-   - Signature: The Stone Breakers - harsh honest realism
-   - When to prioritize: Clear labor/working class theme
-`;
-}
-
-function getRealismHints(photoAnalysis) {
-  const { background, subject, mood } = photoAnalysis;
-  
-  // 농촌/전원 → 밀레 (80%)
-  if (background === 'rural' || subject.includes('countryside') || mood === 'peaceful') {
-    return `
-🎯 STRONG RECOMMENDATION: MILLET (80%)
-Rural/peaceful setting is PERFECT for Millet's serene dignity!
-His poetic realism of peasant life creates deeply moving images.
-`;
-  }
-  
-  // 도시/현대 → 마네 (70%)
-  if (background === 'urban' || subject.includes('city') || subject.includes('café')) {
-    return `
-🎯 STRONG RECOMMENDATION: MANET (70%)
-Urban/modern setting matches Manet's sophisticated Paris realism!
-`;
-  }
-  
-  // 노동자 → 쿠르베
-  if (subject.includes('worker') || subject.includes('labor')) {
-    return `
-🎯 RECOMMENDATION: COURBET (65%)
-Working class subject suits Courbet's raw honest realism.
-`;
-  }
-  
-  return `
-🎯 Default: MILLET (65%) for most Realist scenes
-Choose based on setting:
-- Rural/peaceful → Millet (strongest)
-- Urban/modern → Manet
-- Labor/raw → Courbet
 `;
 }
 
@@ -587,6 +551,72 @@ Consider: still life (Cézanne strongest), decorative (Gauguin), dots (Seurat)
 `;
 }
 
+// 야수파 (3명) ⭐ v42 NEW
+function getFauvismGuidelines() {
+  return `
+Available Fauvism Artists (3명):
+
+1. MATISSE (마티스) ⭐⭐⭐ STRONGEST for Fauvism
+   - Specialty: Pure bold colors, decorative flat patterns, joyful harmonious compositions
+   - Best for: Most photos, especially people, interiors, calm atmosphere
+   - Signature: The Dance, La Desserte - flat decorative color harmony
+   - When to prioritize: Most Fauvism cases (STRONGEST 75%)
+   - Note: Also available in Masters collection
+
+2. DERAIN (드랭) - Best for landscapes, outdoor scenes
+   - Specialty: Bold landscape colors, vivid natural scenery, strong contrasts
+   - Best for: Landscapes, trees, outdoor nature, bright scenery
+   - Signature: Charing Cross Bridge - bold landscape colors
+   - When to prioritize: Clear landscape/outdoor scene (70%)
+
+3. VLAMINCK (블라맹크) - Best for dramatic expressive colors
+   - Specialty: Violent expressive colors, turbulent brushwork, emotional intensity
+   - Best for: Dramatic mood, intense emotions, stormy atmosphere
+   - Signature: Most violent Fauvist colors - emotional explosions
+   - When to prioritize: Dramatic/intense emotional mood (65%)
+
+🎯 CRITICAL DECISION LOGIC:
+- Most photos → MATISSE (75%) - most versatile, harmonious
+- Landscape/outdoor → DERAIN (70%) - landscape specialist
+- Dramatic/intense mood → VLAMINCK (65%) - most emotional
+`;
+}
+
+function getFauvismHints(photoAnalysis) {
+  const { subject, mood, shot_type } = photoAnalysis;
+  
+  // 풍경 → 드랭
+  if (subject === 'landscape' || subject.includes('outdoor') || subject.includes('nature')) {
+    return `
+🎯 STRONG: DERAIN (70%)
+Landscape/outdoor = Derain specialty!
+Bold landscape colors and vivid natural scenery.
+But Matisse also excellent for decorative approach.
+`;
+  }
+  
+  // 극적/강렬한 분위기 → 블라맹크
+  if (mood === 'dramatic' || mood === 'intense' || mood === 'stormy') {
+    return `
+🎯 RECOMMENDATION: VLAMINCK (65%)
+Dramatic/intense mood = Vlaminck!
+Most violent and emotional Fauvist colors.
+`;
+  }
+  
+  // 기본값 → 마티스 (75%)
+  return `
+🎯 STRONG: MATISSE (75%)
+Matisse is the most versatile and harmonious Fauvist.
+Perfect for people, interiors, decorative compositions.
+The Dance and La Desserte style - pure color harmony.
+Note: Matisse also available in Masters collection.
+Unless:
+- Clear landscape → Derain (70%)
+- Dramatic mood → Vlaminck (65%)
+`;
+}
+
 // 표현주의 (5명)
 function getExpressionismGuidelines() {
   return `
@@ -693,9 +723,9 @@ const fallbackPrompts = {
     prompt: 'ancient Greek and Roman classical painting style, idealized human forms, marble-like smooth rendering, heroic noble figures, classical drapery, temple architecture, serene dignified expressions, single unified composition with all figures in one cohesive harmonious scene NOT separated into multiple groups, painted in ancient classical masterpiece quality'
   },
   
-  byzantineIslamic: {
-    name: '비잔틴·이슬람',
-    prompt: 'Byzantine and Islamic art style, golden mosaic backgrounds, ornate geometric patterns, rich jewel-like colors, spiritual iconic forms, decorative arabesque motifs, sacred dignified atmosphere, single unified composition with all figures together in one cohesive harmonious scene NOT separated into multiple groups, painted in Byzantine-Islamic masterpiece quality'
+  medieval: {
+    name: '중세 미술',
+    prompt: 'Medieval art style combining Byzantine golden mosaics, Romanesque solid forms, Gothic vertical grandeur, and Islamic geometric patterns, flat symbolic sacred imagery, rich jewel colors, gold leaf backgrounds, spiritual transcendent atmosphere, architectural elements, decorative ornamental details, single unified composition with all figures together in one cohesive scene NOT separated into multiple groups, painted in Medieval masterpiece quality'
   },
   
   renaissance: {
@@ -713,14 +743,9 @@ const fallbackPrompts = {
     prompt: 'Rococo painting style, light pastel colors, playful ornate decoration, soft delicate brushwork, romantic elegant atmosphere, graceful curved lines, whimsical charm, single unified composition with all figures together in one cohesive scene NOT separated into multiple groups, painted in Rococo masterpiece quality by Watteau or Boucher'
   },
   
-  neoclassicism_vs_romanticism: {
-    name: '신고전주의 vs 낭만주의',
-    prompt: 'Romantic painting style by J.M.W. Turner or Neoclassical style by Jacques-Louis David, choose based on photo mood - if static/balanced/formal use Neoclassical cold perfection with clear lines and heroic dignity, if dynamic/emotional/landscape use Romantic atmospheric sublime effects with passionate turbulent colors, painted in masterpiece quality with single unified composition with all figures together in one cohesive scene NOT separated'
-  },
-  
-  realism: {
-    name: '사실주의',
-    prompt: 'Realist painting style, honest unidealized depiction of everyday life, working class and peasant subjects, earthy natural colors, solid three-dimensional forms, direct observation of reality, social commentary, dignified portrayal of common people, painted in Realist masterpiece quality by Jean-François Millet or Gustave Courbet'
+  neoclassicism_vs_romanticism_vs_realism: {
+    name: '신고전주의 vs 낭만주의 vs 사실주의',
+    prompt: 'Choose best style based on photo: if static/balanced/formal use Neoclassical style by Jacques-Louis David with cold perfection and clear lines, if dynamic/emotional/landscape use Romantic style by J.M.W. Turner with atmospheric sublime effects, if rural/peaceful use Realist style by Jean-François Millet with serene rural dignity, if urban/modern use Realist style by Édouard Manet with sophisticated Paris realism, painted in masterpiece quality with single unified composition NOT separated'
   },
   
   impressionism: {
@@ -731,6 +756,11 @@ const fallbackPrompts = {
   postImpressionism: {
     name: '후기인상주의',
     prompt: 'Post-Impressionist painting style by Vincent van Gogh, bold expressive colors, geometric structured forms, emotional symbolic content, innovative personal vision, swirling passionate brushstrokes, painted in Post-Impressionist masterpiece quality'
+  },
+  
+  fauvism: {
+    name: '야수파',
+    prompt: 'Fauvist painting style by Henri Matisse, pure bold unmixed colors, flat decorative patterns, intense color contrasts, liberation of color from reality, simplified forms, joyful energetic atmosphere, painted in Fauvist masterpiece quality with The Dance-like pure color harmony'
   },
   
   expressionism: {
@@ -767,7 +797,7 @@ const fallbackPrompts = {
     name: '마티스',
     artist: 'Henri Matisse (1869-1954)',
     movement: '야수파 (Fauvism)',
-    prompt: 'painting by Henri Matisse, bold pure flat colors, simplified harmonious forms, decorative rhythmic patterns, joyful life-affirming atmosphere'
+    prompt: 'painting by Henri Matisse in his peak Fauvist period (1905-1910), PURE BOLD UNMIXED COLORS applied in flat decorative areas, complete liberation of color from reality, The Dance-like simplified harmonious forms with rhythmic flowing lines, joyful life-affirming energetic atmosphere, decorative patterns and ornamental elements, saturated intense primary colors (red, blue, yellow, green) in balanced harmonious composition, painted in Matisse masterpiece quality'
   },
   
   picasso: {
@@ -781,7 +811,7 @@ const fallbackPrompts = {
     name: '달리',
     artist: 'Salvador Dalí (1904-1989)',
     movement: '초현실주의 (Surrealism)',
-    prompt: 'Surrealist painting by Salvador Dalí, dreamlike hyperrealistic details, melting distorted forms, bizarre juxtapositions, subconscious imagery, precise meticulous technique'
+    prompt: 'Surrealist painting by Salvador Dalí in his classic period (1929-1940s), DREAMLIKE HYPERREALISTIC precision with meticulous photographic detail, melting distorted forms like The Persistence of Memory clocks, bizarre unexpected juxtapositions, barren desert-like surreal landscapes with infinite perspective, Freudian subconscious symbolism, ants and crutches symbolic elements, long shadows and golden Mediterranean light, paranoid-critical method visualization, painted with Dalí\'s signature technical mastery and hallucinatory precision'
   },
   
   // ========================================
@@ -1006,23 +1036,23 @@ Keep it concise and accurate.`;
       } else if (categoryType === 'rococo') {
         guidelines = getRococoGuidelines();
         hints = getRococoHints(photoAnalysis);
-      } else if (categoryType === 'neoclassicism_vs_romanticism') {
-        guidelines = getNeoclassicismVsRomanticismGuidelines();
-        hints = getNeoclassicismVsRomanticismHints(photoAnalysis);
-      } else if (categoryType === 'realism') {
-        guidelines = getRealismGuidelines();
-        hints = getRealismHints(photoAnalysis);
+      } else if (categoryType === 'neoclassicism_vs_romanticism_vs_realism') {
+        guidelines = getNeoclassicismVsRomanticismVsRealismGuidelines();
+        hints = getNeoclassicismVsRomanticismVsRealismHints(photoAnalysis);
       } else if (categoryType === 'impressionism') {
         guidelines = getImpressionismGuidelines();
         hints = getImpressionismHints(photoAnalysis);
       } else if (categoryType === 'postImpressionism') {
         guidelines = getPostImpressionismGuidelines();
         hints = getPostImpressionismHints(photoAnalysis);
+      } else if (categoryType === 'fauvism') {
+        guidelines = getFauvismGuidelines();
+        hints = getFauvismHints(photoAnalysis);
       } else if (categoryType === 'expressionism') {
         guidelines = getExpressionismGuidelines();
         hints = getExpressionismHints(photoAnalysis);
       } else {
-        // 고대 그리스-로마, 비잔틴·이슬람 등 - 기본 로직
+        // 고대 그리스-로마, 중세 미술 등 - 기본 로직
         promptText = `Analyze this photo and select the BEST artist from ${categoryName} period/style to transform it.
 
 Instructions:
