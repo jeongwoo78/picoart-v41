@@ -568,20 +568,20 @@ Available Post-Impressionism Artists (4명):
    - When to prioritize: Most cases (30%)
    - Note: 점묘법 = 초강력 개성! 일반인도 즉시 알아봄
 
-2. VAN GOGH (반 고흐) ⭐⭐⭐⭐ STRONGEST for emotional/expressive (35%)
+2. VAN GOGH (반 고흐) ⭐⭐⭐ for emotional/expressive (30%)
    - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
-   - Best for: Emotional subjects, starry skies, cypresses, swirling forms, portraits
+   - Best for: Emotional subjects, starry skies, cypresses, swirling forms
    - Signature: Starry Night - turbulent passionate swirls
-   - When to prioritize: Emotional/expressive mood (35%)
+   - When to prioritize: Emotional/expressive mood (30%)
    - Note: Also available in Masters collection
 
-3. GAUGUIN (고갱) ⭐⭐⭐ for flat decorative (25%)
+3. GAUGUIN (고갱) ⭐⭐⭐ for flat decorative (30%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
    - Best for: Decorative aesthetic, simplified forms, exotic/tropical mood
    - Signature: Tahitian paintings - flat bold primitivism
-   - When to prioritize: Flat/decorative aesthetic (25%)
+   - When to prioritize: Flat/decorative aesthetic (30%)
 
-4. CÉZANNE (세잔) - for still life/geometric (10%)
+4. CÉZANNE (세잔) ⭐ for still life/geometric (10%)
    - Specialty: Geometric structured forms, solid volumes, analytical approach
    - Best for: Still life, fruits, objects, geometric compositions
    - Signature: Still Life with Apples - geometric analysis
@@ -589,8 +589,8 @@ Available Post-Impressionism Artists (4명):
 
 🎯 CRITICAL DECISION LOGIC:
 - Pointillist unique look → SEURAT (30%)
-- Emotional/expressive/passionate → VAN GOGH (35%, also in Masters)
-- Flat/decorative/primitive → GAUGUIN (25%)
+- Emotional/expressive/passionate → VAN GOGH (30%, also in Masters)
+- Flat/decorative/primitive → GAUGUIN (30%)
 - Still life/geometric forms → CÉZANNE (10%)
 `;
 }
