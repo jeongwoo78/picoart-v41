@@ -823,12 +823,12 @@ const fallbackPrompts = {
   
   medieval: {
     name: '중세 미술',
-    prompt: 'Medieval art painting in Gothic style (45%) with vibrant stained glass jewel colors (ruby red, sapphire blue, emerald green), vertical elongated graceful figures, heavenly divine light filtering through, sacred spiritual atmosphere, gold halos and decorative details, flat symbolic forms, rich ornamental patterns, architectural Gothic elements, Byzantine golden mosaic influence (35%), or Romanesque solid simple forms (20%), single unified composition with all figures together in one harmonious sacred scene, painted in Medieval illuminated manuscript quality'
+    prompt: 'Medieval art painting in Gothic style (45%): vibrant stained glass jewel colors (ruby red sapphire blue emerald green), vertical elongated graceful figures, heavenly divine light, sacred spiritual atmosphere, gold halos and decorative details, flat symbolic forms, rich ornamental patterns, Byzantine golden mosaic influence (35%) or Romanesque solid simple forms (20%), unified composition all figures together, NOT photographic preserve facial identity, Medieval illuminated manuscript quality'
   },
   
   renaissance: {
     name: '르네상스',
-    prompt: 'Renaissance painting by Leonardo da Vinci with EXTREME Mona Lisa-style sfumato technique, apply very strong soft atmospheric haze throughout, all edges must be completely blurred and gentle, no sharp outlines anywhere in the entire painting, mysterious smoky depth like authentic Mona Lisa, every boundary softly dissolved into atmosphere, warm golden Renaissance colors, harmonious balanced composition, single unified composition with all figures together in one cohesive harmonious scene NOT separated into multiple groups, painted in Renaissance masterpiece quality'
+    prompt: 'Renaissance painting by Leonardo da Vinci EXTREME Mona Lisa-style sfumato: apply very strong soft atmospheric haze throughout, all edges must be completely blurred, no sharp outlines anywhere in entire painting, mysterious smoky depth like authentic Mona Lisa, every boundary softly dissolved into atmosphere, warm golden Renaissance colors, harmonious balanced composition, unified composition all figures together NOT separated, NOT photographic preserve facial identity, Renaissance masterpiece quality'
   },
   
   baroque: {
@@ -863,7 +863,7 @@ const fallbackPrompts = {
   
   expressionism: {
     name: '표현주의',
-    prompt: 'Expressionist painting by Amedeo Modigliani with EXTREME CRITICAL elongation features: STRETCH the neck vertically to 1.8x normal length creating swan-like elongated neck, STRETCH the face vertically to 1.5x creating oval elongated face, ALMOND-SHAPED eyes with NO PUPILS (blank dark outlined eyes), TILT the head slightly to emphasize neck length, SIMPLIFIED smooth contours with no facial details, MUTED earth tones (ochre, sienna, grey-blue palette), melancholic elegant mood, this elongation is MANDATORY for Modigliani signature style, painted in the style of Portrait of Jeanne Hébuterne'
+    prompt: 'Expressionist painting by Amedeo Modigliani: STRETCH neck vertically to 1.8x normal length creating swan-like elongated neck, STRETCH face vertically to 1.5x creating oval elongated face, ALMOND-SHAPED eyes with NO PUPILS (blank dark outlined eyes), TILT head to emphasize neck length, simplified smooth contours, muted earth tones (ochre sienna grey-blue), melancholic elegant mood, this elongation is MANDATORY, NOT photographic preserve facial identity, Portrait of Jeanne Hébuterne style'
   },
   
   // ========================================
@@ -895,7 +895,7 @@ const fallbackPrompts = {
     name: '마티스',
     artist: 'Henri Matisse (1869-1954)',
     movement: '야수파 (Fauvism)',
-    prompt: 'painting by Henri Matisse in his peak Fauvist period (1905-1910), PURE BOLD UNMIXED COLORS applied in flat decorative areas, complete liberation of color from reality, The Dance-like simplified harmonious forms with rhythmic flowing lines, joyful life-affirming energetic atmosphere, decorative patterns and ornamental elements, saturated intense primary colors (red, blue, yellow, green) in balanced harmonious composition, painted in Matisse masterpiece quality'
+    prompt: 'painting by Henri Matisse peak Fauvist period (1905-1910): PURE BOLD UNMIXED COLORS in flat decorative areas, complete liberation of color from reality, The Dance-like simplified harmonious forms with rhythmic flowing lines, joyful life-affirming energetic atmosphere, decorative patterns, saturated intense primary colors (red blue yellow green) in balanced composition, NOT photographic preserve facial identity, Matisse masterpiece quality'
   },
   
   picasso: {
@@ -909,7 +909,7 @@ const fallbackPrompts = {
     name: '달리',
     artist: 'Salvador Dalí (1904-1989)',
     movement: '초현실주의 (Surrealism)',
-    prompt: 'Surrealist painting by Salvador Dalí in his classic period (1929-1940s), DREAMLIKE HYPERREALISTIC precision with meticulous photographic detail, melting distorted forms like The Persistence of Memory clocks, bizarre unexpected juxtapositions, barren desert-like surreal landscapes with infinite perspective, Freudian subconscious symbolism, ants and crutches symbolic elements, long shadows and golden Mediterranean light, paranoid-critical method visualization, painted with Dalí\'s signature technical mastery and hallucinatory precision'
+    prompt: 'Surrealist painting by Salvador Dalí classic period (1929-1940s): DREAMLIKE HYPERREALISTIC precision, melting distorted forms like Persistence of Memory clocks, bizarre unexpected juxtapositions, barren desert-like surreal landscapes with infinite perspective, Freudian subconscious symbolism, ants and crutches symbolic elements, long shadows and golden Mediterranean light, NOT photographic preserve facial identity, Dalí signature technical mastery and hallucinatory precision'
   },
   
   // ========================================
@@ -1878,12 +1878,16 @@ export default async function handler(req, res) {
     // ========================================
     // PicoArt 핵심 원칙: Level 3 회화 강조 + 다시 그리기 + 얼굴 보존
     // ========================================
-    const paintingEnforcement = ', CRITICAL REQUIREMENTS: 1) traditional oil painting with thick visible brushstrokes, canvas texture, painterly artistic rendering, hand-painted artistic re-creation with brush and paint, completely redrawn in painting medium, NOT photographic, NOT photo-realistic, NOT original photo, fully painted composition throughout, 2) single unified artistic composition with all figures together in one cohesive painted scene, NOT separated into multiple groups, 3) PRESERVE FACIAL IDENTITY - maintain recognizable facial features, face shape, distinctive characteristics of each person from the photo, people must remain identifiable';
+    const paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE FACIAL IDENTITY maintain recognizable facial features, unified composition all figures together';
     
-    // 이미 회화 강조가 없는 경우에만 추가
-    if (!finalPrompt.includes('PRESERVE FACIAL') && !finalPrompt.includes('brushstrokes')) {
+    // 이미 회화 강조가 없는 경우에만 추가 (소문자도 체크)
+    if (!finalPrompt.toLowerCase().includes('preserve facial') && 
+        !finalPrompt.includes('brushstrokes') &&
+        !finalPrompt.toLowerCase().includes('not photographic')) {
       finalPrompt = finalPrompt + paintingEnforcement;
       console.log('✅ Added Level 3+ painting enforcement (re-drawn with brush) + facial preservation');
+    } else {
+      console.log('ℹ️ Skipped paintingEnforcement (already in fallback prompt)');
     }
     
     // FLUX Depth 변환 (최신 API 버전)
