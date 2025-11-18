@@ -593,11 +593,6 @@ Available Post-Impressionism Artists (4명):
 - Flat/decorative/primitive → GAUGUIN (25%)
 - Still life/geometric forms → CÉZANNE (10%)
 `;
-- Most photos → SEURAT (DEFAULT 45%) ⭐⭐⭐ pointillism!
-- Emotional/swirling/starry ONLY → VAN GOGH (30%, also in Masters)
-- Flat/decorative → GAUGUIN (20%)
-- Still life ONLY → CÉZANNE (5%)
-`;
 }
 
 function getPostImpressionismHints(photoAnalysis) {
