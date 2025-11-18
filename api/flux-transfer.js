@@ -7,7 +7,7 @@
 //   3. 르네상스 (1400~1600) - 5명 화가 선택
 //   4. 바로크 (1600~1750) - 5명 화가 선택
 //   5. 로코코 (1720~1780) - 2명 화가 선택
-//   6. 낭만주의 (1800~1850) - 4명 화가 선택
+//   6. 신고전주의 vs 낭만주의 (1770~1850) - 6명 화가 선택 (AI가 vs 선택)
 //   7. 사실주의 (1840~1870) - 3명 화가 선택
 //   8. 인상주의 (1860~1890) - 4명 화가 선택
 //   9. 후기인상주의 (1880~1910) - 4명 화가 선택
@@ -250,79 +250,125 @@ If outdoor, consider Watteau instead.
 `;
 }
 
-// 낭만주의 (4명)
-function getRomanticismGuidelines() {
+// 신고전주의 vs 낭만주의 (6명)
+function getNeoclassicismVsRomanticismGuidelines() {
   return `
-Available Romanticism Artists (4명):
+Available Artists (6명) - AI will choose BEST style (Neoclassicism vs Romanticism):
 
-1. TURNER (터너) ⭐ STRONGEST for landscapes
+⚖️ NEOCLASSICISM (신고전주의) - Reason and Order:
+
+1. DAVID (다비드) ⭐ BEST for formal/heroic portraits
+   - Specialty: Classical heroic compositions, clear lines, dignified formality
+   - Best for: Formal portraits, static balanced poses, heroic subjects
+   - Signature: Napoleon's Coronation - cold perfection, clear structure
+   - When to prioritize: Formal/static/balanced photos (70%)
+
+2. INGRES (앵그르) - BEST for elegant female portraits
+   - Specialty: Perfect smooth contours, classical beauty, refined elegance
+   - Best for: Female portraits, graceful poses, elegant beauty
+   - Signature: La Grande Odalisque - idealized smooth perfection
+   - When to prioritize: Elegant female subjects (65%)
+
+⚡ ROMANTICISM (낭만주의) - Emotion and Passion:
+
+3. TURNER (터너) ⭐⭐ STRONGEST for landscapes
    - Specialty: Atmospheric light effects, misty dreamlike landscapes, sublime nature
    - Best for: Landscapes, fog/mist, atmospheric effects, natural scenery
    - Signature: Golden luminous atmosphere, dissolving forms in light
-   - When to prioritize: Landscape photos (STRONG RECOMMENDATION 70%)
+   - When to prioritize: Landscape photos (STRONG 75%)
 
-2. FRIEDRICH (프리드리히) - Best for mountains, contemplative scenes
+4. FRIEDRICH (프리드리히) - BEST for mountains, contemplative scenes
    - Specialty: Sublime mountain landscapes, lone figure contemplating nature
    - Best for: Mountain/nature scenes, back view, solitary contemplation
    - Signature: Wanderer above the Sea of Fog - sublime loneliness
-   - When to prioritize: Mountains or contemplative solitary figure
+   - When to prioritize: Mountains or contemplative solitary figure (70%)
 
-3. DELACROIX (들라크루아) - Best for dramatic action, intense emotions
+5. DELACROIX (들라크루아) - BEST for dramatic action, intense emotions
    - Specialty: Vivid passionate colors, dynamic movement, revolutionary energy
    - Best for: Action scenes, dramatic expressions, multiple people in motion
    - Signature: Liberty Leading the People - passionate drama
-   - When to prioritize: Clear action/drama/multiple people
+   - When to prioritize: Action/drama/multiple people in motion (70%)
 
-4. GÉRICAULT (제리코) - Best for horses, dramatic tragedy
+6. GÉRICAULT (제리코) - BEST for horses, dramatic tragedy
    - Specialty: Horses in motion, tragic dramatic scenes, muscular anatomy
    - Best for: Animals (especially horses), tragic mood, physical intensity
-   - Signature: Raft of the Medusa / Derby at Epsom - tragic power
-   - When to prioritize: Animals present or tragic dramatic mood
+   - Signature: Raft of the Medusa - tragic power
+   - When to prioritize: Animals or tragic dramatic mood (65%)
+
+🎯 CRITICAL DECISION LOGIC:
+- Photo is STATIC, BALANCED, FORMAL → Choose Neoclassicism (David or Ingres)
+- Photo is DYNAMIC, EMOTIONAL, DRAMATIC → Choose Romanticism (Turner/Friedrich/Delacroix/Géricault)
+- Landscape → ALWAYS Romanticism (Turner 75% or Friedrich 70%)
 `;
 }
 
-function getRomanticismHints(photoAnalysis) {
-  const { subject, count, mood } = photoAnalysis;
+function getNeoclassicismVsRomanticismHints(photoAnalysis) {
+  const { subject, count, mood, composition, shot_type } = photoAnalysis;
   
-  // 풍경 → 터너 (70%)
+  // 풍경 → 항상 낭만주의 (터너/프리드리히)
   if (subject === 'landscape') {
     return `
-🎯 STRONG RECOMMENDATION: TURNER (70%)
-Landscape is Turner's supreme specialty!
-His atmospheric light effects create the most sublime Romantic landscapes.
-Unless: Mountains (→ consider Friedrich)
+🎯 STRONG: ROMANTICISM - TURNER (75%)
+Landscape = Romanticism territory!
+Turner's atmospheric sublime light is supreme.
+Mountains? → Friedrich (70%) also excellent.
+NEVER use Neoclassicism for landscapes.
 `;
   }
   
-  // 산/자연 → 프리드리히
+  // 산/자연 → 낭만주의 (프리드리히)
   if (subject.includes('mountain') || subject.includes('nature')) {
     return `
-🎯 RECOMMENDATION: FRIEDRICH (65%)
-Mountains/nature matches Friedrich's sublime contemplation.
-Turner also excellent for atmospheric effects.
+🎯 STRONG: ROMANTICISM - FRIEDRICH (70%)
+Mountains/nature = Romanticism!
+Friedrich's sublime contemplation perfect.
+Turner also great for atmospheric effects.
 `;
   }
   
-  // 동물 (특히 말) → 제리코
+  // 동물 → 낭만주의 (제리코)
   if (subject.includes('animal') || subject.includes('horse')) {
     return `
-🎯 RECOMMENDATION: GÉRICAULT (70%)
-Animals (especially horses) are Géricault's specialty!
+🎯 ROMANTICISM - GÉRICAULT (65%)
+Animals (especially horses) = Romanticism!
 `;
   }
   
-  // 여러 명 + 역동적 → 들라크루아
+  // 여러 명 + 역동적 → 낭만주의 (들라크루아)
   if (count >= 2 && (mood === 'dramatic' || mood === 'energetic')) {
     return `
-🎯 RECOMMENDATION: DELACROIX (65%)
-Dramatic multi-person scene matches Delacroix's revolutionary energy!
+🎯 ROMANTICISM - DELACROIX (70%)
+Dramatic multi-person action = Romanticism!
+Revolutionary energy and passion.
+`;
+  }
+  
+  // 격식 있는 정적인 초상화 → 신고전주의 (다비드)
+  if ((shot_type === 'portrait' || shot_type === 'upper_body') && 
+      (composition === 'balanced' || mood === 'formal')) {
+    return `
+🎯 NEOCLASSICISM - DAVID (70%)
+Formal balanced portrait = Neoclassicism!
+Cold perfection and heroic dignity.
+Unless dynamic/emotional → then Romanticism.
+`;
+  }
+  
+  // 우아한 여성 초상화 → 신고전주의 (앵그르)
+  if (subject === 'female' && (mood === 'elegant' || mood === 'graceful')) {
+    return `
+🎯 NEOCLASSICISM - INGRES (65%)
+Elegant female portrait suits Ingres' smooth perfection.
+But if dramatic mood → Delacroix Romanticism.
 `;
   }
   
   return `
-🎯 Default: TURNER for most Romantic scenes
-Consider subject: landscape (Turner), mountains (Friedrich), 
-action (Delacroix), animals (Géricault)
+🎯 DECISION GUIDE:
+- Static/Balanced/Formal → NEOCLASSICISM (David/Ingres)
+- Dynamic/Emotional/Dramatic → ROMANTICISM (Turner/Friedrich/Delacroix/Géricault)
+- Landscape → ALWAYS Romanticism (Turner 75%)
+- Most photos → Romanticism (more versatile)
 `;
 }
 
@@ -667,9 +713,9 @@ const fallbackPrompts = {
     prompt: 'Rococo painting style, light pastel colors, playful ornate decoration, soft delicate brushwork, romantic elegant atmosphere, graceful curved lines, whimsical charm, single unified composition with all figures together in one cohesive scene NOT separated into multiple groups, painted in Rococo masterpiece quality by Watteau or Boucher'
   },
   
-  romanticism: {
-    name: '낭만주의',
-    prompt: 'Romantic painting style by J.M.W. Turner, atmospheric light effects, sublime natural beauty, vivid expressive colors, dynamic turbulent composition, passionate atmosphere, painted in Romantic masterpiece quality'
+  neoclassicism_vs_romanticism: {
+    name: '신고전주의 vs 낭만주의',
+    prompt: 'Romantic painting style by J.M.W. Turner or Neoclassical style by Jacques-Louis David, choose based on photo mood - if static/balanced/formal use Neoclassical cold perfection with clear lines and heroic dignity, if dynamic/emotional/landscape use Romantic atmospheric sublime effects with passionate turbulent colors, painted in masterpiece quality with single unified composition with all figures together in one cohesive scene NOT separated'
   },
   
   realism: {
@@ -960,9 +1006,9 @@ Keep it concise and accurate.`;
       } else if (categoryType === 'rococo') {
         guidelines = getRococoGuidelines();
         hints = getRococoHints(photoAnalysis);
-      } else if (categoryType === 'romanticism') {
-        guidelines = getRomanticismGuidelines();
-        hints = getRomanticismHints(photoAnalysis);
+      } else if (categoryType === 'neoclassicism_vs_romanticism') {
+        guidelines = getNeoclassicismVsRomanticismGuidelines();
+        hints = getNeoclassicismVsRomanticismHints(photoAnalysis);
       } else if (categoryType === 'realism') {
         guidelines = getRealismGuidelines();
         hints = getRealismHints(photoAnalysis);
