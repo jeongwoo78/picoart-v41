@@ -1233,131 +1233,179 @@ export default async function handler(req, res) {
         
         // 레오나르도 다 빈치 선택시 스푸마토 초강화 + control_strength 0.65
         if (selectedArtist.toUpperCase().trim().includes('LEONARDO') || selectedArtist.toUpperCase().trim().includes('DA VINCI')) {
+          console.log('🎯 Leonardo da Vinci detected');
           if (!finalPrompt.includes('Mona Lisa-style')) {
             finalPrompt = finalPrompt + ', painting by Leonardo da Vinci, Mona Lisa-style EXTREME sfumato technique with all edges completely soft and blurred throughout, NO sharp outlines anywhere in the entire painting, mysterious smoky atmospheric haze dissolving every boundary, gentle soft transitions between all forms, warm golden Renaissance colors, enigmatic subtle smile, tender atmospheric depth like authentic Mona Lisa, everything slightly out of focus and dreamy';
             controlStrength = 0.65;
-            console.log('✅ Enhanced Leonardo sfumato (control_strength 0.65)');
+            console.log('✅ Enhanced Leonardo sfumato added (control_strength 0.65)');
+          } else {
+            console.log('ℹ️ Leonardo sfumato already in prompt (AI included it)');
           }
         }
         
         // 카라바조 선택시 키아로스쿠로 강화
         if (selectedArtist.toUpperCase().trim().includes('CARAVAGGIO')) {
+          console.log('🎯 Caravaggio detected');
           if (!finalPrompt.includes('DRAMATIC chiaroscuro')) {
             finalPrompt = finalPrompt + ', DRAMATIC chiaroscuro with extreme light-dark contrast, theatrical spotlight effect, deep black shadows, tenebrism technique';
-            console.log('✅ Enhanced chiaroscuro for Caravaggio');
+            console.log('✅ Enhanced Caravaggio chiaroscuro added');
+          } else {
+            console.log('ℹ️ Caravaggio chiaroscuro already in prompt (AI included it)');
           }
         }
         
         // 렘브란트 선택시 빛 강화
         if (selectedArtist.toUpperCase().trim().includes('REMBRANDT')) {
+          console.log('🎯 Rembrandt detected');
           if (!finalPrompt.includes('golden luminous light')) {
             finalPrompt = finalPrompt + ', MASTERFUL use of golden luminous light, warm glowing illumination, subtle light gradations, Rembrandt lighting technique with soft transitions between light and shadow';
-            console.log('✅ Enhanced light mastery for Rembrandt');
+            console.log('✅ Enhanced Rembrandt lighting added');
+          } else {
+            console.log('ℹ️ Rembrandt lighting already in prompt (AI included it)');
           }
         }
         
         // 티치아노 선택시 베네치아 색채와 티치아노 레드 강화
         if (selectedArtist.toUpperCase().trim().includes('TITIAN')) {
+          console.log('🎯 Titian detected');
           if (!finalPrompt.includes('Titian red')) {
             finalPrompt = finalPrompt + ', painting by Titian, Venetian painting-style with rich luminous colors and signature Titian red tones, thick layered glazing technique creating depth and luminosity, warm golden-amber atmosphere, sensuous fluid brushwork, sumptuous color harmonies with radiant warm palette, glowing flesh tones and rich drapery';
-            console.log('✅ Enhanced Titian Venetian colors');
+            console.log('✅ Enhanced Titian colors added');
+          } else {
+            console.log('ℹ️ Titian colors already in prompt (AI included it)');
           }
         }
         
         // 모딜리아니 선택시 긴 목/아몬드 눈 강화 + control_strength 0.65
         if (selectedArtist.toUpperCase().trim().includes('MODIGLIANI')) {
+          console.log('🎯 Modigliani detected');
           if (!finalPrompt.includes('elongated neck')) {
             finalPrompt = finalPrompt + ', painting by Amedeo Modigliani, signature elongated portrait-style with EXTREMELY elongated graceful neck (2X longer than normal swan-like proportions), mysterious almond-shaped eyes WITHOUT pupils (blank dark oval eyes), simplified elegant sculptural forms with smooth contours, warm earthy palette of ochres terracottas and muted browns, melancholic serene beauty with African mask influences, dramatically stretched neck and hauntingly blank eyes';
             controlStrength = 0.65;
-            console.log('✅ Enhanced Modigliani elongation (control_strength 0.65)');
+            console.log('✅ Enhanced Modigliani elongation added (control_strength 0.65)');
+          } else {
+            console.log('ℹ️ Modigliani elongation already in prompt (AI included it)');
           }
         }
         
         // 보티첼리 선택시 흐르는 우아함 강화
         if (selectedArtist.toUpperCase().trim().includes('BOTTICELLI')) {
+          console.log('🎯 Botticelli detected');
           if (!finalPrompt.includes('Birth of Venus')) {
             finalPrompt = finalPrompt + ', painting by Sandro Botticelli, Birth of Venus-style flowing graceful lines with wind-blown hair streaming elegantly, delicate drapery flowing in gentle curves, soft pastel colors of pale pinks seafoam greens and golden highlights, lyrical elegant movement and ethereal beauty, tender linear grace with elongated elegant figures';
-            console.log('✅ Enhanced Botticelli flowing grace');
+            console.log('✅ Enhanced Botticelli flowing grace added');
+          } else {
+            console.log('ℹ️ Botticelli grace already in prompt (AI included it)');
           }
         }
         
         // 베르메르 선택시 진주귀걸이 소녀 빛 강화
         if (selectedArtist.toUpperCase().trim().includes('VERMEER')) {
+          console.log('🎯 Vermeer detected');
           if (!finalPrompt.includes('Girl with Pearl')) {
             finalPrompt = finalPrompt + ', painting by Johannes Vermeer, Girl with a Pearl Earring-style soft window light with pearl-like luminosity, cool blue and warm yellow color harmonies, precise delicate brushwork with photographic clarity, intimate domestic tranquility and serene peaceful atmosphere, subtle side lighting creating gentle shadows';
-            console.log('✅ Enhanced Vermeer pearl light');
+            console.log('✅ Enhanced Vermeer pearl light added');
+          } else {
+            console.log('ℹ️ Vermeer pearl light already in prompt (AI included it)');
           }
         }
         
         // 터너 선택시 안개 용해 강화
         if (selectedArtist.toUpperCase().trim().includes('TURNER')) {
+          console.log('🎯 Turner detected');
           if (!finalPrompt.includes('dissolving into mist')) {
             finalPrompt = finalPrompt + ', painting by J.M.W. Turner, atmospheric sublime landscape-style with all forms dissolving into golden luminous mist and haze, swirling turbulent skies with dramatic light effects, warm golden yellows fiery oranges and ethereal blues, forms barely visible through fog and melting into atmosphere, loose fluid brushstrokes creating dreamlike transcendent beauty';
-            console.log('✅ Enhanced Turner dissolving mist');
+            console.log('✅ Enhanced Turner mist added');
+          } else {
+            console.log('ℹ️ Turner mist already in prompt (AI included it)');
           }
         }
         
         // 들라크루아 선택시 혁명적 역동성 강화
         if (selectedArtist.toUpperCase().trim().includes('DELACROIX')) {
+          console.log('🎯 Delacroix detected');
           if (!finalPrompt.includes('Liberty Leading')) {
             finalPrompt = finalPrompt + ', painting by Eugène Delacroix, Liberty Leading the People-style passionate revolutionary energy, vivid dramatic colors with bold reds blues and warm golden tones at intense saturation, dynamic diagonal composition with turbulent movement, loose expressive brushstrokes full of emotion and action, dramatic gestures and heroic romantic intensity';
-            console.log('✅ Enhanced Delacroix revolutionary energy');
+            console.log('✅ Enhanced Delacroix energy added');
+          } else {
+            console.log('ℹ️ Delacroix energy already in prompt (AI included it)');
           }
         }
         
         // 모네 선택시 수련/빛 포착 강화
         if (selectedArtist.toUpperCase().trim().includes('MONET')) {
+          console.log('🎯 Monet detected');
           if (!finalPrompt.includes('Water Lilies')) {
             finalPrompt = finalPrompt + ', painting by Claude Monet, Water Lilies-style capturing fleeting light effects with visible short impressionist brushstrokes, pure unmixed colors dabbed side by side, broken color technique with small distinct touches, shimmering luminous atmosphere with light reflecting on water, plein-air freshness with loose fluid brushwork';
-            console.log('✅ Enhanced Monet Water Lilies');
+            console.log('✅ Enhanced Monet Water Lilies added');
+          } else {
+            console.log('ℹ️ Monet Water Lilies already in prompt (AI included it)');
           }
         }
         
         // 드가 선택시 발레리나 움직임 강화
         if (selectedArtist.toUpperCase().trim().includes('DEGAS')) {
+          console.log('🎯 Degas detected');
           if (!finalPrompt.includes('ballet dancer')) {
             finalPrompt = finalPrompt + ', painting by Edgar Degas, ballet dancer-style capturing graceful movement and dynamic gestures in motion, soft pastel colors of pale pinks blues and peachy tones, diagonal compositional angles with unusual cropped viewpoints, rehearsal atmosphere with dancers adjusting stretching practicing, delicate precise drawing with soft sfumato edges';
-            console.log('✅ Enhanced Degas ballet dancers');
+            console.log('✅ Enhanced Degas ballet added');
+          } else {
+            console.log('ℹ️ Degas ballet already in prompt (AI included it)');
           }
         }
         
         // 세잔 선택시 기하학적 구조 강화
         if (selectedArtist.toUpperCase().trim().includes('CÉZANNE') || selectedArtist.toUpperCase().trim().includes('CEZANNE')) {
+          console.log('🎯 Cézanne detected');
           if (!finalPrompt.includes('Still Life with Apples')) {
             finalPrompt = finalPrompt + ', painting by Paul Cézanne, Still Life with Apples-style geometric analysis of forms into cylinders spheres and cones, multiple simultaneous viewpoints (proto-Cubism), constructive brushstrokes building architectural volumes, modulated colors creating solid sculptural forms, visible parallel brushstrokes creating structure and depth, geometric precision';
-            console.log('✅ Enhanced Cézanne geometry');
+            console.log('✅ Enhanced Cézanne geometry added');
+          } else {
+            console.log('ℹ️ Cézanne geometry already in prompt (AI included it)');
           }
         }
         
         // 고갱 선택시 평면적 원시주의 강화
         if (selectedArtist.toUpperCase().trim().includes('GAUGUIN')) {
+          console.log('🎯 Gauguin detected');
           if (!finalPrompt.includes('Tahitian painting')) {
             finalPrompt = finalPrompt + ', painting by Paul Gauguin, Tahitian painting-style flat bold areas of pure unmixed color with NO modeling or shading, primitive decorative patterns with strong dark outlines (cloisonnism), exotic tropical colors of deep oranges purples and vibrant greens, simplified forms with flat decorative surfaces, symbolic primitive aesthetic with mystical exotic atmosphere';
-            console.log('✅ Enhanced Gauguin flat primitive');
+            console.log('✅ Enhanced Gauguin primitive added');
+          } else {
+            console.log('ℹ️ Gauguin primitive already in prompt (AI included it)');
           }
         }
         
         // 쇠라 선택시 점묘법 강화
         if (selectedArtist.toUpperCase().trim().includes('SEURAT')) {
+          console.log('🎯 Seurat detected');
           if (!finalPrompt.includes('pointillist technique')) {
             finalPrompt = finalPrompt + ', painting by Georges Seurat, A Sunday on La Grande Jatte-style pure pointillist technique painted ONLY with tiny distinct dots of pure color, thousands of individual small color points systematically placed, complementary colors side by side for optical mixing, scientific color harmony with disciplined dot placement, divisionist method with eye blending dots from distance';
-            console.log('✅ Enhanced Seurat pointillism');
+            console.log('✅ Enhanced Seurat pointillism added');
+          } else {
+            console.log('ℹ️ Seurat pointillism already in prompt (AI included it)');
           }
         }
         
         // 칸딘스키 선택시 추상 색채 강화
         if (selectedArtist.toUpperCase().trim().includes('KANDINSKY')) {
+          console.log('🎯 Kandinsky detected');
           if (!finalPrompt.includes('abstract color explosion')) {
             finalPrompt = finalPrompt + ', painting by Wassily Kandinsky, Composition VII-style pure abstract color explosion with NO recognizable objects, vibrant spiritual color harmonies of intense reds blues yellows and greens, dynamic geometric and organic shapes flowing like visual music, bold lines circles and triangles in rhythmic composition, completely non-representational pure color form and movement';
-            console.log('✅ Enhanced Kandinsky abstract');
+            console.log('✅ Enhanced Kandinsky abstract added');
+          } else {
+            console.log('ℹ️ Kandinsky abstract already in prompt (AI included it)');
           }
         }
         
         // 실레 선택시 왜곡된 신체 강화
         if (selectedArtist.toUpperCase().trim().includes('SCHIELE')) {
+          console.log('🎯 Schiele detected');
           if (!finalPrompt.includes('distorted angular')) {
             finalPrompt = finalPrompt + ', painting by Egon Schiele, expressive figure-style distorted angular body forms with twisted contorted poses, sharp angular lines and exaggerated elongated limbs, raw psychological tension and erotic stark linearity, thin wiry contour lines with intense expressive distortion, earthy muted colors with areas of bare canvas showing, body feeling tortured and psychologically intense with extreme angular distortion';
-            console.log('✅ Enhanced Schiele distortion');
+            console.log('✅ Enhanced Schiele distortion added');
+          } else {
+            console.log('ℹ️ Schiele distortion already in prompt (AI included it)');
           }
         }
       } else {
