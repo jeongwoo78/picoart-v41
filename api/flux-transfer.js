@@ -622,35 +622,42 @@ function getExpressionismGuidelines() {
   return `
 Available Expressionism Artists (5명):
 
-1. MUNCH (뭉크) ⭐⭐⭐ STRONGEST for Expressionism
-   - Specialty: Existential anxiety, psychological tension, swirling distorted forms
-   - Best for: Most portraits, emotional intensity, psychological depth
-   - Signature: The Scream - most iconic Expressionist work
-   - When to prioritize: Most Expressionism cases (STRONGEST 70-80%)
+1. MODIGLIANI (모딜리아니) ⭐⭐⭐ STRONGEST for portraits (기본값)
+   - Specialty: ELONGATED NECKS (instantly recognizable!), almond eyes, melancholic elegant beauty
+   - Best for: Most 1-person portraits, upper body shots, graceful to melancholic mood
+   - Signature: Long neck portraits - THE most distinctive Expressionist feature
+   - When to prioritize: Most portrait cases (DEFAULT 70%)
+   - Note: "긴 목" = 초강력 개성! 일반인도 즉시 알아봄
 
-2. MODIGLIANI (모딜리아니) - Best for elegant graceful portraits
-   - Specialty: Elongated necks, almond eyes, melancholic elegant beauty
-   - Best for: Elegant graceful portraits, gentle melancholic mood
-   - Signature: Long neck portraits - sad elegant beauty (also in Masters 50%)
-   - When to prioritize: Graceful elegant portrait specifically desired
+2. MUNCH (뭉크) ⭐⭐⭐ BEST for anxiety/scream expressions ONLY
+   - Specialty: Existential anxiety, psychological tension, swirling distorted forms
+   - Best for: Anxious expressions, screaming, psychological distress, The Scream-like mood
+   - Signature: The Scream - iconic anxiety expression
+   - When to prioritize: Clear anxiety/fear/scream expression ONLY (65%)
+   - Warning: Don't overuse - use ONLY for anxious mood
 
 3. SCHIELE (에곤 실레) - Best for body emphasis, distorted poses
    - Specialty: Distorted body, erotic tension, contorted limbs, raw emotion
-   - Best for: Full body, unconventional poses, body-focused compositions
+   - Best for: Full body with unusual poses, body-focused compositions
    - Signature: Twisted nude self-portraits - erotic psychological tension
-   - When to prioritize: Full body with unusual/distorted pose (65%)
+   - When to prioritize: Full body with unusual/distorted pose (60%)
 
-4. KIRCHNER (키르히너) - Best for urban scenes, angular forms
+4. KIRCHNER (키르히너) - MINIMIZE (개성 약함)
    - Specialty: Angular jagged forms, intense colors, urban anxiety
-   - Best for: City backgrounds, street scenes, sharp geometric compositions
-   - Signature: Street Scenes - angular urban anxiety
-   - When to prioritize: Urban/city background or angular aesthetic
+   - Best for: Urban/city backgrounds ONLY
+   - When to prioritize: Clear urban/street setting (minimize usage)
 
-5. KANDINSKY (칸딘스키) - Best for abstract, non-representational
-   - Specialty: Abstract expressionism, spiritual composition, musical forms
-   - Best for: Very unclear subjects, abstract mood, spiritual atmosphere
-   - Signature: Compositions - pure abstract expression
-   - When to prioritize: Subject very unclear or abstract desired
+5. KANDINSKY (칸딘스키) - MINIMIZE (개성 약함)
+   - Specialty: Abstract expressionism, spiritual composition
+   - Best for: Very unclear subjects ONLY
+   - When to prioritize: Subject very unclear (minimize usage)
+
+🎯 CRITICAL DECISION LOGIC:
+- Most 1-person portraits → MODIGLIANI (DEFAULT 70%) ⭐⭐⭐
+- Anxious/scream expression ONLY → MUNCH (65%)
+- Full body distorted pose → SCHIELE (60%)
+- Urban setting only → KIRCHNER (minimize)
+- Abstract only → KANDINSKY (minimize)
 `;
 }
 
@@ -719,7 +726,7 @@ body (Schiele), urban (Kirchner), abstract (Kandinsky)
 // ========================================
 const fallbackPrompts = {
   ancient: {
-    name: '고대 그리스-로마',
+    name: '그리스·로마',
     prompt: 'ancient Greek and Roman classical painting style, idealized human forms, marble-like smooth rendering, heroic noble figures, classical drapery, temple architecture, serene dignified expressions, single unified composition with all figures in one cohesive harmonious scene NOT separated into multiple groups, painted in ancient classical masterpiece quality'
   },
   

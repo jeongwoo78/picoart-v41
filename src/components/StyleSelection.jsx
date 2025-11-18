@@ -9,7 +9,7 @@ const StyleSelection = ({ onSelect }) => {
   // 스타일 카테고리 정의 (v42: 10개 사조)
   const styleCategories = {
     // 미술사조 10개
-    ancient: { name: '고대 미술', period: 'BC 800 - AD 500' },
+    ancient: { name: '그리스·로마', period: 'BC 800 - AD 500' },
     medieval: { name: '중세 미술', period: '4-14세기' },
     renaissance: { name: '르네상스', period: '14-16세기' },
     baroque: { name: '바로크', period: '17세기' },
@@ -30,7 +30,7 @@ const StyleSelection = ({ onSelect }) => {
   // 스타일 데이터 (AI가 자동 선택하므로 최소 정보만) - v42: 10개 사조
   const artStyles = [
     // 미술사조 10개 (시간순)
-    { id: 'ancient', name: '고대 미술', category: 'ancient', icon: '🏛️', description: '그리스·로마의 완벽한 균형미' },
+    { id: 'ancient', name: '그리스·로마', category: 'ancient', icon: '🏛️', description: '완벽한 비례와 균형미' },
     { id: 'medieval', name: '중세 미술', category: 'medieval', icon: '⛪', description: '비잔틴·고딕·이슬람의 신성함' },
     { id: 'renaissance', name: '르네상스', category: 'renaissance', icon: '🎭', description: '인간 중심의 이상적 아름다움' },
     { id: 'baroque', name: '바로크', category: 'baroque', icon: '👑', description: '극적이고 웅장한 표현' },
