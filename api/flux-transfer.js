@@ -561,33 +561,38 @@ function getPostImpressionismGuidelines() {
   return `
 Available Post-Impressionism Artists (4명):
 
-1. SEURAT (쇠라) ⭐⭐⭐ STRONGEST - Pointillism (기본값 45%)
+1. SEURAT (쇠라) ⭐⭐⭐ for unique pointillism (30%)
    - Specialty: POINTILLISM technique with thousands of tiny colored dots, scientific color theory
-   - Best for: Most photos - creates unique distinctive look
+   - Best for: Creating distinctive pointillist look
    - Signature: A Sunday on La Grande Jatte - pointillist precision
-   - When to prioritize: Most cases (DEFAULT 45%)
+   - When to prioritize: Most cases (30%)
    - Note: 점묘법 = 초강력 개성! 일반인도 즉시 알아봄
 
-2. VAN GOGH (반 고흐) ⭐⭐⭐ BEST for emotional/swirling ONLY (30%)
+2. VAN GOGH (반 고흐) ⭐⭐⭐⭐ STRONGEST for emotional/expressive (35%)
    - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
-   - Best for: Emotional subjects, starry skies, cypresses, swirling forms
+   - Best for: Emotional subjects, starry skies, cypresses, swirling forms, portraits
    - Signature: Starry Night - turbulent passionate swirls
-   - When to prioritize: Clear emotional/swirling mood ONLY (30%)
+   - When to prioritize: Emotional/expressive mood (35%)
    - Note: Also available in Masters collection
 
-3. GAUGUIN (고갱) - Best for flat decorative (20%)
+3. GAUGUIN (고갱) ⭐⭐⭐ for flat decorative (25%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
    - Best for: Decorative aesthetic, simplified forms, exotic/tropical mood
    - Signature: Tahitian paintings - flat bold primitivism
-   - When to prioritize: Clear flat/decorative aesthetic (20%)
+   - When to prioritize: Flat/decorative aesthetic (25%)
 
-4. CÉZANNE (세잔) - Best for still life ONLY (5%)
+4. CÉZANNE (세잔) - for still life/geometric (10%)
    - Specialty: Geometric structured forms, solid volumes, analytical approach
-   - Best for: Still life, fruits, objects ONLY
+   - Best for: Still life, fruits, objects, geometric compositions
    - Signature: Still Life with Apples - geometric analysis
-   - When to prioritize: Clear still life photo ONLY (5%)
+   - When to prioritize: Still life or geometric forms (10%)
 
 🎯 CRITICAL DECISION LOGIC:
+- Pointillist unique look → SEURAT (30%)
+- Emotional/expressive/passionate → VAN GOGH (35%, also in Masters)
+- Flat/decorative/primitive → GAUGUIN (25%)
+- Still life/geometric forms → CÉZANNE (10%)
+`;
 - Most photos → SEURAT (DEFAULT 45%) ⭐⭐⭐ pointillism!
 - Emotional/swirling/starry ONLY → VAN GOGH (30%, also in Masters)
 - Flat/decorative → GAUGUIN (20%)
@@ -708,16 +713,17 @@ function getExpressionismGuidelines() {
   return `
 Available Expressionism Artists (5명):
 
-1. MODIGLIANI (모딜리아니) ⭐⭐⭐ for elegant portraits (25%)
+1. MODIGLIANI (모딜리아니) ⭐⭐⭐ for SINGLE PERSON portraits (25%)
    - Specialty: EXTREME ELONGATED NECKS (swan-like 1.8x length!), almond eyes with no pupils, melancholic elegant beauty
-   - Best for: Elegant graceful portraits, upper body shots, serene to melancholic mood
+   - Best for: 1 PERSON portraits (upper body/full body), elegant graceful mood, occasionally 2 people
    - Signature: Long neck portraits with blank almond eyes - most distinctive feature
-   - When to prioritize: Elegant/graceful portrait mood (25%)
+   - When to prioritize: 1 person elegant portrait (25%), rarely 2 people
    - CRITICAL: FLUX must STRETCH neck to 1.8x and face to 1.5x vertically
+   - ⚠️ NOT for groups (3+ people)
 
 2. MUNCH (뭉크) ⭐⭐⭐ STRONGEST for anxiety/psychological (30%)
    - Specialty: Existential anxiety, psychological tension, swirling distorted forms
-   - Best for: Anxious expressions, dramatic emotions, psychological intensity
+   - Best for: Anxious expressions, dramatic emotions, psychological intensity, any number of people
    - Signature: The Scream - iconic anxiety and modern alienation
    - When to prioritize: Emotional/anxious/dramatic expressions (30%)
    - Note: Also available in Masters collection
@@ -744,7 +750,7 @@ Available Expressionism Artists (5명):
    - Warning: Reduces portrait recognition
 
 🎯 CRITICAL DECISION LOGIC:
-- Elegant/graceful mood → MODIGLIANI (25%)
+- 1 person elegant/graceful → MODIGLIANI (25%, rarely 2 people)
 - Emotional/anxious/dramatic → MUNCH (30%, also in Masters)
 - Full body/angular forms → EGON SCHIELE (20%)
 - Urban/bold colors/geometric → KIRCHNER (20%)
@@ -755,12 +761,21 @@ Available Expressionism Artists (5명):
 function getExpressionismHints(photoAnalysis) {
   const { count, shot_type, expression, background, subject } = photoAnalysis;
   
+  // 3명 이상 → 모딜리아니 제외
+  if (count >= 3) {
+    return `
+⚠️ 3+ people: Do NOT use MODIGLIANI (he only painted 1-2 person portraits)
+🎯 RECOMMENDATION: MUNCH (30%) or KIRCHNER (20%)
+Munch for emotional group scenes, Kirchner for urban/angular groups.
+`;
+  }
+  
   // 1명 초상 → 모딜리아니 또는 뭉크
   if (count === 1 && (shot_type === 'portrait' || shot_type === 'upper_body')) {
     // 불안/절규 표정 → 뭉크
     if (expression === 'anxious' || expression === 'fearful' || expression === 'scream' || expression === 'distressed') {
       return `
-🎯 RECOMMENDATION: MUNCH (25%)
+🎯 RECOMMENDATION: MUNCH (30%)
 Anxious/fearful/dramatic expression = Munch specialty!
 The Scream-like psychological intensity.
 Munch also available in Masters collection.
@@ -769,12 +784,21 @@ Munch also available in Masters collection.
     
     // 우아한 표정 → 모딜리아니
     return `
-🎯 RECOMMENDATION: MODIGLIANI (30%)
-Elegant portrait suits Modigliani's elongated neck style.
+🎯 RECOMMENDATION: MODIGLIANI (25%)
+1 person elegant portrait suits Modigliani's elongated neck style.
 Long swan-like neck creates distinctive look.
 But consider mood:
-- Dramatic/anxious → Munch (25%)
+- Dramatic/anxious → Munch (30%)
 - Angular pose → Egon Schiele (20%)
+`;
+  }
+  
+  // 2명 → 모딜리아니 가능하지만 드물게
+  if (count === 2) {
+    return `
+🎯 RECOMMENDATION: Consider MUNCH (30%) or rarely MODIGLIANI (25%)
+Modigliani rarely painted 2 people, but possible for elegant double portraits.
+Munch better for emotional/dramatic 2-person scenes.
 `;
   }
   
@@ -853,7 +877,7 @@ const fallbackPrompts = {
   
   postImpressionism: {
     name: '후기인상주의',
-    prompt: 'Post-Impressionist painting style by Vincent van Gogh, bold expressive colors, geometric structured forms, emotional symbolic content, innovative personal vision, swirling passionate brushstrokes, painted in Post-Impressionist masterpiece quality'
+    prompt: 'Post-Impressionist pointillist painting by Georges Seurat: thousands of tiny SOFT PASTEL-TONED dots creating luminous gentle atmosphere, DESATURATED harmonious colors blending optically, light airy peaceful mood, dots should appear SOFT not harsh, colors muted and delicate (pale blues pinks yellows greens), pointillist technique with serene harmonious composition, NOT photographic preserve facial identity'
   },
   
   fauvism: {
