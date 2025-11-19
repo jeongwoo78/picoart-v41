@@ -1,11 +1,9 @@
-// PicoArt v47 - Ancient Greek Polychromy (Painted Sculpture)
-// v47: 고대 그리스 폴리크로미 (채색 조각) 스타일
-//      역사적으로 정확한 고대 그리스 채색 대리석 조각
-//      - 흰색 대리석 위에 밝고 생생한 원색 채색
-//      - 빨강, 파랑, 노랑, 초록 등 선명한 원색의 옷
-//      - 따뜻한 살색으로 채색된 피부
-//      - 밝은 배경 (크림, 흰색, 하늘색)
-//      - 신고전주의 아님, 진짜 고대 그리스 스타일
+// PicoArt v47 - Ancient Greek Marble Sculpture with Expressive Eyes
+// v47: 고대 그리스 대리석 조각 + 생동감 있는 눈동자
+//      순수 흰색/크림색 대리석 조각
+//      명확한 동공 표현 (조각되거나 그려진)
+//      생생한 시선과 표정
+//      채색 없음 - 깔끔한 대리석 미학
 //
 // v46: 르네상스 남성 초상화 최적화
 //      남성 상반신 → 티치아노 70% (베네치아 초상화 전통)
@@ -861,7 +859,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek art PAINTING depicting Parthenon temple polychromy - painted image of classical sculpture with colors: render subject in classical Greek sculptural form BUT this is a PAINTING showing how ancient sculptures looked with original paint. CRITICAL COLOR REQUIREMENTS: EYES must show COLORED IRISES painted in vivid blue or green or brown with BLACK PUPILS clearly visible NOT blank eyes, HAIR must be COLORED painted in deep black or rich brown or golden blonde NOT white or gray, LIPS painted in soft PINK or ROSE color NOT colorless, CLOTHING draped togas painted in BRIGHT REDS BLUES YELLOWS or GREENS. Pale ivory skin tone suggesting marble but painted with warm cream tones. This is a PAINTING with visible pigment and color NOT actual unpainted stone. Light neutral background. Classical Greek idealized proportions and sculptural volume rendered through painting technique. Neoclassical academic painting style showing ancient Greek polychromy. Unified composition, NOT photographic preserve facial identity, painted masterpiece quality'
+    prompt: 'Ancient Greek marble sculpture in classical style: white marble three-dimensional statue with smooth stone surface and idealized classical proportions, sculptural volume and depth, serene noble expression. CRITICAL FEATURE: EYES must have CLEARLY VISIBLE PUPILS - either carved as dark indentations or painted as dark dots in the center of eyes, eyes should NOT be completely blank white stone, pupils give life and focus to the gaze. Classical Greek draped clothing carved in flowing folds, elegant hair with detailed sculptural curls, pale marble complexion throughout. Light neutral background emphasizing the sculpture. Greek temple statue aesthetic with lifelike eyes through visible pupils. This is pure white marble sculpture NOT painted colors, unified composition, NOT photographic preserve facial identity, ancient Greek classical sculpture masterpiece with expressive eyes'
   },
   
   medieval: {
