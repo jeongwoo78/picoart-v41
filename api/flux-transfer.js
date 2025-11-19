@@ -1,10 +1,12 @@
-// PicoArt v51 - Ancient Sculpture Material Flexibility + Polychromy
-// v51: 고대 조각 재료 다양화 + 채색 추가
-//      조각: 흰 대리석 / 청동 / 착색 석재 (AI 선택)
-//      대리석 채색: 눈동자, 입술, 옷 등 고대 폴리크로미 재현
-//      역사적 정확성 향상! (그리스 원본 = 주로 청동)
+// PicoArt v52 - Medieval Islamic Geometric Enhancement
+// v52: 중세 이슬람 기하학 프롬프트 강화
+//      문제: AI가 "painting in Islamic geometric art style"만 생성
+//      해결: 구체적 특징 포함 의무화
+//           "CLEARLY VISIBLE geometric patterns, Islamic tessellation,
+//            star patterns, interlocking shapes, arabesque motifs..."
+//      고대 조각 성공 로그 참조하여 상세도 향상!
 //
-// v50: 고대 그리스-로마 가이드라인 시스템 추가
+// v51: 고대 조각 재료 다양화 + 채색 추가
 //
 // v47: 고대 그리스 대리석 조각 + 생동감 있는 눈동자
 //
@@ -400,10 +402,14 @@ Choose best style among: Byzantine, Gothic, Romanesque, Islamic GEOMETRIC
 ✅ Islamic GEOMETRIC patterns excellent for landscape/nature scenes
 
 4. ISLAMIC GEOMETRIC (이슬람 기하학) - For landscapes only
-   - Specialty: Intricate arabesque patterns, sacred geometry, decorative motifs, calligraphic elements
+   - Specialty: CLEARLY VISIBLE intricate geometric patterns and arabesque motifs forming the artwork
+   - Technique: Islamic geometric tessellation, star patterns, interlocking shapes, ornamental arabesques
+   - Visual style: Decorative geometric mosaic-like composition, symmetrical patterns, sacred geometry
+   - Colors: Rich jewel tones (deep blues, golds, emerald greens, ruby reds) in geometric arrangements
    - Best for: LANDSCAPES, nature, architecture, objects (NO people!)
-   - Signature: Geometric precision, flowing arabesque, ornamental beauty
-   - ⚠️ CRITICAL: ONLY for NON-PEOPLE photos, excellent for landscapes!
+   - Key features: Geometric precision, flowing arabesque decorations, Islamic art aesthetic
+   - IMPORTANT: The entire image should be composed of visible geometric patterns and decorative motifs
+   - ⚠️ CRITICAL: ONLY for NON-PEOPLE photos, excellent for transforming landscapes into geometric art!
 
 🎯 CRITICAL DECISION LOGIC:
 IF photo has PEOPLE:
@@ -1327,15 +1333,20 @@ ${hints}
 Instructions:
 1. Analyze photo: people count, subject, mood, age
 2. Follow RECOMMENDATIONS (70-80% weight)
-3. Choose most DISTINCTIVE artist
+3. Choose most DISTINCTIVE artist/style
 4. Preserve facial identity
+5. IMPORTANT: Include DETAILED style characteristics in your prompt
+   - For Islamic Geometric: mention "CLEARLY VISIBLE geometric patterns, Islamic tessellation, star patterns, interlocking shapes, arabesque motifs, symmetrical geometric composition, decorative Islamic mosaic aesthetic"
+   - For Byzantine: mention "golden mosaic backgrounds with shimmering gold leaf, flat hieratic frontal figures, divine sacred atmosphere"
+   - For Gothic: mention "cathedral stained glass jewel tones, vertical elongated figures, divine holy light streaming through Gothic arches"
+   - For other styles: include their signature techniques and visual characteristics
 
 Return JSON only:
 {
   "analysis": "brief (1 sentence)",
-  "selected_artist": "Artist Name",
+  "selected_artist": "Artist Name or Style Name",
   "reason": "why (1 sentence)",
-  "prompt": "painting by [Artist], [technique], depicting subject with preserved facial features in unified artistic composition"
+  "prompt": "Medieval art in [style name], [DETAILED style characteristics including techniques and visual features], depicting subject while preserving original features"
 }`;
         }
       }
