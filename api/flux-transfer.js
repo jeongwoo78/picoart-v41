@@ -1,17 +1,19 @@
-// PicoArt v54 - Dynamic Movement Priority + Natural Roman Mosaic
-// v54: 역동성 우선순위 #1 + 자연스러운 로마 모자이크
-//      우선순위 (중요도 순):
-//        1. 역동적 움직임/스포츠 → 조각 (배경 무관!)
-//        2. 정적 + 풍경 있음 → 모자이크
-//        3. 초상화 (풍경 없음) → 조각
-//      예시:
-//        ✅ 배구 경기 (경기장 배경) = 조각 (역동성 최우선!)
-//        ✅ 강가 서있는 부자 = 모자이크 (정적+풍경)
-//        ✅ 스튜디오 초상 = 조각 (배경 없음)
-//      모자이크: AI에게 맡김 (자연스러운 tesserae)
-//        "LARGE TILE" 강제 제거 → 역사적 정확성
+// PicoArt v55 - Group Photos Mosaic + Material Freedom + Islamic Aniconism
+// v55: 3가지 중요 수정
+//      1. 단체 사진 = 모자이크 (여러 명 함께)
+//         예: 가족 사진, 단체 사진 → 모자이크
+//         단, 역동적 스포츠는 여전히 조각!
+//      2. 재질 자유화 복구 (v51로)
+//         "white marble, bronze, or tinted stone"
+//         + 배경 "simple plain neutral" (회화 느낌 방지)
+//      3. 이슬람 기하학 인물 금지 강화! 🚨
+//         "ABSOLUTELY NO HUMAN FIGURES OR FACES"
+//         "pure geometric and floral patterns only"
+//         여자 얼굴 나온 버그 수정!
+//      4. 모자이크 타일 가시성 강조
+//         "clearly visible tesserae tiles with distinct grout lines"
 //
-// v53: 풍경 기준 수정 (실패 - 스포츠 기준 누락)
+// v54: 역동성 우선순위 (스포츠=조각)
 //
 // v47: 고대 그리스 대리석 조각 + 생동감 있는 눈동자
 //
@@ -60,35 +62,39 @@ function getAncientGreekRomanGuidelines() {
 Available Ancient Greek-Roman Styles (2가지):
 
 ⭐ STYLE 1: CLASSICAL SCULPTURE (고대 그리스-로마 조각)
-   - For: DYNAMIC ACTION & PORTRAITS - movement/sports OR people without landscape
+   - For: DYNAMIC ACTION & INDIVIDUAL PORTRAITS - movement/sports OR single person
    - PRIORITY CRITERION: Any dynamic movement, action, sports, athletic poses
    - Examples: Sports (volleyball, soccer, basketball, running, jumping)
               Action shots with movement and energy
               Athletic poses and dynamic gestures
-              Portrait photos without significant landscape background
-   - Materials: White marble or bronze (AI chooses - bronze excellent for sports!)
+              Individual portrait photos (one person)
+   - Materials: White marble, bronze, or tinted stone (AI chooses - bronze for sports!)
    - Technique: Dynamic athletic poses, visible pupils in eyes, sculptural curls
    - Polychromy: Marble should include subtle painted details (eyes, lips, clothing)
-   - Background: Clean light neutral background for sculpture aesthetic
+   - Background: Simple plain neutral background for sculpture aesthetic
    - Aesthetic: Classical Greek/Roman sculpture, captures movement and vitality
 
 ⭐ STYLE 2: ROMAN MOSAIC (로마 모자이크)
-   - For: STATIC PHOTOS WITH LANDSCAPE - calm peaceful scenes with nature elements
+   - For: LANDSCAPE/GROUP PHOTOS - scenery elements OR multiple people together
    - Examples: Mountains, rivers, sky, trees, buildings, flowers
-              People standing calmly in nature settings
-              Peaceful outdoor family photos
-              Landscapes with or without people (if people are static/calm)
-   - Technique: Roman tesserae tiles with grout lines, mosaic texture
+              Group photos with multiple people (families, teams in non-action)
+              People in nature settings
+              Peaceful outdoor scenes
+              Landscapes with or without people
+   - Technique: Clearly visible tesserae tiles with distinct grout lines
+              Recognizable mosaic texture, NOT smooth painting
    - Aesthetic: Roman floor/wall mosaic, jewel-tone colors, decorative patterns
 
 🎯 KEY DECISION RULE - PRIORITY ORDER:
-1. Is there DYNAMIC MOVEMENT/ACTION/SPORTS? → SCULPTURE (even if landscape visible!)
-2. Is it STATIC photo WITH landscape elements? → MOSAIC
-3. Is it portrait WITHOUT landscape? → SCULPTURE
+1. Is there DYNAMIC MOVEMENT/ACTION/SPORTS? → SCULPTURE (even if multiple people!)
+2. Is it a GROUP PHOTO (multiple people)? → MOSAIC
+3. Is it STATIC photo WITH landscape? → MOSAIC
+4. Is it INDIVIDUAL portrait? → SCULPTURE
 Examples:
-- Volleyball game in stadium = SCULPTURE (dynamic action is priority!)
-- Dad and child calmly standing in river = MOSAIC (static + landscape)
-- Portrait headshot = SCULPTURE (no landscape)
+- Volleyball game = SCULPTURE (dynamic action is priority!)
+- Family group photo = MOSAIC (multiple people)
+- Dad and child in river = MOSAIC (landscape + multiple people)
+- Individual portrait = SCULPTURE (one person)
 `;
 }
 
@@ -974,7 +980,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT FOCUS: OPTION 1 FOR DYNAMIC/PORTRAIT SUBJECTS (PRIORITY: any dynamic movement action sports athletic poses, OR portraits without landscape): Greek-Roman classical sculpture - white marble or bronze material inspired by ancient Greek sculptors, three-dimensional sculptural form with smooth stone or bronze surface, dynamic lifelike athletic poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures should include subtle painted details on eyes lips and clothing (ancient polychromy), clean light neutral background, sculptural depth and volume. OPTION 2 FOR STATIC LANDSCAPE SUBJECTS (static peaceful photos WITH landscape nature elements - mountains rivers sky trees buildings flowers with people standing calmly): Roman mosaic - ancient Roman mosaic art with tesserae tiles and grout lines creating mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, decorative patterns and borders, tessellated surface made of tile pieces, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION PRIORITY 1: ANY dynamic action sports movement = SCULPTURE (even with landscape background). PRIORITY 2: Static calm photo with landscape = MOSAIC. Portrait without landscape = SCULPTURE. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
+    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT FOCUS: OPTION 1 FOR DYNAMIC INDIVIDUAL/SPORTS SUBJECTS (dynamic action sports athletic movement OR individual portraits): Greek-Roman classical sculpture - white marble, bronze, or tinted stone material inspired by ancient Greek sculptors, three-dimensional sculptural form with smooth stone or bronze surface, dynamic lifelike athletic poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures should include subtle painted details on eyes lips and clothing (ancient polychromy), simple plain neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE/GROUP SUBJECTS (landscape nature elements OR group photos with multiple people OR static peaceful scenes): Roman mosaic - ancient Roman mosaic art with clearly visible tesserae tiles and distinct grout lines creating recognizable mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION PRIORITY: ANY dynamic action sports = SCULPTURE. Group photos with multiple people = MOSAIC. Static with landscape = MOSAIC. Individual portrait = SCULPTURE. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
   },
   
   medieval: {
@@ -1373,7 +1379,7 @@ Instructions:
 3. Choose most DISTINCTIVE artist/style
 4. Preserve facial identity
 5. IMPORTANT: Include DETAILED style characteristics in your prompt
-   - For Islamic Geometric: mention "CLEARLY VISIBLE geometric patterns, Islamic tessellation, star patterns, interlocking shapes, arabesque motifs, symmetrical geometric composition, decorative Islamic mosaic aesthetic"
+   - For Islamic Geometric: mention "CLEARLY VISIBLE geometric patterns, Islamic tessellation, star patterns, interlocking shapes, arabesque motifs, symmetrical geometric composition, decorative Islamic mosaic aesthetic" AND CRITICAL: "ABSOLUTELY NO HUMAN FIGURES OR FACES, pure geometric and floral patterns only, Islamic aniconism tradition"
    - For Byzantine: mention "golden mosaic backgrounds with shimmering gold leaf, flat hieratic frontal figures, divine sacred atmosphere"
    - For Gothic: mention "cathedral stained glass jewel tones, vertical elongated figures, divine holy light streaming through Gothic arches"
    - For other styles: include their signature techniques and visual characteristics
