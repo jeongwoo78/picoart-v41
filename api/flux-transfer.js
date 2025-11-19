@@ -1,12 +1,20 @@
-// PicoArt v57 - Gothic Painting Prevention Enhancement
-// v57: 고딕 양식 회화 느낌 방지 강화
-//      문제: 고딕이 사실적 회화처럼 나올 수 있음
-//      해결: 명확한 금지 문구 추가
+// PicoArt v57 - Medieval Painting Prevention (Gothic + Romanesque)
+// v57: 중세 미술 회화 느낌 방지 강화
+//      
+//      고딕 (Gothic):
 //        "FLAT TWO-DIMENSIONAL medieval style"
 //        "NOT realistic smooth oil painting"
 //        "angular linear forms with hard edges"
-//        "like stained glass panels"
-//      스테인드글라스 + 필사본 스타일 강조
+//        "like stained glass panels + manuscripts"
+//      
+//      로마네스크 (Romanesque):
+//        "FLAT MURAL FRESCO style like church walls"
+//        "NOT smooth realistic painting"
+//        "solid block-like forms with heavy outlines"
+//        "simple colors and bold shapes like stone carvings"
+//      
+//      목표: 스테인드글라스/필사본/프레스코 느낌
+//      금지: 사실적 유화, 부드러운 회화
 //
 // v56: 40% 구성 기준 + 순백 대리석
 //
@@ -426,6 +434,8 @@ Available Medieval Art Styles:
    - Specialty: CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, monumental dignity
    - Best for: Simple compositions, solemn religious scenes, medieval church atmosphere
    - Signature: Stone relief flatness, ROMANESQUE CHURCH interior feeling, sacred geometric order
+   - CRITICAL: FLAT MURAL FRESCO style like church walls, solid block-like forms with heavy outlines
+   - NOT smooth realistic painting, simple colors and bold shapes like stone carvings
    - Religious elements: Monastery setting, devotional mood, scriptural gravity
 
 4. ISLAMIC MINIATURE (이슬람 세밀화) ⭐⭐ (25%)
@@ -985,7 +995,7 @@ const fallbackPrompts = {
   
   medieval: {
     name: '중세 미술',
-    prompt: 'Medieval sacred art with dynamic style selection: IF PEOPLE in photo choose from BYZANTINE (30%): GOLDEN MOSAIC sacred backgrounds with shimmering gold leaf, flat hieratic frontal iconic figures, divine transcendent spiritual atmosphere, eternal timeless holy presence; OR GOTHIC (25%): CATHEDRAL STAINED GLASS jewel tones (ruby red sapphire blue emerald green), vertical elongated figures, DIVINE HOLY LIGHT streaming through Gothic arches, illuminated manuscript style, PRAYER GESTURES and BIBLICAL SOLEMNITY, FLAT TWO-DIMENSIONAL medieval aesthetic NOT realistic smooth painting, angular linear style with hard edges like stained glass panels, decorative gold leaf details, manuscript illumination quality NOT oil painting; OR ROMANESQUE (20%): CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, stone relief aesthetic, MONASTIC SETTING with rounded arches, scriptural devotional dignity; OR ISLAMIC MINIATURE (25%): Persian/Ottoman COURT MINIATURE painting style with intricate delicate details, vibrant jewel colors, flat decorative composition, ornamental patterns, courtly elegant figures with rich textiles. IF NO PEOPLE (landscape) choose from Byzantine/Gothic/Romanesque OR ISLAMIC GEOMETRIC: intricate arabesque patterns, sacred geometry, decorative motifs, flowing ornamental designs, geometric precision. NEVER Islamic Miniature for landscapes. NEVER Islamic Geometric for people. Unified composition, NOT photographic preserve facial identity, Medieval masterpiece quality'
+    prompt: 'Medieval sacred art with dynamic style selection: IF PEOPLE in photo choose from BYZANTINE (30%): GOLDEN MOSAIC sacred backgrounds with shimmering gold leaf, flat hieratic frontal iconic figures, divine transcendent spiritual atmosphere, eternal timeless holy presence; OR GOTHIC (25%): CATHEDRAL STAINED GLASS jewel tones (ruby red sapphire blue emerald green), vertical elongated figures, DIVINE HOLY LIGHT streaming through Gothic arches, illuminated manuscript style, PRAYER GESTURES and BIBLICAL SOLEMNITY, FLAT TWO-DIMENSIONAL medieval aesthetic NOT realistic smooth painting, angular linear style with hard edges like stained glass panels, decorative gold leaf details, manuscript illumination quality NOT oil painting; OR ROMANESQUE (20%): CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, stone relief aesthetic, MONASTIC SETTING with rounded arches, scriptural devotional dignity, FLAT MURAL FRESCO style like church walls NOT smooth realistic painting, solid block-like forms with heavy outlines, simple colors and bold shapes like stone carvings; OR ISLAMIC MINIATURE (25%): Persian/Ottoman COURT MINIATURE painting style with intricate delicate details, vibrant jewel colors, flat decorative composition, ornamental patterns, courtly elegant figures with rich textiles. IF NO PEOPLE (landscape) choose from Byzantine/Gothic/Romanesque OR ISLAMIC GEOMETRIC: intricate arabesque patterns, sacred geometry, decorative motifs, flowing ornamental designs, geometric precision. NEVER Islamic Miniature for landscapes. NEVER Islamic Geometric for people. Unified composition, NOT photographic preserve facial identity, Medieval masterpiece quality'
   },
   
   renaissance: {
@@ -1382,6 +1392,7 @@ Instructions:
    - For Islamic Geometric: mention "CLEARLY VISIBLE geometric patterns, Islamic tessellation, star patterns, interlocking shapes, arabesque motifs, symmetrical geometric composition, decorative Islamic mosaic aesthetic" AND CRITICAL: "ABSOLUTELY NO HUMAN FIGURES OR FACES, pure geometric and floral patterns only, Islamic aniconism tradition"
    - For Byzantine: mention "golden mosaic backgrounds with shimmering gold leaf, flat hieratic frontal figures, divine sacred atmosphere"
    - For Gothic: mention "cathedral stained glass jewel tones, vertical elongated figures, divine holy light streaming through Gothic arches" AND "FLAT TWO-DIMENSIONAL medieval style NOT realistic smooth painting, angular linear forms with hard edges like stained glass panels"
+   - For Romanesque: mention "church fresco flat solid forms, biblical narrative simplicity, stone relief aesthetic" AND "FLAT MURAL FRESCO style NOT smooth realistic painting, solid block-like forms with heavy outlines like stone carvings"
    - For other styles: include their signature techniques and visual characteristics
 
 Return JSON only:
