@@ -1,28 +1,30 @@
-// PicoArt v42 - Art Movements with Detailed Artist Selection
-// v42: 10개 미술사조 + 야수파 추가 + 6번 사조 통합 + 야수파/달리 최적화
+// PicoArt v44 - Medieval Art Religious Enhancement
+// v44: 중세 미술 종교성 강화 + 비율 조정 (비잔틴 50% → 고딕 30% → 로마네스크 20%)
+//      고딕: 성당 스테인드글라스 + 기도 자세 + 성서적 엄숙함
+//      로마네스크: 교회 프레스코 + 성서적 서사 + 수도원 분위기
 //
 // 미술사조 10개 (시간순):
 //   1. 고대 그리스-로마 (BC 800~AD 500) - 유지
-//   2. 중세 미술 (4~15세기) - 비잔틴·로마네스크·고딕·이슬람 확장
+//   2. 중세 미술 (4~15세기) - 비잔틴 50% 고딕 30% 로마네스크 20% ⭐ 종교성 강화
 //   3. 르네상스 (1400~1600) - 5명 화가 선택
 //   4. 바로크 (1600~1750) - 5명 화가 선택
 //   5. 로코코 (1720~1780) - 2명 화가 선택
-//   6. 신고전주의 vs 낭만주의 vs 사실주의 (1770~1870) - 7명 화가 선택 (AI가 3개 중 선택) ⭐
+//   6. 신고전주의 vs 낭만주의 vs 사실주의 (1770~1870) - 7명 화가 선택 (AI가 3개 중 선택)
 //      → David, Ingres (신고전주의)
 //      → Turner, Friedrich, Delacroix (낭만주의)
 //      → Millet, Manet (사실주의)
 //   7. 인상주의 (1860~1890) - 4명 화가 선택
 //   8. 후기인상주의 (1880~1910) - 4명 화가 선택
-//   9. 야수파 (1905~1908) - 3명 화가 선택 ⭐ NEW
+//   9. 야수파 (1905~1908) - 3명 화가 선택
 //  10. 표현주의 (1905~1920) - 5명 화가 선택
 //
 // 거장 6명 (시간순 + 생사연도):
 //   1. 반 고흐 (1853-1890, 후기인상주의)
 //   2. 클림트 (1862-1918, 아르누보)
 //   3. 뭉크 (1863-1944, 표현주의)
-//   4. 마티스 (1869-1954, 야수파) ⭐ 최적화
+//   4. 마티스 (1869-1954, 야수파)
 //   5. 피카소 (1881-1973, 입체주의)
-//   6. 달리 (1904-1989, 초현실주의) ⭐ 최적화
+//   6. 달리 (1904-1989, 초현실주의)
 
 
 // ========================================
@@ -265,23 +267,25 @@ Available Medieval Art Styles (4 styles):
 📍 FOR PORTRAITS/PEOPLE (인물화):
 ⚠️ NEVER use Islamic style - Islamic art prohibits human depiction!
 
-1. GOTHIC (고딕) ⭐⭐⭐ STRONGEST for people (45%)
-   - Specialty: Stained glass jewel colors, vertical elongated figures, heavenly light
-   - Best for: Most people photos
-   - Signature: Vibrant jewel-toned colors, Gothic cathedral atmosphere
-   - When to prioritize: Most portraits (DEFAULT 45%)
+1. BYZANTINE (비잔틴) ⭐⭐⭐ STRONGEST for people (50%)
+   - Specialty: SACRED GOLDEN MOSAIC backgrounds, flat iconic forms, divine transcendence
+   - Best for: Most people photos - Byzantine spirituality
+   - Signature: Gold leaf backgrounds, hieratic frontal poses, sacred eternal atmosphere
+   - When to prioritize: Most portraits (DEFAULT 50%)
 
-2. BYZANTINE (비잔틴) ⭐⭐⭐ STRONG for formal/sacred mood (35%)
-   - Specialty: Golden mosaic backgrounds, flat iconic forms, sacred dignity
-   - Best for: Formal poses, dignified expressions, sacred atmosphere
-   - Signature: Gold leaf backgrounds, spiritual transcendent mood
-   - When to prioritize: Formal/sacred mood (35%)
+2. GOTHIC (고딕) ⭐⭐ STRONG for religious/sacred mood (30%)
+   - Specialty: CATHEDRAL STAINED GLASS jewel colors, vertical elongation, DIVINE LIGHT
+   - Best for: Religious atmosphere, sacred expressions, heavenly mood
+   - Signature: Illuminated manuscript style, Gothic arch composition, HOLY SCRIPTURE aesthetic
+   - Religious elements: Cathedral setting, prayer gesture, biblical solemnity
+   - When to prioritize: Religious/sacred mood (30%)
 
-3. ROMANESQUE (로마네스크) - Solid/simple forms (20%)
-   - Specialty: Thick solid forms, round arches, simple sturdy beauty
-   - Best for: Simple compositions, solid stable feeling
-   - Signature: Solid massive forms, simple dignity
-   - When to prioritize: Simple/solid aesthetic (20%)
+3. ROMANESQUE (로마네스크) - Church fresco style (20%)
+   - Specialty: CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, monumental dignity
+   - Best for: Simple compositions, solemn religious scenes, medieval church atmosphere
+   - Signature: Stone relief flatness, ROMANESQUE CHURCH interior feeling, sacred geometric order
+   - Religious elements: Monastery setting, devotional mood, scriptural gravity
+   - When to prioritize: Simple sacred aesthetic (20%)
 
 📍 FOR NON-PORTRAITS (landscapes, objects, patterns):
 AI will choose among ALL 4 styles including Islamic:
@@ -305,17 +309,17 @@ IF photo has NO people (landscape/objects):
 function getMedievalHints(photoAnalysis) {
   const { count, subject } = photoAnalysis;
   
-  // 인물 있으면 → 고딕 45%, 비잔틴 35%, 로마네스크 20% (이슬람 제외!)
+  // 인물 있으면 → 비잔틴 50%, 고딕 30%, 로마네스크 20% (이슬람 제외!)
   if (count >= 1 || subject.includes('person') || subject.includes('people') || subject.includes('portrait')) {
     return `
 ⚠️ CRITICAL: This photo has PEOPLE
 → NEVER use Islamic style (prohibits human depiction)
 
-🎯 STRONG: GOTHIC (45%) - DEFAULT for people
-Stained glass jewel tones and heavenly light.
+🎯 STRONG: BYZANTINE (50%) - DEFAULT for people
+Sacred golden mosaic atmosphere with divine transcendence.
 Unless:
-- Formal/sacred mood → Byzantine (35%)
-- Simple/solid → Romanesque (20%)
+- Religious/sacred mood strongly needed → Gothic (30%) - Cathedral stained glass holiness
+- Simple church fresco feeling → Romanesque (20%) - Biblical narrative simplicity
 `;
   }
   
@@ -561,37 +565,37 @@ function getPostImpressionismGuidelines() {
   return `
 Available Post-Impressionism Artists (4명):
 
-1. SEURAT (쇠라) ⭐⭐⭐ for unique pointillism (25%)
+1. SEURAT (쇠라) ⭐⭐⭐ STRONGEST - Pointillism (기본값 45%)
    - Specialty: POINTILLISM technique with thousands of tiny colored dots, scientific color theory
-   - Best for: Creating distinctive pointillist look
+   - Best for: Most photos - creates unique distinctive look
    - Signature: A Sunday on La Grande Jatte - pointillist precision
-   - When to prioritize: Pointillist aesthetic (25%)
+   - When to prioritize: Most cases (DEFAULT 45%)
    - Note: 점묘법 = 초강력 개성! 일반인도 즉시 알아봄
 
-2. VAN GOGH (반 고흐) ⭐⭐⭐⭐ STRONGEST for emotional/expressive (33%)
+2. VAN GOGH (반 고흐) ⭐⭐⭐ BEST for emotional/swirling ONLY (30%)
    - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
    - Best for: Emotional subjects, starry skies, cypresses, swirling forms
    - Signature: Starry Night - turbulent passionate swirls
-   - When to prioritize: Emotional/expressive mood (33%)
+   - When to prioritize: Clear emotional/swirling mood ONLY (30%)
    - Note: Also available in Masters collection
 
-3. GAUGUIN (고갱) ⭐⭐⭐ for flat decorative (32%)
+3. GAUGUIN (고갱) - Best for flat decorative (20%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
    - Best for: Decorative aesthetic, simplified forms, exotic/tropical mood
    - Signature: Tahitian paintings - flat bold primitivism
-   - When to prioritize: Flat/decorative aesthetic (32%)
+   - When to prioritize: Clear flat/decorative aesthetic (20%)
 
-4. CÉZANNE (세잔) ⭐ for still life/geometric (10%)
+4. CÉZANNE (세잔) - Best for still life ONLY (5%)
    - Specialty: Geometric structured forms, solid volumes, analytical approach
-   - Best for: Still life, fruits, objects, geometric compositions
+   - Best for: Still life, fruits, objects ONLY
    - Signature: Still Life with Apples - geometric analysis
-   - When to prioritize: Still life or geometric forms (10%)
+   - When to prioritize: Clear still life photo ONLY (5%)
 
 🎯 CRITICAL DECISION LOGIC:
-- Emotional/expressive/passionate → VAN GOGH (33%, also in Masters)
-- Flat/decorative/primitive → GAUGUIN (32%)
-- Pointillist unique look → SEURAT (25%)
-- Still life/geometric forms → CÉZANNE (10%)
+- Most photos → SEURAT (DEFAULT 45%) ⭐⭐⭐ pointillism!
+- Emotional/swirling/starry ONLY → VAN GOGH (30%, also in Masters)
+- Flat/decorative → GAUGUIN (20%)
+- Still life ONLY → CÉZANNE (5%)
 `;
 }
 
@@ -708,19 +712,18 @@ function getExpressionismGuidelines() {
   return `
 Available Expressionism Artists (5명):
 
-1. MODIGLIANI (모딜리아니) ⭐⭐⭐ for SINGLE PERSON portraits (25%)
+1. MODIGLIANI (모딜리아니) ⭐⭐⭐ STRONGEST for elegant portraits (30%)
    - Specialty: EXTREME ELONGATED NECKS (swan-like 1.8x length!), almond eyes with no pupils, melancholic elegant beauty
-   - Best for: 1 PERSON portraits (upper body/full body), elegant graceful mood, occasionally 2 people
+   - Best for: Elegant graceful portraits, upper body shots, serene to melancholic mood
    - Signature: Long neck portraits with blank almond eyes - most distinctive feature
-   - When to prioritize: 1 person elegant portrait (25%), rarely 2 people
+   - When to prioritize: Elegant/graceful portrait mood (30%)
    - CRITICAL: FLUX must STRETCH neck to 1.8x and face to 1.5x vertically
-   - ⚠️ NOT for groups (3+ people)
 
-2. MUNCH (뭉크) ⭐⭐⭐ STRONGEST for anxiety/psychological (30%)
+2. MUNCH (뭉크) ⭐⭐⭐ STRONG for anxiety/psychological (25%)
    - Specialty: Existential anxiety, psychological tension, swirling distorted forms
-   - Best for: Anxious expressions, dramatic emotions, psychological intensity, any number of people
+   - Best for: Anxious expressions, dramatic emotions, psychological intensity
    - Signature: The Scream - iconic anxiety and modern alienation
-   - When to prioritize: Emotional/anxious/dramatic expressions (30%)
+   - When to prioritize: Emotional/anxious/dramatic expressions (25%)
    - Note: Also available in Masters collection
 
 3. EGON SCHIELE (에곤 실레) ⭐⭐⭐ STRONG for angular/distorted (20%)
@@ -745,8 +748,8 @@ Available Expressionism Artists (5명):
    - Warning: Reduces portrait recognition
 
 🎯 CRITICAL DECISION LOGIC:
-- 1 person elegant/graceful → MODIGLIANI (25%, rarely 2 people)
-- Emotional/anxious/dramatic → MUNCH (30%, also in Masters)
+- Elegant/graceful mood → MODIGLIANI (30%)
+- Emotional/anxious/dramatic → MUNCH (25%, also in Masters)
 - Full body/angular forms → EGON SCHIELE (20%)
 - Urban/bold colors/geometric → KIRCHNER (20%)
 - Abstract/spiritual mood → KANDINSKY (5%)
@@ -756,21 +759,12 @@ Available Expressionism Artists (5명):
 function getExpressionismHints(photoAnalysis) {
   const { count, shot_type, expression, background, subject } = photoAnalysis;
   
-  // 3명 이상 → 모딜리아니 제외
-  if (count >= 3) {
-    return `
-⚠️ 3+ people: Do NOT use MODIGLIANI (he only painted 1-2 person portraits)
-🎯 RECOMMENDATION: MUNCH (30%) or KIRCHNER (20%)
-Munch for emotional group scenes, Kirchner for urban/angular groups.
-`;
-  }
-  
   // 1명 초상 → 모딜리아니 또는 뭉크
   if (count === 1 && (shot_type === 'portrait' || shot_type === 'upper_body')) {
     // 불안/절규 표정 → 뭉크
     if (expression === 'anxious' || expression === 'fearful' || expression === 'scream' || expression === 'distressed') {
       return `
-🎯 RECOMMENDATION: MUNCH (30%)
+🎯 RECOMMENDATION: MUNCH (25%)
 Anxious/fearful/dramatic expression = Munch specialty!
 The Scream-like psychological intensity.
 Munch also available in Masters collection.
@@ -779,21 +773,12 @@ Munch also available in Masters collection.
     
     // 우아한 표정 → 모딜리아니
     return `
-🎯 RECOMMENDATION: MODIGLIANI (25%)
-1 person elegant portrait suits Modigliani's elongated neck style.
+🎯 RECOMMENDATION: MODIGLIANI (30%)
+Elegant portrait suits Modigliani's elongated neck style.
 Long swan-like neck creates distinctive look.
 But consider mood:
-- Dramatic/anxious → Munch (30%)
+- Dramatic/anxious → Munch (25%)
 - Angular pose → Egon Schiele (20%)
-`;
-  }
-  
-  // 2명 → 모딜리아니 가능하지만 드물게
-  if (count === 2) {
-    return `
-🎯 RECOMMENDATION: Consider MUNCH (30%) or rarely MODIGLIANI (25%)
-Modigliani rarely painted 2 people, but possible for elegant double portraits.
-Munch better for emotional/dramatic 2-person scenes.
 `;
   }
   
@@ -842,7 +827,7 @@ const fallbackPrompts = {
   
   medieval: {
     name: '중세 미술',
-    prompt: 'Medieval art painting in Gothic style (45%): vibrant stained glass jewel colors (ruby red sapphire blue emerald green), vertical elongated graceful figures, heavenly divine light, sacred spiritual atmosphere, gold halos and decorative details, flat symbolic forms, rich ornamental patterns, Byzantine golden mosaic influence (35%) or Romanesque solid simple forms (20%), unified composition all figures together, NOT photographic preserve facial identity, Medieval illuminated manuscript quality'
+    prompt: 'Medieval sacred religious art: BYZANTINE STYLE (50% primary): GOLDEN MOSAIC sacred backgrounds with shimmering gold leaf, flat hieratic frontal iconic figures, divine transcendent spiritual atmosphere, eternal timeless holy presence, mosaic tile patterns, sacred geometry; OR GOTHIC STYLE (30%): CATHEDRAL STAINED GLASS jewel tones (ruby red sapphire blue emerald green), vertical elongated figures reaching toward heaven, DIVINE HOLY LIGHT streaming through Gothic arches, illuminated manuscript borders and decorative initials, PRAYER GESTURES and BIBLICAL SOLEMNITY, sacred scripture aesthetic, monastery devotional mood; OR ROMANESQUE STYLE (20%): CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, stone relief aesthetic, MONASTIC SETTING with heavy rounded arches, medieval church interior atmosphere, scriptural gravity and devotional dignity, unified composition all figures together, NOT photographic preserve facial identity, Medieval sacred masterpiece quality with religious reverence'
   },
   
   renaissance: {
@@ -872,7 +857,7 @@ const fallbackPrompts = {
   
   postImpressionism: {
     name: '후기인상주의',
-    prompt: 'Post-Impressionist pointillist painting by Georges Seurat: thousands of tiny SOFT PASTEL-TONED dots creating luminous gentle atmosphere, DESATURATED harmonious colors blending optically, light airy peaceful mood, dots should appear SOFT not harsh, colors muted and delicate (pale blues pinks yellows greens), pointillist technique with serene harmonious composition, NOT photographic preserve facial identity'
+    prompt: 'Post-Impressionist painting style by Vincent van Gogh, bold expressive colors, geometric structured forms, emotional symbolic content, innovative personal vision, swirling passionate brushstrokes, painted in Post-Impressionist masterpiece quality'
   },
   
   fauvism: {
@@ -882,7 +867,7 @@ const fallbackPrompts = {
   
   expressionism: {
     name: '표현주의',
-    prompt: 'Expressionist painting by Amedeo Modigliani: ELONGATED SWAN-LIKE NECK stretched to 1.8-2.0x normal length, LONG OVAL FACE with ELONGATED NARROW CHIN stretched vertically to 1.5x, almond-shaped eyes (minimal or no pupils), lowered sloping shoulders, painted with VERY THIN DELICATE BRUSH creating slender graceful lines, simplified smooth contours, DESATURATED muted earth tones (ochre sienna grey-blue), dark shadowy background, NOT photographic preserve facial identity'
+    prompt: 'Expressionist painting by Amedeo Modigliani: STRETCH neck vertically to 1.8-2.0x DOUBLE the normal length, STRETCH face vertically to 1.5x elongated oval, ALMOND-SHAPED eyes ABSOLUTELY NO PUPILS NO iris (completely blank dark outlined), TILT head slightly, simplified smooth contours, DESATURATED muted earth tones (ochre sienna grey-blue), dark shadowy background, NOT photographic preserve facial identity'
   },
   
   // ========================================
