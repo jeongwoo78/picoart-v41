@@ -1,9 +1,21 @@
-// PicoArt v47 - Ancient Greek Marble Sculpture with Expressive Eyes
+// PicoArt v49 - Ancient Greek-Roman Smart Subject Detection
+// v49: 고대 그리스-로마 스마트 주체 판단 시스템
+//      
+//      선택지 1: 인물 초상 주체 → 미론 스타일 대리석 조각
+//        - 개인 초상화 (전신/상반신/헤드샷)
+//        - 스포츠 액션샷
+//        - 단체 스포츠 사진 (인물이 주체)
+//        → 순수 흰색 대리석, 생동감 있는 포즈, 눈동자 표현
+//      
+//      선택지 2: 풍경 배경 주체 → 큰 타일 모자이크
+//        - 자연 풍경
+//        - 도시 풍경
+//        - 풍경 속 작은 사람들 (배경이 주체)
+//        → 명확한 큰 타일, 그라우트 라인, 픽셀 효과
+//
+// v48: 고대 그리스-로마 2가지 스타일 시스템 (인물 유무 기준 - 단순함)
+//
 // v47: 고대 그리스 대리석 조각 + 생동감 있는 눈동자
-//      순수 흰색/크림색 대리석 조각
-//      명확한 동공 표현 (조각되거나 그려진)
-//      생생한 시선과 표정
-//      채색 없음 - 깔끔한 대리석 미학
 //
 // v46: 르네상스 남성 초상화 최적화
 //      남성 상반신 → 티치아노 70% (베네치아 초상화 전통)
@@ -859,7 +871,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek WHITE MARBLE sculpture in classical style with dynamic lifelike composition: PURE WHITE MARBLE material NOT bronze or brown stone, smooth pale ivory white stone surface, three-dimensional sculptural relief with multiple figures in natural animated poses showing movement and life, expressive faces with visible pupils in eyes giving focus and vitality, detailed carved drapery flowing with motion, classical Greek idealized proportions and anatomy, sculptural depth and volume with figures emerging from background, energetic dynamic composition NOT static, temple frieze or monument aesthetic. CRITICAL: sculpture must be WHITE MARBLE or PALE CREAM STONE color NOT bronze NOT brown NOT golden, maintain the pale luminous quality of Carrara marble. Light neutral background. Greek Parthenon frieze style with lively narrative action. Unified composition, NOT photographic preserve facial identity, ancient Greek white marble relief sculpture masterpiece with expressive animated quality'
+    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT FOCUS (NOT just presence of people): OPTION 1 FOR PORTRAIT SUBJECTS (individual person as main subject - full body portrait, upper body portrait, headshot, sports action shots, group sports photos where people are main focus): Myron-style Greek marble sculpture - pure white marble classical sculpture inspired by ancient Greek sculptor Myron, three-dimensional sculptural form with smooth pale ivory stone surface, dynamic lifelike athletic poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple statue aesthetic with animated quality, light neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE SUBJECTS (landscape as main subject - nature scenes, cityscapes, landscapes with small background people where scenery is focus NOT people): Large tile Roman mosaic - ancient Roman mosaic art with CLEARLY VISIBLE LARGE TILES and grout lines between tiles, each tile piece distinct and recognizable creating pixelated mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION: Sports team photo or action shot with people as subject = MARBLE SCULPTURE. Scenic landscape with tiny people in background = MOSAIC. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
   },
   
   medieval: {
