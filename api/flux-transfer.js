@@ -1,19 +1,23 @@
-// PicoArt v55 - Group Photos Mosaic + Material Freedom + Islamic Aniconism
-// v55: 3가지 중요 수정
-//      1. 단체 사진 = 모자이크 (여러 명 함께)
-//         예: 가족 사진, 단체 사진 → 모자이크
-//         단, 역동적 스포츠는 여전히 조각!
-//      2. 재질 자유화 복구 (v51로)
-//         "white marble, bronze, or tinted stone"
-//         + 배경 "simple plain neutral" (회화 느낌 방지)
-//      3. 이슬람 기하학 인물 금지 강화! 🚨
-//         "ABSOLUTELY NO HUMAN FIGURES OR FACES"
-//         "pure geometric and floral patterns only"
-//         여자 얼굴 나온 버그 수정!
-//      4. 모자이크 타일 가시성 강조
-//         "clearly visible tesserae tiles with distinct grout lines"
+// PicoArt v56 - 50% Composition Rule + Pure White Marble
+// v56: 명확한 구성 비율 기준 + 순백 대리석
+//      핵심 기준: 인물이 사진의 50% 이상 차지하는가?
+//        YES (50%+) → 순백 대리석 조각
+//        NO (<50%) → 로마 모자이크
+//      우선순위:
+//        1. 역동적 스포츠 = 조각 (구성 무관)
+//        2. 인물 50%+ = 조각
+//        3. 인물 <50% = 모자이크
+//        4. 인물 없음 = 모자이크
+//      재질 단순화: pure white marble (가장 고전적)
+//      폴리크로미 유지: 눈동자, 입술, 옷 채색
+//      
+//      예시:
+//        ✅ 배구 = 조각 (역동성)
+//        ✅ 커플 클로즈업 = 조각 (인물 80%)
+//        ✅ 강가 부자 와이드 = 모자이크 (인물 30%)
+//        ✅ 해바라기 = 모자이크 (인물 0%)
 //
-// v54: 역동성 우선순위 (스포츠=조각)
+// v55: 단체/재질/이슬람 (복잡했던 버전)
 //
 // v47: 고대 그리스 대리석 조각 + 생동감 있는 눈동자
 //
@@ -62,39 +66,41 @@ function getAncientGreekRomanGuidelines() {
 Available Ancient Greek-Roman Styles (2가지):
 
 ⭐ STYLE 1: CLASSICAL SCULPTURE (고대 그리스-로마 조각)
-   - For: DYNAMIC ACTION & INDIVIDUAL PORTRAITS - movement/sports OR single person
-   - PRIORITY CRITERION: Any dynamic movement, action, sports, athletic poses
-   - Examples: Sports (volleyball, soccer, basketball, running, jumping)
-              Action shots with movement and energy
-              Athletic poses and dynamic gestures
-              Individual portrait photos (one person)
-   - Materials: White marble, bronze, or tinted stone (AI chooses - bronze for sports!)
-   - Technique: Dynamic athletic poses, visible pupils in eyes, sculptural curls
-   - Polychromy: Marble should include subtle painted details (eyes, lips, clothing)
-   - Background: Simple plain neutral background for sculpture aesthetic
-   - Aesthetic: Classical Greek/Roman sculpture, captures movement and vitality
+   - For: PEOPLE-FOCUSED PHOTOS - people占 50% or more of composition
+   - PRIORITY: Dynamic movement/action/sports (regardless of composition)
+   - Examples: Sports action shots (any composition)
+              Portrait close-ups (people dominant)
+              Upper body shots (people 80%+)
+              Group photos where people fill most of frame
+              Any photo where human figures are main visual focus
+   - Material: Pure white marble only (classical aesthetic)
+   - Technique: Dynamic poses, visible pupils in eyes, sculptural curls
+   - Polychromy: Marble includes subtle painted details (eyes, lips, clothing)
+   - Background: Simple plain neutral background
+   - Aesthetic: Classical Greek/Roman white marble sculpture
 
 ⭐ STYLE 2: ROMAN MOSAIC (로마 모자이크)
-   - For: LANDSCAPE/GROUP PHOTOS - scenery elements OR multiple people together
-   - Examples: Mountains, rivers, sky, trees, buildings, flowers
-              Group photos with multiple people (families, teams in non-action)
-              People in nature settings
-              Peaceful outdoor scenes
-              Landscapes with or without people
+   - For: LANDSCAPE-FOCUSED PHOTOS - people占 less than 50% OR no people
+   - Examples: Wide landscape shots with small distant people
+              Nature scenes where scenery dominates
+              Mountains, rivers, sky, trees as main subject
+              People as small elements in large environment
+              Flowers, plants, objects without people
    - Technique: Clearly visible tesserae tiles with distinct grout lines
-              Recognizable mosaic texture, NOT smooth painting
-   - Aesthetic: Roman floor/wall mosaic, jewel-tone colors, decorative patterns
+   - Aesthetic: Roman floor/wall mosaic, jewel-tone colors
 
-🎯 KEY DECISION RULE - PRIORITY ORDER:
-1. Is there DYNAMIC MOVEMENT/ACTION/SPORTS? → SCULPTURE (even if multiple people!)
-2. Is it a GROUP PHOTO (multiple people)? → MOSAIC
-3. Is it STATIC photo WITH landscape? → MOSAIC
-4. Is it INDIVIDUAL portrait? → SCULPTURE
+🎯 KEY DECISION RULE - COMPOSITION BASED:
+1. Is there DYNAMIC ACTION/SPORTS? → SCULPTURE (priority!)
+2. Do people占 50% or MORE of the photo? → SCULPTURE
+3. Do people占 LESS than 50% (landscape dominant)? → MOSAIC
+4. No people (flowers, nature, objects)? → MOSAIC
+
 Examples:
-- Volleyball game = SCULPTURE (dynamic action is priority!)
-- Family group photo = MOSAIC (multiple people)
-- Dad and child in river = MOSAIC (landscape + multiple people)
-- Individual portrait = SCULPTURE (one person)
+- Volleyball game = SCULPTURE (dynamic action)
+- Couple close-up portrait = SCULPTURE (people 80% of frame)
+- Dad and child in wide river landscape = MOSAIC (people 30% of frame)
+- Mountain landscape with tiny hikers = MOSAIC (people 10% of frame)
+- Sunflower = MOSAIC (no people)
 `;
 }
 
@@ -980,7 +986,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT FOCUS: OPTION 1 FOR DYNAMIC INDIVIDUAL/SPORTS SUBJECTS (dynamic action sports athletic movement OR individual portraits): Greek-Roman classical sculpture - white marble, bronze, or tinted stone material inspired by ancient Greek sculptors, three-dimensional sculptural form with smooth stone or bronze surface, dynamic lifelike athletic poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures should include subtle painted details on eyes lips and clothing (ancient polychromy), simple plain neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE/GROUP SUBJECTS (landscape nature elements OR group photos with multiple people OR static peaceful scenes): Roman mosaic - ancient Roman mosaic art with clearly visible tesserae tiles and distinct grout lines creating recognizable mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION PRIORITY: ANY dynamic action sports = SCULPTURE. Group photos with multiple people = MOSAIC. Static with landscape = MOSAIC. Individual portrait = SCULPTURE. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
+    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT COMPOSITION: OPTION 1 FOR PEOPLE-FOCUSED SUBJECTS (people占 50% or more of image composition OR dynamic action sports): Greek-Roman classical sculpture - pure white marble classical sculpture inspired by ancient Greek sculptors, three-dimensional sculptural form with smooth pale marble surface, dynamic lifelike poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures should include subtle painted details on eyes lips and clothing (ancient polychromy), simple plain neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE-FOCUSED SUBJECTS (people占 less than 50% of image OR landscape nature dominates composition OR no people): Roman mosaic - ancient Roman mosaic art with clearly visible tesserae tiles and distinct grout lines creating recognizable mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION: Dynamic sports action = SCULPTURE. People占 50%+ of photo = SCULPTURE. People占 <50% with landscape dominant = MOSAIC. Flowers/nature without people = MOSAIC. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
   },
   
   medieval: {
