@@ -1,19 +1,10 @@
-// PicoArt v49 - Ancient Greek-Roman Smart Subject Detection
-// v49: 고대 그리스-로마 스마트 주체 판단 시스템
-//      
-//      선택지 1: 인물 초상 주체 → 미론 스타일 대리석 조각
-//        - 개인 초상화 (전신/상반신/헤드샷)
-//        - 스포츠 액션샷
-//        - 단체 스포츠 사진 (인물이 주체)
-//        → 순수 흰색 대리석, 생동감 있는 포즈, 눈동자 표현
-//      
-//      선택지 2: 풍경 배경 주체 → 큰 타일 모자이크
-//        - 자연 풍경
-//        - 도시 풍경
-//        - 풍경 속 작은 사람들 (배경이 주체)
-//        → 명확한 큰 타일, 그라우트 라인, 픽셀 효과
+// PicoArt v51 - Ancient Sculpture Material Flexibility + Polychromy
+// v51: 고대 조각 재료 다양화 + 채색 추가
+//      조각: 흰 대리석 / 청동 / 착색 석재 (AI 선택)
+//      대리석 채색: 눈동자, 입술, 옷 등 고대 폴리크로미 재현
+//      역사적 정확성 향상! (그리스 원본 = 주로 청동)
 //
-// v48: 고대 그리스-로마 2가지 스타일 시스템 (인물 유무 기준 - 단순함)
+// v50: 고대 그리스-로마 가이드라인 시스템 추가
 //
 // v47: 고대 그리스 대리석 조각 + 생동감 있는 눈동자
 //
@@ -55,6 +46,79 @@
 // ========================================
 // 사조별 화가 가이드라인 함수
 // ========================================
+
+// 고대 그리스-로마 (2가지 스타일)
+function getAncientGreekRomanGuidelines() {
+  return `
+Available Ancient Greek-Roman Styles (2가지):
+
+⭐ STYLE 1: CLASSICAL SCULPTURE (고대 그리스-로마 조각)
+   - For: PORTRAIT SUBJECTS where people are the MAIN FOCUS
+   - Examples: Individual portraits (full body, upper body, headshot)
+              Sports action shots with athletes as main subject
+              Group sports photos where people are primary focus
+              Any photo where human figures dominate composition
+   - Materials: White marble, bronze, or tinted stone (AI chooses best)
+   - Technique: Dynamic athletic poses, visible pupils in eyes, sculptural curls
+   - Special: Marble may have subtle painted details (ancient polychromy on eyes, lips, clothing)
+   - Aesthetic: Classical Greek/Roman sculpture, lifelike movement, three-dimensional form
+
+⭐ STYLE 2: ROMAN MOSAIC (로마 모자이크)
+   - For: LANDSCAPE SUBJECTS where scenery is the MAIN FOCUS
+   - Examples: Nature landscapes, cityscapes, still life objects
+              Scenic views with tiny background people
+              Flowers, plants, objects as main subject
+              Any photo where background/environment dominates
+   - Technique: Large visible tiles, grout lines, pixelated mosaic effect
+   - Aesthetic: Roman floor/wall mosaic, jewel-tone colors, geometric patterns
+
+🎯 KEY DECISION RULE:
+- Is the photo ABOUT people (their faces, bodies, actions)? → SCULPTURE (bronze/marble/stone)
+- Is the photo ABOUT scenery/objects (landscape, flowers, buildings)? → MOSAIC
+`;
+}
+
+function getAncientGreekRomanHints(photoAnalysis) {
+  const { count, subject, shot_type } = photoAnalysis;
+  
+  // 풍경/정물 → 모자이크
+  if (subject === 'landscape' || subject === 'flowers' || subject === 'plants' || 
+      subject === 'cityscape' || subject === 'objects' || subject === 'still_life' ||
+      subject.includes('flower') || subject.includes('plant') || subject.includes('tree')) {
+    return `
+🎯 STRONG RECOMMENDATION: ROMAN MOSAIC (로마 모자이크)
+This is a landscape/still-life subject - perfect for Roman mosaic!
+Flowers, plants, or scenery should use the mosaic style with visible tiles.
+`;
+  }
+  
+  // 1명 초상 → 조각
+  if (count === 1 && (shot_type === 'portrait' || shot_type === 'upper_body' || shot_type === 'full_body')) {
+    return `
+🎯 STRONG RECOMMENDATION: CLASSICAL SCULPTURE (고대 조각)
+Individual portrait - perfect for Greek-Roman sculpture!
+AI will choose best material: white marble, bronze, or tinted stone.
+People as main subject should use the classical sculpture style.
+`;
+  }
+  
+  // 단체/스포츠 → 조각
+  if (count > 1 || subject.includes('sport') || subject.includes('team') || subject.includes('group')) {
+    return `
+🎯 STRONG RECOMMENDATION: CLASSICAL SCULPTURE (고대 조각)
+Group/sports photo - perfect for dynamic Greek-Roman sculpture!
+AI will choose best material: marble, bronze, or stone for athletic poses.
+People in action should use the classical sculpture style.
+`;
+  }
+  
+  // 기본값 → 주체 분석 필요
+  return `
+🎯 Analyze carefully:
+- If people are the MAIN SUBJECT → CLASSICAL SCULPTURE (marble/bronze/stone)
+- If landscape/objects are the MAIN SUBJECT → MOSAIC
+`;
+}
 
 // 르네상스 (5명)
 function getRenaissanceGuidelines() {
@@ -871,7 +935,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT FOCUS (NOT just presence of people): OPTION 1 FOR PORTRAIT SUBJECTS (individual person as main subject - full body portrait, upper body portrait, headshot, sports action shots, group sports photos where people are main focus): Myron-style Greek marble sculpture - pure white marble classical sculpture inspired by ancient Greek sculptor Myron, three-dimensional sculptural form with smooth pale ivory stone surface, dynamic lifelike athletic poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple statue aesthetic with animated quality, light neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE SUBJECTS (landscape as main subject - nature scenes, cityscapes, landscapes with small background people where scenery is focus NOT people): Large tile Roman mosaic - ancient Roman mosaic art with CLEARLY VISIBLE LARGE TILES and grout lines between tiles, each tile piece distinct and recognizable creating pixelated mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION: Sports team photo or action shot with people as subject = MARBLE SCULPTURE. Scenic landscape with tiny people in background = MOSAIC. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
+    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT FOCUS (NOT just presence of people): OPTION 1 FOR PORTRAIT SUBJECTS (individual person as main subject - full body portrait, upper body portrait, headshot, sports action shots, group sports photos where people are main focus): Greek-Roman classical sculpture - white marble, bronze, or tinted stone material inspired by ancient Greek sculptor Myron and classical sculptors, three-dimensional sculptural form with smooth stone or bronze surface, dynamic lifelike athletic poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures may have subtle painted details on eyes lips and clothing (ancient polychromy), light neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE SUBJECTS (landscape as main subject - nature scenes, cityscapes, landscapes with small background people where scenery is focus NOT people): Large tile Roman mosaic - ancient Roman mosaic art with CLEARLY VISIBLE LARGE TILES and grout lines between tiles, each tile piece distinct and recognizable creating pixelated mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION: Sports team photo or action shot with people as subject = SCULPTURE. Scenic landscape with tiny people in background = MOSAIC. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
   },
   
   medieval: {
@@ -1178,7 +1242,10 @@ Keep it concise and accurate.`;
         composition: 'normal'
       };
       
-      if (categoryType === 'renaissance') {
+      if (categoryType === 'ancient') {
+        guidelines = getAncientGreekRomanGuidelines();
+        hints = getAncientGreekRomanHints(photoAnalysis);
+      } else if (categoryType === 'renaissance') {
         guidelines = getRenaissanceGuidelines();
         hints = getRenaissanceHints(photoAnalysis);
       } else if (categoryType === 'baroque') {
@@ -1228,7 +1295,30 @@ Keep it concise and accurate.`;
       
       // 상세 가이드라인이 있는 사조
       if (guidelines) {
-        promptText = `Select the BEST ${categoryName} artist for this photo.
+        // 고대 그리스-로마는 스타일 선택 (화가 아님)
+        if (categoryType === 'ancient') {
+          promptText = `Select the BEST ${categoryName} STYLE for this photo.
+
+${guidelines}
+
+${hints}
+
+Instructions:
+1. Analyze photo: Is it about PEOPLE or LANDSCAPE/OBJECTS?
+2. Follow RECOMMENDATIONS (80% weight)
+3. Choose CLASSICAL SCULPTURE or MOSAIC
+4. Preserve subject identity
+
+Return JSON only:
+{
+  "analysis": "brief (1 sentence)",
+  "selected_artist": "Classical Sculpture" or "Roman Mosaic",
+  "reason": "why this style fits (1 sentence)",
+  "prompt": "Ancient Greek-Roman art in [chosen style], [style characteristics from guidelines], depicting subject while preserving original features"
+}`;
+        } else {
+          // 다른 사조들은 화가 선택
+          promptText = `Select the BEST ${categoryName} artist for this photo.
 
 ${guidelines}
 
@@ -1247,6 +1337,7 @@ Return JSON only:
   "reason": "why (1 sentence)",
   "prompt": "painting by [Artist], [technique], depicting subject with preserved facial features in unified artistic composition"
 }`;
+        }
       }
     }
     
