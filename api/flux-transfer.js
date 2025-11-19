@@ -1,10 +1,11 @@
-// PicoArt v47 - Ancient Greek-Roman Marble Sculpture Enhancement
-// v47: 고대 그리스-로마 대리석 조각 스타일 강화
-//      인물을 살아있는 대리석 조각처럼 표현
-//      - 부드러운 흰색 대리석 피부 질감
-//      - 이상화된 고전적 비율과 완벽한 해부학
-//      - 명확한 윤곽선과 조각적 입체감
-//      - 신고전주의 회화 기법 (Jacques-Louis David)
+// PicoArt v47 - Ancient Greek Polychromy (Painted Sculpture)
+// v47: 고대 그리스 폴리크로미 (채색 조각) 스타일
+//      역사적으로 정확한 고대 그리스 채색 대리석 조각
+//      - 흰색 대리석 위에 밝고 생생한 원색 채색
+//      - 빨강, 파랑, 노랑, 초록 등 선명한 원색의 옷
+//      - 따뜻한 살색으로 채색된 피부
+//      - 밝은 배경 (크림, 흰색, 하늘색)
+//      - 신고전주의 아님, 진짜 고대 그리스 스타일
 //
 // v46: 르네상스 남성 초상화 최적화
 //      남성 상반신 → 티치아노 70% (베네치아 초상화 전통)
@@ -860,7 +861,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek-Roman Neoclassical painting by Jacques-Louis David: figures with SMOOTH PALE MARBLE-LIKE SKIN in white ivory and cream tones resembling polished stone sculpture, but wearing RICHLY COLORED classical Greek robes and drapery in vibrant ochre terracotta deep reds soft blues warm oranges and golden yellows flowing in elegant folds, PAINTED BACKGROUND with warm golden beige and soft terracotta tones featuring classical temple architecture Greek columns and ancient scenery, sculptural idealized classical proportions with perfect anatomy, smooth academic brushwork with refined transitions, serene noble dignified expressions, the painting shows Greek sculptural figures brought to life with painted colored garments against painted backgrounds, harmonious composition with marble-like skin contrasting beautifully against rich fabric colors, Neoclassical academic technique combining sculptural forms with painterly color, unified composition, NOT photographic preserve facial identity, painted in ancient classical masterpiece quality like Jacques-Louis David Neoclassical paintings'
+    prompt: 'Ancient Greek polychromy style - PAINTED MARBLE SCULPTURE as it originally appeared in antiquity: smooth white marble sculptural forms with BRIGHT VIVID COLORS painted directly on the stone surface, skin rendered as polished marble with warm peachy-pink painted flesh tones, BRILLIANT PRIMARY COLORS on clothing and drapery including vivid reds bright blues golden yellows and rich greens painted with flat areas of pure color, hair painted in deep blacks rich browns or shining golds, jewelry and ornaments in metallic gold and silver painted details, BRIGHT LIGHT BACKGROUND in pale cream white or soft sky blue, the aesthetic of ancient Greek sculptures as they truly were with vibrant polychrome painting on marble, clear sculptural contours and idealized classical proportions, painted patterns and decorative borders on garments, cheerful bright luminous atmosphere unlike faded white museums, historically accurate ancient Greek temple sculpture polychromy, unified composition, NOT photographic preserve facial identity, ancient Greek painted sculpture masterpiece quality'
   },
   
   medieval: {
