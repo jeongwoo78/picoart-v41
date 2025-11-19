@@ -1,14 +1,19 @@
-// PicoArt v45 - Medieval Islamic Art Update
+// PicoArt v46 - Renaissance Male Portrait Enhancement
+// v46: 르네상스 남성 초상화 최적화
+//      남성 상반신 → 티치아노 70% (베네치아 초상화 전통)
+//      여성 상반신 → 다 빈치 80% (모나리자 스푸마토)
+//      남성 전신 → 미켈란젤로 (다비드 영웅성)
+//
 // v45: 중세 미술에 이슬람 미술 2가지 스타일 추가
 //      인물 사진: 비잔틴 30% / 고딕 25% / 로마네스크 20% / 이슬람 세밀화 25%
 //      풍경 사진: 비잔틴 / 고딕 / 로마네스크 / 이슬람 기하학 (AI 선택, 세밀화 금지)
 //
 // 미술사조 10개 (시간순):
 //   1. 고대 그리스-로마 (BC 800~AD 500) - 유지
-//   2. 중세 미술 (4~15세기) - 비잔틴·고딕·로마네스크·이슬람 ⭐ 이슬람 2가지 추가
+//   2. 중세 미술 (4~15세기) - 비잔틴·고딕·로마네스크·이슬람
 //      → Islamic Miniature: 인물 전용 (페르시아 세밀화, 궁정 우아함)
 //      → Islamic Geometric: 풍경 전용 (기하학 패턴, 아라베스크)
-//   3. 르네상스 (1400~1600) - 5명 화가 선택
+//   3. 르네상스 (1400~1600) - 5명 화가 선택 ⭐ 남성 초상화 최적화
 //   4. 바로크 (1600~1750) - 5명 화가 선택
 //   5. 로코코 (1720~1780) - 2명 화가 선택
 //   6. 신고전주의 vs 낭만주의 vs 사실주의 (1770~1870) - 7명 화가 선택 (AI가 3개 중 선택)
@@ -45,11 +50,12 @@ Available Renaissance Artists (5명):
    - Masterpiece: Mona Lisa
    - When to prioritize: Female face/upper body portrait (STRONG RECOMMENDATION 80%)
 
-2. TITIAN (티치아노) - Best for landscapes with sky/sunset
-   - Specialty: Golden Venetian color, luminous skies, rich warm tones
-   - Best for: Landscapes, sunset scenes, outdoor backgrounds
-   - Signature: Glowing golden atmosphere, Venetian warmth
-   - When to prioritize: Clear sky/landscape/sunset elements
+2. TITIAN (티치아노) ⭐⭐ STRONG for male portraits & landscapes (70%)
+   - Specialty: Venetian golden color, luminous flesh tones, ARISTOCRATIC MALE PORTRAITS
+   - Best for: MALE upper body portraits, landscapes with sky/sunset, noble dignified men
+   - Signature: Rich Titian red, glowing golden atmosphere, Venetian warmth and power
+   - Masterpieces: Portrait of a Man, Venetian nobleman portraits
+   - When to prioritize: Male face/upper body portrait (STRONG 70%) OR landscapes with sky
 
 3. RAPHAEL (라파엘로) - Best for mother+baby, peaceful scenes
    - Specialty: Harmonious balanced composition, graceful figures, serene beauty
@@ -84,6 +90,18 @@ will create the most iconic Renaissance portrait.
 Unless this is clearly:
 - Landscape/sunset (→ Titian)
 - Young female full body with graceful pose (→ Botticelli)
+`;
+  }
+  
+  // 남성 상반신 → 티치아노 (70%) ⭐ NEW
+  if (count === 1 && gender === 'male' && (shot_type === 'portrait' || shot_type === 'upper_body')) {
+    return `
+🎯 STRONG RECOMMENDATION: TITIAN (70% priority)
+This is a male portrait - perfect for Titian's Venetian portrait tradition!
+His rich golden colors, luminous flesh tones, and aristocratic dignity
+create powerful Renaissance male portraits.
+Unless this is clearly:
+- Male full body heroic pose (→ Michelangelo)
 `;
   }
   
