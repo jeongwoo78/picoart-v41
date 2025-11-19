@@ -1,4 +1,11 @@
-// PicoArt v46 - Renaissance Male Portrait Enhancement
+// PicoArt v47 - Ancient Greek-Roman Marble Sculpture Enhancement
+// v47: 고대 그리스-로마 대리석 조각 스타일 강화
+//      인물을 살아있는 대리석 조각처럼 표현
+//      - 부드러운 흰색 대리석 피부 질감
+//      - 이상화된 고전적 비율과 완벽한 해부학
+//      - 명확한 윤곽선과 조각적 입체감
+//      - 신고전주의 회화 기법 (Jacques-Louis David)
+//
 // v46: 르네상스 남성 초상화 최적화
 //      남성 상반신 → 티치아노 70% (베네치아 초상화 전통)
 //      여성 상반신 → 다 빈치 80% (모나리자 스푸마토)
@@ -853,7 +860,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'ancient Greek and Roman classical painting style, idealized human forms, marble-like smooth rendering, heroic noble figures, classical drapery, temple architecture, serene dignified expressions, single unified composition with all figures in one cohesive harmonious scene NOT separated into multiple groups, painted in ancient classical masterpiece quality'
+    prompt: 'Ancient Greek-Roman Neoclassical painting style depicting the subject as LIVING MARBLE SCULPTURE: render the figure with SMOOTH WHITE MARBLE skin texture like polished stone, idealized classical proportions with perfect anatomical beauty, sharp clear contours defining sculptural three-dimensional forms, pale ivory cream and white tones for skin like Carrara marble, classical Greek draped robes and garments in flowing elegant folds, painted in Neoclassical technique by Jacques-Louis David with precise academic rendering, warm golden ochre and soft terracotta background, ancient Greek temple columns and classical architecture, serene noble dignified expression with timeless eternal beauty, the figure appears as if a perfect Greek statue brought to life in painting form, marble-like smoothness and polish, sculptural volume and monumentality, unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
   },
   
   medieval: {
