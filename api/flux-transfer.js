@@ -2168,7 +2168,7 @@ export default async function handler(req, res) {
                           finalPrompt.toLowerCase().includes('pointillist');
     
     let paintingEnforcement;
-    if (isSeuratPointillism) {
+    if (isPointillism) {
       // 쇠라: brushstrokes 제외
       paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
       console.log('ℹ️ Seurat mode: paintingEnforcement WITHOUT brushstrokes');
