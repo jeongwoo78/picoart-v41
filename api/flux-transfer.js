@@ -1421,11 +1421,15 @@ ${guidelines}
 ${hints}
 
 Instructions:
-1. Analyze photo: people count, subject, mood, age
-2. Follow RECOMMENDATIONS (70-80% weight)
-3. Choose most DISTINCTIVE artist/style
-4. Preserve facial identity
-5. IMPORTANT: Include DETAILED style characteristics in your prompt
+1. 🚨 FIRST CHECK: Does this photo have ANIMALS?
+   - If YES → MUST choose Islamic Miniature (ONLY safe option)
+   - NEVER Byzantine/Gothic/Romanesque for animals (religious context!)
+2. Analyze photo: people count, subject, mood, age
+3. Follow RECOMMENDATIONS (70-80% weight)
+4. Choose most DISTINCTIVE artist/style
+5. Preserve facial identity
+6. IMPORTANT: Include DETAILED style characteristics in your prompt
+   - For Islamic Miniature with animals: mention "Persian/Ottoman court painting, garden or hunting scenes with animals, vibrant jewel colors, ornamental floral patterns, secular courtly aesthetic"
    - For Islamic Geometric: mention "CLEARLY VISIBLE geometric patterns, Islamic tessellation, star patterns, interlocking shapes, arabesque motifs, symmetrical geometric composition, decorative Islamic mosaic aesthetic" AND CRITICAL: "ABSOLUTELY NO HUMAN FIGURES OR FACES, pure geometric and floral patterns only, Islamic aniconism tradition"
    - For Byzantine: mention "golden mosaic backgrounds with shimmering gold leaf, flat hieratic frontal figures, divine sacred atmosphere"
    - For Gothic: mention "cathedral stained glass jewel tones, vertical elongated figures, divine holy light streaming through Gothic arches" AND "FLAT TWO-DIMENSIONAL medieval style NOT realistic smooth painting, angular linear forms with hard edges like stained glass panels"
