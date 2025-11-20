@@ -1403,13 +1403,18 @@ Instructions - PRIORITY ORDER:
 4. FOURTH: Portrait without landscape → CLASSICAL SCULPTURE
 5. Follow RECOMMENDATIONS (80% weight)
 6. Preserve subject identity
+7. 🎭 CRITICAL: Transform modern clothing to ancient Greek-Roman style
+   - Modern clothes → togas, tunics, chitons, himations
+   - Sneakers → sandals or barefoot
+   - T-shirts/jeans → draped garments
+   - Keep facial features, change costume to historical accuracy
 
 Return JSON only:
 {
   "analysis": "brief - note if animals/dynamic/static (1 sentence)",
   "selected_artist": "Classical Sculpture" or "Roman Mosaic",
   "reason": "why this style fits, mention animals/dynamic/static (1 sentence)",
-  "prompt": "Ancient Greek-Roman art in [chosen style], [style characteristics - for Sculpture mention material choice, for Mosaic mention tesserae tiles], depicting subject while preserving original features"
+  "prompt": "Ancient Greek-Roman art in [chosen style], [style characteristics - for Sculpture mention material choice, for Mosaic mention tesserae tiles], TRANSFORM modern clothing to ancient Greek-Roman costume (togas, tunics, chitons, draped garments), depicting subject while preserving original facial features"
 }`;
         } else {
           // 다른 사조들은 화가 선택
