@@ -765,79 +765,86 @@ function getPostImpressionismGuidelines() {
   return `
 Available Post-Impressionism Artists (4명):
 
-1. SEURAT (쇠라) ⭐⭐⭐ STRONGEST - Pointillism (기본값 45%)
-   - Specialty: POINTILLISM technique with thousands of tiny colored dots, scientific color theory
-   - Best for: Most photos - creates unique distinctive look
-   - Signature: A Sunday on La Grande Jatte - pointillist precision
-   - When to prioritize: Most cases (DEFAULT 45%)
-   - Note: 점묘법 = 초강력 개성! 일반인도 즉시 알아봄
-
-2. VAN GOGH (반 고흐) ⭐⭐⭐ BEST for emotional/swirling ONLY (30%)
+1. VAN GOGH (반 고흐) ⭐⭐⭐ STRONGEST for emotional/swirling (30%)
    - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
-   - Best for: Emotional subjects, starry skies, cypresses, swirling forms
+   - Best for: Emotional subjects, portraits, landscapes with dynamic energy
    - Signature: Starry Night - turbulent passionate swirls
-   - When to prioritize: Clear emotional/swirling mood ONLY (30%)
+   - When to prioritize: Most emotional/expressive photos (30%)
    - Note: Also available in Masters collection
 
-3. GAUGUIN (고갱) - Best for flat decorative (20%)
+2. GAUGUIN (고갱) ⭐⭐ STRONG for flat decorative (25%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
-   - Best for: Decorative aesthetic, simplified forms, exotic/tropical mood
+   - Best for: Portraits, people, decorative aesthetic, simplified forms
    - Signature: Tahitian paintings - flat bold primitivism
-   - When to prioritize: Clear flat/decorative aesthetic (20%)
+   - When to prioritize: Portraits and decorative aesthetic (25%)
 
-4. CÉZANNE (세잔) - Best for still life ONLY (5%)
+3. CÉZANNE (세잔) ⭐⭐ STRONG for structured (25%)
    - Specialty: Geometric structured forms, solid volumes, analytical approach
-   - Best for: Still life, fruits, objects ONLY
-   - Signature: Still Life with Apples - geometric analysis
-   - When to prioritize: Clear still life photo ONLY (5%)
+   - Best for: Still life, landscapes, portraits with structured composition
+   - Signature: Still Life with Apples, Mont Sainte-Victoire - geometric analysis
+   - When to prioritize: Structured compositions, still life, landscapes (25%)
+
+4. SIGNAC (시냐크) ⭐⭐ Pointillism with bright colors (20%)
+   - Specialty: POINTILLISM with larger, brighter colored dots, luminous Mediterranean palette
+   - Best for: Landscapes, seascapes, bright outdoor scenes
+   - Signature: Port of Saint-Tropez - vibrant pointillist harbor scenes
+   - When to prioritize: Bright colorful scenes, landscapes (20%)
+   - Note: Brighter and more accessible than Seurat's pointillism
 
 🎯 CRITICAL DECISION LOGIC:
-- Most photos → SEURAT (DEFAULT 45%) ⭐⭐⭐ pointillism!
-- Emotional/swirling/starry ONLY → VAN GOGH (30%, also in Masters)
-- Flat/decorative → GAUGUIN (20%)
-- Still life ONLY → CÉZANNE (5%)
+- Emotional/expressive → VAN GOGH (30%) ⭐⭐⭐
+- Portraits/people/decorative → GAUGUIN (25%) ⭐⭐
+- Structured/still life → CÉZANNE (25%) ⭐⭐
+- Bright landscapes → SIGNAC (20%) ⭐⭐
 `;
 }
 
 function getPostImpressionismHints(photoAnalysis) {
   const { subject, mood, composition } = photoAnalysis;
   
-  // 정물만 → 세잔 (5%)
+  // 정물 → 세잔 (25%)
   if (subject === 'still_life' || subject.includes('object') || subject.includes('fruit')) {
     return `
-🎯 SPECIAL CASE: CÉZANNE (5%)
-Still life ONLY = Cézanne specialty!
+🎯 RECOMMENDATION: CÉZANNE (25%)
+Still life = Cézanne specialty!
 His geometric analysis creates powerful structured beauty.
 `;
   }
   
-  // 감정적/소용돌이/밤하늘만 → 반 고흐 (30%)
+  // 감정적/소용돌이 → 반 고흐 (30%)
   if (mood === 'emotional' || mood === 'intense' || subject.includes('swirl') || subject.includes('night') || subject.includes('starry')) {
     return `
 🎯 RECOMMENDATION: VAN GOGH (30%)
 Emotional/swirling mood suits Van Gogh's turbulent style.
-But SEURAT (45%) is stronger default for most photos.
 Van Gogh also available in Masters collection.
 `;
   }
   
-  // 평면적/장식적 → 고갱 (20%)
-  if (composition === 'flat' || mood === 'decorative' || mood === 'exotic') {
+  // 평면적/장식적/인물 → 고갱 (25%)
+  if (composition === 'flat' || mood === 'decorative' || mood === 'exotic' || subject.includes('person') || subject.includes('portrait')) {
     return `
-🎯 RECOMMENDATION: GAUGUIN (20%)
-Flat/decorative aesthetic matches Gauguin's bold primitivism.
+🎯 RECOMMENDATION: GAUGUIN (25%)
+Portraits and flat/decorative aesthetic match Gauguin's bold primitivism.
 `;
   }
   
-  // 기본값 → 쇠라 (45%)
+  // 밝은 풍경 → 시냐크 (20%)
+  if (subject.includes('landscape') || subject.includes('outdoor') || subject.includes('bright') || subject.includes('seascape')) {
+    return `
+🎯 RECOMMENDATION: SIGNAC (20%)
+Bright outdoor scenes suit Signac's luminous pointillism.
+Larger, brighter dots - Mediterranean light and color.
+`;
+  }
+  
+  // 기본값 → 반 고흐 (30%)
   return `
-🎯 STRONG: SEURAT (45%) - DEFAULT for Post-Impressionism
-Pointillism = THE most distinctive technique!
-Thousands of tiny colored dots create unique look.
-Unless:
-- Still life ONLY → Cézanne (5%)
-- Emotional/swirling → Van Gogh (30%, also in Masters)
-- Flat/decorative → Gauguin (20%)
+🎯 DEFAULT: VAN GOGH (30%)
+Van Gogh's expressive brushstrokes work for most photos.
+But consider:
+- Portraits/people → Gauguin (25%)
+- Structured/still life → Cézanne (25%)
+- Bright landscapes → Signac (20%)
 `;
 }
 
@@ -1783,14 +1790,14 @@ export default async function handler(req, res) {
           }
         }
         
-        // 쇠라 선택시 점묘법 강화
-        if (selectedArtist.toUpperCase().trim().includes('SEURAT')) {
-          console.log('🎯 Seurat detected');
+        // 시냐크 선택시 점묘법 강화 (쇠라보다 밝고 큰 점)
+        if (selectedArtist.toUpperCase().trim().includes('SIGNAC')) {
+          console.log('🎯 Signac detected');
           if (!finalPrompt.includes('pointillist technique')) {
-            finalPrompt = finalPrompt + ', painting by Georges Seurat, A Sunday on La Grande Jatte-style pure pointillist technique painted ONLY with tiny distinct dots of pure color, thousands of individual small color points systematically placed, complementary colors side by side for optical mixing, scientific color harmony with disciplined dot placement, divisionist method with eye blending dots from distance';
-            console.log('✅ Enhanced Seurat pointillism added');
+            finalPrompt = finalPrompt + ', painting by Paul Signac, luminous pointillist technique with larger vibrant colored dots, Mediterranean bright palette, pure unmixed colors placed side by side, optical color mixing with cheerful luminous effect, larger dot size than Seurat for more accessible style, complementary colors creating brilliant light, divisionist method with joyful brightness';
+            console.log('✅ Enhanced Signac pointillism added');
           } else {
-            console.log('ℹ️ Seurat pointillism already in prompt (AI included it)');
+            console.log('ℹ️ Signac pointillism already in prompt (AI included it)');
           }
         }
         
@@ -2155,9 +2162,10 @@ export default async function handler(req, res) {
     // PicoArt 핵심 원칙: Level 3 회화 강조 + 다시 그리기 + 얼굴 보존
     // ========================================
     
-    // 쇠라 점묘법은 brushstrokes와 충돌하므로 제외
-    const isSeuratPointillism = finalPrompt.toLowerCase().includes('seurat') || 
-                                 finalPrompt.toLowerCase().includes('pointillist');
+    // 시냐크/쇠라 점묘법은 brushstrokes와 충돌하므로 제외
+    const isPointillism = finalPrompt.toLowerCase().includes('seurat') || 
+                          finalPrompt.toLowerCase().includes('signac') ||
+                          finalPrompt.toLowerCase().includes('pointillist');
     
     let paintingEnforcement;
     if (isSeuratPointillism) {
