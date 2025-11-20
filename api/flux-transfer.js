@@ -120,6 +120,20 @@ Marble should include polychromy (painted eyes, lips, clothing).
 `;
   }
   
+  // 동물 → 모자이크 (역사적으로 로마가 동물 모자이크 전성기)
+  if (subject === 'animal' || subject === 'pet' || subject === 'dog' || subject === 'cat' || 
+      subject === 'horse' || subject === 'bird' || subject === 'fish' || 
+      subject.includes('animal') || subject.includes('pet') || subject.includes('dog') || 
+      subject.includes('cat') || subject.includes('horse') || subject.includes('bird')) {
+    return `
+🎯 HIGHEST PRIORITY: ROMAN MOSAIC (로마 모자이크)
+This photo has ANIMALS - perfect for Roman mosaic!
+Historical accuracy: Romans excelled at animal mosaics (Pompeii Cave Canem, Orpheus mosaics).
+Greek animal sculptures exist but are less common.
+Roman mosaic with tesserae tiles showing animals, birds, or sea creatures.
+`;
+  }
+  
   // 풍경/정물 → 모자이크
   if (subject === 'landscape' || subject === 'flowers' || subject === 'plants' || 
       subject === 'cityscape' || subject === 'objects' || subject === 'still_life' ||
@@ -990,7 +1004,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT COMPOSITION: OPTION 1 FOR PEOPLE-FOCUSED SUBJECTS (people占 40% or more of image composition OR dynamic action sports): Greek-Roman classical sculpture - pure white marble classical sculpture inspired by ancient Greek sculptors, three-dimensional sculptural form with smooth pale marble surface, dynamic lifelike poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures should include subtle painted details on eyes lips and clothing (ancient polychromy), simple plain neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE-FOCUSED SUBJECTS (people占 less than 40% of image OR landscape nature dominates composition OR no people): Roman mosaic - ancient Roman mosaic art with clearly visible tesserae tiles and distinct grout lines creating recognizable mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic. KEY DISTINCTION: Dynamic sports action = SCULPTURE. People占 40%+ of photo = SCULPTURE. People占 <40% with landscape dominant = MOSAIC. Flowers/nature without people = MOSAIC. Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
+    prompt: 'Ancient Greek-Roman art with TWO style options based on SUBJECT COMPOSITION: OPTION 1 FOR PEOPLE-FOCUSED SUBJECTS (people占 40% or more of image composition OR dynamic action sports): Greek-Roman classical sculpture - pure white marble classical sculpture inspired by ancient Greek sculptors, three-dimensional sculptural form with smooth pale marble surface, dynamic lifelike poses with natural movement and expression, visible pupils carved or painted in eyes for vitality, detailed carved drapery and hair with sculptural curls, classical idealized proportions and anatomy, Greek temple or Roman forum statue aesthetic with animated quality, marble sculptures should include subtle painted details on eyes lips and clothing (ancient polychromy), simple plain neutral background, sculptural depth and volume. OPTION 2 FOR LANDSCAPE/NATURE/ANIMAL-FOCUSED SUBJECTS (people占 less than 40% of image OR landscape nature animals dominate composition OR no people): Roman mosaic - ancient Roman mosaic art with clearly visible tesserae tiles and distinct grout lines creating recognizable mosaic texture effect, rich jewel-tone colors in glass and stone tiles including deep blues golds reds greens, geometric patterns and decorative borders, tessellated surface obviously made of individual tile pieces NOT smooth painting, classical Roman floor or wall mosaic aesthetic with animals birds flowers depicted in mosaic tiles. KEY DISTINCTION: Dynamic sports action = SCULPTURE. People占 40%+ of photo = SCULPTURE. People占 <40% with landscape dominant = MOSAIC. Flowers/nature without people = MOSAIC. ANIMALS (dogs cats horses birds fish etc) = MOSAIC (Roman style). Unified composition, NOT photographic preserve facial identity, ancient classical masterpiece quality'
   },
   
   medieval: {
