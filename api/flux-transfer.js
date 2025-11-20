@@ -765,37 +765,38 @@ function getPostImpressionismGuidelines() {
   return `
 Available Post-Impressionism Artists (4명):
 
-1. VAN GOGH (반 고흐) ⭐⭐⭐ STRONGEST for emotional/swirling (30%)
+1. VAN GOGH (반 고흐) ⭐⭐⭐ STRONG for emotional/swirling (25%)
    - Specialty: Swirling expressive brushstrokes, intense emotional colors, turbulent energy
    - Best for: Emotional subjects, portraits, landscapes with dynamic energy
    - Signature: Starry Night - turbulent passionate swirls
-   - When to prioritize: Most emotional/expressive photos (30%)
+   - When to prioritize: Emotional/expressive photos (25%)
    - Note: Also available in Masters collection
 
-2. GAUGUIN (고갱) ⭐⭐ STRONG for flat decorative (25%)
+2. GAUGUIN (고갱) ⭐⭐⭐ STRONG for flat decorative (25%)
    - Specialty: Flat bold colors, decorative patterns, primitive simplicity
    - Best for: Portraits, people, decorative aesthetic, simplified forms
    - Signature: Tahitian paintings - flat bold primitivism
    - When to prioritize: Portraits and decorative aesthetic (25%)
 
-3. CÉZANNE (세잔) ⭐⭐ STRONG for structured (25%)
+3. CÉZANNE (세잔) ⭐⭐⭐ STRONG for structured (25%)
    - Specialty: Geometric structured forms, solid volumes, analytical approach
    - Best for: Still life, landscapes, portraits with structured composition
    - Signature: Still Life with Apples, Mont Sainte-Victoire - geometric analysis
    - When to prioritize: Structured compositions, still life, landscapes (25%)
 
-4. SIGNAC (시냐크) ⭐⭐ Pointillism with bright colors (20%)
+4. SIGNAC (시냐크) ⭐⭐⭐ STRONG Pointillism with bright colors (25%)
    - Specialty: POINTILLISM with larger, brighter colored dots, luminous Mediterranean palette
    - Best for: Landscapes, seascapes, bright outdoor scenes
    - Signature: Port of Saint-Tropez - vibrant pointillist harbor scenes
-   - When to prioritize: Bright colorful scenes, landscapes (20%)
+   - When to prioritize: Bright colorful scenes, landscapes (25%)
    - Note: Brighter and more accessible than Seurat's pointillism
 
 🎯 CRITICAL DECISION LOGIC:
-- Emotional/expressive → VAN GOGH (30%) ⭐⭐⭐
-- Portraits/people/decorative → GAUGUIN (25%) ⭐⭐
-- Structured/still life → CÉZANNE (25%) ⭐⭐
-- Bright landscapes → SIGNAC (20%) ⭐⭐
+- All 4 artists EQUAL priority (25% each) ⭐⭐⭐
+- Emotional/expressive → VAN GOGH
+- Portraits/people/decorative → GAUGUIN
+- Structured/still life → CÉZANNE
+- Bright landscapes → SIGNAC
 `;
 }
 
@@ -811,10 +812,10 @@ His geometric analysis creates powerful structured beauty.
 `;
   }
   
-  // 감정적/소용돌이 → 반 고흐 (30%)
+  // 감정적/소용돌이 → 반 고흐 (25%)
   if (mood === 'emotional' || mood === 'intense' || subject.includes('swirl') || subject.includes('night') || subject.includes('starry')) {
     return `
-🎯 RECOMMENDATION: VAN GOGH (30%)
+🎯 RECOMMENDATION: VAN GOGH (25%)
 Emotional/swirling mood suits Van Gogh's turbulent style.
 Van Gogh also available in Masters collection.
 `;
@@ -828,23 +829,23 @@ Portraits and flat/decorative aesthetic match Gauguin's bold primitivism.
 `;
   }
   
-  // 밝은 풍경 → 시냐크 (20%)
+  // 밝은 풍경 → 시냐크 (25%)
   if (subject.includes('landscape') || subject.includes('outdoor') || subject.includes('bright') || subject.includes('seascape')) {
     return `
-🎯 RECOMMENDATION: SIGNAC (20%)
+🎯 RECOMMENDATION: SIGNAC (25%)
 Bright outdoor scenes suit Signac's luminous pointillism.
 Larger, brighter dots - Mediterranean light and color.
 `;
   }
   
-  // 기본값 → 반 고흐 (30%)
+  // 기본값 → 균등 분배
   return `
-🎯 DEFAULT: VAN GOGH (30%)
-Van Gogh's expressive brushstrokes work for most photos.
-But consider:
+🎯 ALL EQUAL (25% each):
+- Emotional/expressive → Van Gogh (25%)
 - Portraits/people → Gauguin (25%)
 - Structured/still life → Cézanne (25%)
-- Bright landscapes → Signac (20%)
+- Bright landscapes → Signac (25%)
+AI will choose based on photo characteristics.
 `;
 }
 
