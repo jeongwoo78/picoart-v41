@@ -2154,7 +2154,20 @@ export default async function handler(req, res) {
     // ========================================
     // PicoArt 핵심 원칙: Level 3 회화 강조 + 다시 그리기 + 얼굴 보존
     // ========================================
-    const paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
+    
+    // 쇠라 점묘법은 brushstrokes와 충돌하므로 제외
+    const isSeuratPointillism = finalPrompt.toLowerCase().includes('seurat') || 
+                                 finalPrompt.toLowerCase().includes('pointillist');
+    
+    let paintingEnforcement;
+    if (isSeuratPointillism) {
+      // 쇠라: brushstrokes 제외
+      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
+      console.log('ℹ️ Seurat mode: paintingEnforcement WITHOUT brushstrokes');
+    } else {
+      // 일반: brushstrokes 포함
+      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
+    }
     
     // 이미 회화 강조가 없는 경우에만 추가 (소문자도 체크)
     if (!finalPrompt.toLowerCase().includes('preserve facial') && 
