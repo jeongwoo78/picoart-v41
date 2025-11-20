@@ -489,6 +489,25 @@ IF photo has NO people (landscape/objects):
 function getMedievalHints(photoAnalysis) {
   const { count, subject } = photoAnalysis;
   
+  // 동물 있으면 → 무조건 이슬람 세밀화 (신성모독 방지!)
+  if (subject === 'animal' || subject === 'pet' || subject === 'dog' || subject === 'cat' || 
+      subject === 'horse' || subject === 'bird' || subject === 'fish' || 
+      subject.includes('animal') || subject.includes('pet') || subject.includes('dog') || 
+      subject.includes('cat') || subject.includes('horse') || subject.includes('bird')) {
+    return `
+🚨 CRITICAL: This photo has ANIMALS
+
+🎯 MUST use Islamic Miniature (ONLY safe option for animals):
+- Persian/Ottoman court painting style
+- Garden or hunting scenes with animals
+- Vibrant jewel colors, ornamental patterns
+- NO Christian religious imagery (avoids sacred context)
+- Secular courtly art aesthetic
+
+⚠️ NEVER Byzantine/Gothic/Romanesque for animals (religious context inappropriate!)
+`;
+  }
+  
   // 인물 있으면 → 비잔틴 30%, 고딕 25%, 로마네스크 20%, 이슬람 세밀화 25%
   if (count >= 1 || subject.includes('person') || subject.includes('people') || subject.includes('portrait')) {
     return `
@@ -1009,7 +1028,7 @@ const fallbackPrompts = {
   
   medieval: {
     name: '중세 미술',
-    prompt: 'Medieval sacred art with dynamic style selection: IF PEOPLE in photo choose from BYZANTINE (30%): GOLDEN MOSAIC sacred backgrounds with shimmering gold leaf, flat hieratic frontal iconic figures, divine transcendent spiritual atmosphere, eternal timeless holy presence; OR GOTHIC (25%): CATHEDRAL STAINED GLASS jewel tones (ruby red sapphire blue emerald green), vertical elongated figures, DIVINE HOLY LIGHT streaming through Gothic arches, illuminated manuscript style, PRAYER GESTURES and BIBLICAL SOLEMNITY, FLAT TWO-DIMENSIONAL medieval aesthetic NOT realistic smooth painting, angular linear style with hard edges like stained glass panels, decorative gold leaf details, manuscript illumination quality NOT oil painting; OR ROMANESQUE (20%): CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, stone relief aesthetic, MONASTIC SETTING with rounded arches, scriptural devotional dignity, FLAT MURAL FRESCO style like church walls NOT smooth realistic painting, solid block-like forms with heavy outlines, simple colors and bold shapes like stone carvings; OR ISLAMIC MINIATURE (25%): Persian/Ottoman COURT MINIATURE painting style with intricate delicate details, vibrant jewel colors, flat decorative composition, ornamental patterns, courtly elegant figures with rich textiles. IF NO PEOPLE (landscape) choose from Byzantine/Gothic/Romanesque OR ISLAMIC GEOMETRIC: intricate arabesque patterns, sacred geometry, decorative motifs, flowing ornamental designs, geometric precision. NEVER Islamic Miniature for landscapes. NEVER Islamic Geometric for people. Unified composition, NOT photographic preserve facial identity, Medieval masterpiece quality'
+    prompt: 'Medieval sacred art with dynamic style selection: IF ANIMALS in photo → ALWAYS use Islamic Miniature style: Persian/Ottoman COURT MINIATURE painting with intricate delicate details, vibrant jewel colors (ruby red, sapphire blue, emerald green, gold), flat decorative composition, ornamental floral patterns, courtly elegant aesthetic, richly decorated background, animals depicted in garden or hunting scenes, luxurious manuscript illumination quality, NO religious Christian imagery for animals to avoid inappropriate context. IF PEOPLE in photo choose from BYZANTINE (30%): GOLDEN MOSAIC sacred backgrounds with shimmering gold leaf, flat hieratic frontal iconic figures, divine transcendent spiritual atmosphere; OR GOTHIC (25%): CATHEDRAL STAINED GLASS jewel tones, vertical elongated figures, DIVINE HOLY LIGHT streaming through Gothic arches, FLAT TWO-DIMENSIONAL medieval aesthetic NOT realistic smooth painting, angular linear style with hard edges like stained glass panels; OR ROMANESQUE (20%): CHURCH FRESCO flat solid forms, BIBLICAL NARRATIVE simplicity, stone relief aesthetic, FLAT MURAL FRESCO style NOT smooth realistic painting, solid block-like forms with heavy outlines; OR ISLAMIC MINIATURE (25%): Persian/Ottoman COURT MINIATURE for people. IF NO PEOPLE AND NO ANIMALS (landscape only) → ISLAMIC GEOMETRIC: intricate arabesque patterns, sacred geometry, decorative motifs, flowing ornamental designs. ANIMALS = ISLAMIC MINIATURE ALWAYS (safe secular art). Medieval masterpiece quality'
   },
   
   renaissance: {
