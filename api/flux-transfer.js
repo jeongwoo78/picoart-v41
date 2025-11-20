@@ -1416,8 +1416,8 @@ Return JSON only:
   "reason": "why this style fits, mention animals/dynamic/static (1 sentence)",
   "prompt": "Ancient Greek-Roman art in [chosen style], [style characteristics - for Sculpture mention material choice, for Mosaic mention tesserae tiles], TRANSFORM modern clothing to ancient Greek-Roman costume (togas, tunics, chitons, draped garments), depicting subject while preserving original facial features"
 }`;
-        } else {
-          // 다른 사조들은 화가 선택
+        } else if (categoryType === 'medieval') {
+          // 중세 미술만 동물 체크 (Islamic Miniature)
           promptText = `Select the BEST ${categoryName} artist for this photo.
 
 ${guidelines}
@@ -1446,6 +1446,28 @@ Return JSON only:
   "selected_artist": "Artist Name or Style Name",
   "reason": "why (1 sentence)",
   "prompt": "Medieval art in [style name], [DETAILED style characteristics including techniques and visual features], depicting subject while preserving original features"
+}`;
+        } else {
+          // 다른 사조들 (표현주의, 르네상스, 바로크 등)
+          promptText = `Select the BEST ${categoryName} artist for this photo.
+
+${guidelines}
+
+${hints}
+
+Instructions:
+1. Analyze photo: people count, subject, mood, age, composition
+2. Follow RECOMMENDATIONS (70-80% weight)
+3. Choose most DISTINCTIVE artist for THIS specific photo
+4. Preserve facial identity and original features
+5. Include DETAILED style characteristics in your prompt
+
+Return JSON only:
+{
+  "analysis": "brief (1 sentence)",
+  "selected_artist": "Artist Full Name",
+  "reason": "why this artist fits (1 sentence)",
+  "prompt": "painting by [Artist], [artist's signature technique], [detailed visual characteristics], depicting subject while preserving original features"
 }`;
         }
       }
