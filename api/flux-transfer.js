@@ -107,6 +107,55 @@ Examples:
 function getAncientGreekRomanHints(photoAnalysis) {
   const { count, subject, shot_type } = photoAnalysis;
   
+  // 사람 있는지 체크
+  const hasPeople = count >= 1 || 
+    subject.includes('person') || subject.includes('people') || 
+    subject.includes('portrait') || subject.includes('man') || 
+    subject.includes('woman') || subject.includes('child') ||
+    subject.includes('boy') || subject.includes('girl');
+  
+  // 동물 있는지 체크
+  const hasAnimals = subject === 'animal' || subject === 'pet' || 
+    subject === 'dog' || subject === 'cat' || subject === 'horse' || 
+    subject === 'bird' || subject === 'fish' || 
+    subject.includes('animal') || subject.includes('pet') || 
+    subject.includes('dog') || subject.includes('cat') || 
+    subject.includes('horse') || subject.includes('bird');
+  
+  // ===== 케이스 1: 동물만 (사람 없음) =====
+  if (hasAnimals && !hasPeople) {
+    return `
+🎯 HIGHEST PRIORITY: ROMAN MOSAIC (로마 모자이크)
+This photo has ANIMALS ONLY (no people) - perfect for Roman mosaic!
+Historical accuracy: Romans excelled at animal mosaics (Pompeii Cave Canem, Orpheus mosaics, sea creatures).
+Roman mosaic with tesserae tiles showing animals, birds, or sea creatures.
+`;
+  }
+  
+  // ===== 케이스 2: 사람 + 동물 함께 =====
+  if (hasPeople && hasAnimals) {
+    return `
+⚖️ BALANCED CHOICE: PEOPLE + ANIMALS together
+AI should analyze the photo and decide:
+
+Option A - CLASSICAL SCULPTURE (if portrait-focused):
+- Person holding/embracing pet closely
+- Focus on human-animal bond and relationship
+- Historical examples: Roman funerary monuments with beloved pets
+- Marcus Aurelius on horseback, Diana the Hunter with hounds
+
+Option B - ROMAN MOSAIC (if scene-focused):
+- Garden scene with people and animals in landscape
+- Pastoral or daily life setting
+- Historical examples: Villa mosaics showing shepherds, hunting scenes
+- People walking with animals in natural settings
+
+AI will analyze composition, distance, and context to choose the best style.
+`;
+  }
+  
+  // ===== 케이스 3: 사람만 (동물 없음) - 기존 로직 유지 =====
+  
   // 스포츠/액션 → 조각 (최우선!)
   if (subject.includes('sport') || subject.includes('action') || subject.includes('athletic') ||
       subject.includes('jump') || subject.includes('run') || subject.includes('dance') ||
@@ -117,20 +166,6 @@ This photo has DYNAMIC MOVEMENT/ACTION - perfect for sculpture!
 Sports, action, athletic poses = SCULPTURE (even if landscape/stadium visible!)
 AI should choose bronze for dynamic sports action.
 Marble should include polychromy (painted eyes, lips, clothing).
-`;
-  }
-  
-  // 동물 → 모자이크 (역사적으로 로마가 동물 모자이크 전성기)
-  if (subject === 'animal' || subject === 'pet' || subject === 'dog' || subject === 'cat' || 
-      subject === 'horse' || subject === 'bird' || subject === 'fish' || 
-      subject.includes('animal') || subject.includes('pet') || subject.includes('dog') || 
-      subject.includes('cat') || subject.includes('horse') || subject.includes('bird')) {
-    return `
-🎯 HIGHEST PRIORITY: ROMAN MOSAIC (로마 모자이크)
-This photo has ANIMALS - perfect for Roman mosaic!
-Historical accuracy: Romans excelled at animal mosaics (Pompeii Cave Canem, Orpheus mosaics).
-Greek animal sculptures exist but are less common.
-Roman mosaic with tesserae tiles showing animals, birds, or sea creatures.
 `;
   }
   
@@ -1023,7 +1058,7 @@ body (Schiele 20%), urban (Kirchner 3%), abstract (Kandinsky 2%)
 const fallbackPrompts = {
   ancient: {
     name: '그리스·로마',
-    prompt: 'Transform this image into ancient Greek-Roman art. STRICT RULE: If ANY animal creature is visible (dog, cat, bird, horse, fish, raccoon, wildlife, pet), create Roman mosaic with clearly visible tesserae tiles, distinct grout lines, rich jewel-tone colors (deep blues, golds, reds, greens), geometric patterns, small colorful tile pieces forming the animal image, Pompeii-style mosaic aesthetic. If ONLY people without animals, create Greek marble sculpture. ANIMALS ALWAYS GET MOSAIC. Ancient masterpiece quality preserving subject'
+    prompt: 'Transform this image into ancient Greek-Roman art. STRICT RULES: 1) If ANIMALS ONLY (no people) → create Roman mosaic with clearly visible tesserae tiles, distinct grout lines, rich jewel-tone colors, Pompeii-style animal mosaic. 2) If PEOPLE + ANIMALS together → analyze composition: if portrait-focused (holding pet closely) use Classical sculpture, if scene-focused (walking with animals in landscape) use Roman mosaic. 3) If PEOPLE ONLY (no animals) → use Classical Greek marble sculpture. Ancient masterpiece quality preserving subject'
   },
   
   medieval: {
@@ -1392,17 +1427,27 @@ ${guidelines}
 ${hints}
 
 Instructions - PRIORITY ORDER:
-1. FIRST check: Are there ANIMALS in this photo?
-   - Dogs, cats, horses, birds, fish, any animals → ROMAN MOSAIC
-   - Historical accuracy: Romans excelled at animal mosaics (Pompeii Cave Canem)
-   - Animals = MOSAIC priority!
-2. SECOND check: Is there DYNAMIC MOVEMENT/ACTION/SPORTS in this photo?
-   - If YES → CLASSICAL SCULPTURE (even if landscape/stadium visible!)
-   - Sports, jumping, running, athletic action = SCULPTURE priority!
-3. THIRD check: Is it a STATIC photo WITH landscape/nature elements?
-   - If YES → ROMAN MOSAIC
-4. FOURTH: Portrait without landscape → CLASSICAL SCULPTURE
-5. Follow RECOMMENDATIONS (80% weight)
+1. FIRST: Identify photo content
+   - Animals ONLY (no people)?
+   - People + Animals together?
+   - People ONLY (no animals)?
+
+2. IF ANIMALS ONLY (no people):
+   → ROMAN MOSAIC (highest priority)
+   - Historical: Romans excelled at animal mosaics
+   
+3. IF PEOPLE + ANIMALS together:
+   → Analyze composition and choose:
+   a) Portrait-focused (holding pet, close bond) → CLASSICAL SCULPTURE
+   b) Scene-focused (walking, garden, landscape) → ROMAN MOSAIC
+   - Historical examples for both styles exist
+
+4. IF PEOPLE ONLY (no animals):
+   a) DYNAMIC movement/sports? → CLASSICAL SCULPTURE
+   b) Static portrait? → CLASSICAL SCULPTURE
+   c) Landscape with people? → ROMAN MOSAIC
+
+5. Follow RECOMMENDATIONS (70% weight)
 6. Preserve subject identity
 
 Return JSON only:
