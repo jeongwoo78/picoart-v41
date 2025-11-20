@@ -1373,20 +1373,24 @@ ${guidelines}
 ${hints}
 
 Instructions - PRIORITY ORDER:
-1. FIRST check: Is there DYNAMIC MOVEMENT/ACTION/SPORTS in this photo?
+1. FIRST check: Are there ANIMALS in this photo?
+   - Dogs, cats, horses, birds, fish, any animals → ROMAN MOSAIC
+   - Historical accuracy: Romans excelled at animal mosaics (Pompeii Cave Canem)
+   - Animals = MOSAIC priority!
+2. SECOND check: Is there DYNAMIC MOVEMENT/ACTION/SPORTS in this photo?
    - If YES → CLASSICAL SCULPTURE (even if landscape/stadium visible!)
    - Sports, jumping, running, athletic action = SCULPTURE priority!
-2. SECOND check: Is it a STATIC photo WITH landscape elements?
+3. THIRD check: Is it a STATIC photo WITH landscape/nature elements?
    - If YES → ROMAN MOSAIC
-3. THIRD: Portrait without landscape → CLASSICAL SCULPTURE
-4. Follow RECOMMENDATIONS (80% weight)
-5. Preserve subject identity
+4. FOURTH: Portrait without landscape → CLASSICAL SCULPTURE
+5. Follow RECOMMENDATIONS (80% weight)
+6. Preserve subject identity
 
 Return JSON only:
 {
-  "analysis": "brief - note if dynamic/static (1 sentence)",
+  "analysis": "brief - note if animals/dynamic/static (1 sentence)",
   "selected_artist": "Classical Sculpture" or "Roman Mosaic",
-  "reason": "why this style fits, mention dynamic/static (1 sentence)",
+  "reason": "why this style fits, mention animals/dynamic/static (1 sentence)",
   "prompt": "Ancient Greek-Roman art in [chosen style], [style characteristics - for Sculpture mention material choice, for Mosaic mention tesserae tiles], depicting subject while preserving original features"
 }`;
         } else {
