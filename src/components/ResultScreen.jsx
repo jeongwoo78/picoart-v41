@@ -315,7 +315,34 @@ const ResultScreen = ({
       'kandinsky': '칸딘스키(Wassily Kandinsky)',
       'wassily kandinsky': '칸딘스키(Wassily Kandinsky)',
       'kokoschka': '코코슈카(Oskar Kokoschka)',
-      'oskar kokoschka': '코코슈카(Oskar Kokoschka)'
+      'oskar kokoschka': '코코슈카(Oskar Kokoschka)',
+      
+      // 동양화 - 한국
+      'korean-jingyeong': '진경산수화(Korean True-View Landscape)',
+      'korean_jingyeong': '진경산수화(Korean True-View Landscape)',
+      'jingyeong': '진경산수화(True-View Landscape)',
+      'korean-minhwa': '민화(Korean Folk Painting)',
+      'korean_minhwa': '민화(Korean Folk Painting)',
+      'minhwa': '민화(Folk Painting)',
+      'korean-genre': '풍속화(Korean Genre Painting)',
+      'korean_genre': '풍속화(Korean Genre Painting)',
+      'genre-painting': '풍속화(Genre Painting)',
+      
+      // 동양화 - 중국
+      'chinese-ink': '수묵산수화(Chinese Ink Landscape)',
+      'chinese_ink': '수묵산수화(Chinese Ink Landscape)',
+      'ink-landscape': '수묵산수화(Ink Landscape)',
+      'chinese-gongbi': '공필화(Chinese Gongbi)',
+      'chinese_gongbi': '공필화(Chinese Gongbi)',
+      'gongbi': '공필화(Gongbi)',
+      'chinese-huaniao': '화조화(Chinese Bird-and-Flower)',
+      'chinese_huaniao': '화조화(Chinese Bird-and-Flower)',
+      'huaniao': '화조화(Bird-and-Flower)',
+      
+      // 동양화 - 일본
+      'japanese-ukiyoe': '우키요에(Japanese Ukiyo-e)',
+      'japanese_ukiyoe': '우키요에(Japanese Ukiyo-e)',
+      'ukiyoe': '우키요에(Ukiyo-e)'
     };
     
     // 매핑에서 찾기
@@ -737,14 +764,15 @@ const ResultScreen = ({
         .card-header {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 0.75rem;
           padding-bottom: 1.5rem;
           border-bottom: 2px solid #e0e0e0;
           margin-bottom: 1.5rem;
         }
 
         .technique-icon {
-          font-size: 4rem;
+          font-size: 3.5rem;
+          min-width: 3.5rem;
           filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
         }
 
@@ -848,7 +876,7 @@ const ResultScreen = ({
           color: #333;
           line-height: 1.8;
           font-size: 1rem;
-          margin: 0 0 1.26em 0;  /* 0.7줄 간격 = line-height(1.8) × 0.7 */
+          margin: 0 0 0.5em 0;
         }
         
         .technique-explanation p:last-child {
