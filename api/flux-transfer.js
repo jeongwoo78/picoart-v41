@@ -1129,7 +1129,7 @@ const fallbackPrompts = {
   // ========================================
   korean: {
     name: '한국 전통화',
-    prompt: 'Korean traditional painting in authentic Joseon Dynasty style. CRITICAL INSTRUCTIONS: 1) GENDER PRESERVATION - carefully preserve exact gender and facial features from original photo (male stays male with masculine face, female stays female with feminine features), 2) Choose appropriate Korean style based on photo subject (Minhwa folk art for animals/flowers with bold outlines and bright Obangsaek colors, Pungsokdo genre painting for people/daily life with refined brushwork, Jingyeong landscape for nature/mountains with expressive ink), 3) Use Korean aesthetic sensibility, 4) SINGLE UNIFIED COMPOSITION - all figures and elements together in one cohesive harmonious scene, NOT separated into multiple distinct groups or layers. ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ). This is PURE KOREAN ART, not Japanese ukiyo-e.'
+    prompt: 'Korean traditional painting in authentic Joseon Dynasty style. CRITICAL INSTRUCTIONS: 1) GENDER PRESERVATION - carefully preserve exact gender and facial features from original photo (male stays male with masculine face, female stays female with feminine features), 2) TRANSFORM modern clothing to Joseon Dynasty traditional costume (hanbok, durumagi, gat hat, daenggi ribbon for women, traditional Korean attire), 3) Choose appropriate Korean style: [Minhwa folk art for animals/flowers: light subtle Obangsaek colors NOT overly saturated, soft gentle pigments, cheerful but restrained palette] [Pungsokdo genre painting for people/daily life: LIGHT INK WASH technique (damchae), subtle delicate colors over ink lines, refined elegant brushwork, realistic but understated, Kim Hong-do and Shin Yun-bok style NOT animation NOT cartoon, restrained muted tones] [Jingyeong landscape for nature/mountains: expressive ink with minimal color], 4) SINGLE UNIFIED COMPOSITION - all figures together in one cohesive scene. ABSOLUTELY NO Japanese hiragana or katakana. This is PURE KOREAN ART, not Japanese ukiyo-e.'
   },
   
   chinese: {
@@ -1215,12 +1215,12 @@ You must choose ONE of these THREE styles:
 
 Style 1: Korean Minhwa Folk Painting (민화)
 - Best for: animals (tiger, magpie, fish), flowers (peony), birds, simple subjects
-- Characteristics: THICK BLACK OUTLINES around all shapes, BRIGHT primary colors (Obangsaek: red/blue/yellow/white/black), completely FLAT naive composition, childlike playful aesthetic
+- Characteristics: THICK BLACK OUTLINES around all shapes, LIGHT SUBTLE Obangsaek colors (NOT overly saturated, soft gentle pigments, cheerful but restrained palette), completely FLAT naive composition, childlike playful aesthetic
 - When: Photo has animals, flowers, or needs cheerful colorful treatment
 
 Style 2: Korean Pungsokdo Genre Painting (풍속도)
 - Best for: people, portraits, daily life, couples, festivals, human activities
-- Characteristics: Refined delicate brushwork, figures in hanbok, soft pastel colors, narrative storytelling of Joseon life, elegant composition
+- Characteristics: LIGHT INK WASH TECHNIQUE (damchae 淡彩), SUBTLE DELICATE colors over ink lines, refined elegant brushwork, realistic but understated, Kim Hong-do and Shin Yun-bok style, restrained muted tones, NOT animation NOT cartoon, Joseon Dynasty hanbok traditional costume
 - When: Photo has people, faces, human subjects
 
 Style 3: Korean Jingyeong Landscape (진경산수)
@@ -1231,7 +1231,12 @@ Style 3: Korean Jingyeong Landscape (진경산수)
 Analyze the photo and choose the MOST suitable style.
 
 CRITICAL INSTRUCTIONS FOR PROMPT GENERATION:
-1. GENDER PRESERVATION (MANDATORY IN PROMPT):
+1. CLOTHING TRANSFORMATION (MANDATORY):
+   - TRANSFORM modern clothing (t-shirts, jeans, sneakers) to Joseon Dynasty traditional costume
+   - Hanbok, durumagi, gat hat for men, daenggi ribbon for women
+   - Period-appropriate Korean traditional attire
+
+2. GENDER PRESERVATION (MANDATORY IN PROMPT):
    - FIRST identify if photo has person(s) and their gender
    - If MALE in photo → prompt MUST start with "CRITICAL GENDER RULE: This photo shows MALE person, ABSOLUTELY PRESERVE MASCULINE FEATURES - strong jaw, masculine face, male body structure, DO NOT feminize, DO NOT make female-looking face, KEEP MALE GENDER EXACTLY."
    - If FEMALE in photo → prompt MUST start with "CRITICAL GENDER RULE: This photo shows FEMALE person, ABSOLUTELY PRESERVE FEMININE FEATURES - soft face, feminine features, female body structure, DO NOT masculinize, KEEP FEMALE GENDER EXACTLY."
@@ -1249,7 +1254,7 @@ Return ONLY valid JSON (no markdown):
   "selected_artist": "Korean Minhwa" or "Korean Pungsokdo" or "Korean Jingyeong Landscape",
   "selected_style": "minhwa" or "pungsokdo" or "landscape",
   "reason": "why this style fits (1 sentence)",
-  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Korean [style name]...' with all characteristics. MUST include 'ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ), this is PURE KOREAN ART' at the end."
+  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Korean [style name]...' including: [for Minhwa: light subtle Obangsaek NOT overly saturated] [for Pungsokdo: light ink wash damchae, subtle colors, NOT animation NOT cartoon, Kim Hong-do/Shin Yun-bok style, TRANSFORM to Joseon hanbok] [for Jingyeong: expressive ink]. MUST include 'ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ), this is PURE KOREAN ART' at the end."
 }
 
 Keep it concise and accurate.`;
@@ -2163,6 +2168,11 @@ export default async function handler(req, res) {
     // PicoArt 핵심 원칙: Level 3 회화 강조 + 다시 그리기 + 얼굴 보존
     // ========================================
     
+    // 동양 미술 체크 (한국/중국)
+    const isOrientalArt = finalPrompt.toLowerCase().includes('korean') || 
+                          finalPrompt.toLowerCase().includes('chinese') ||
+                          categoryType === 'oriental';
+    
     // 시냐크/쇠라 점묘법은 brushstrokes와 충돌하므로 제외
     const isPointillism = finalPrompt.toLowerCase().includes('seurat') || 
                           finalPrompt.toLowerCase().includes('signac') ||
@@ -2170,12 +2180,16 @@ export default async function handler(req, res) {
     
     let paintingEnforcement;
     if (isPointillism) {
-      // 쇠라: brushstrokes 제외
-      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
-      console.log('ℹ️ Seurat mode: paintingEnforcement WITHOUT brushstrokes');
+      // 점묘법: brushstrokes 제외
+      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
+      console.log('ℹ️ Pointillism mode: paintingEnforcement WITHOUT brushstrokes');
+    } else if (isOrientalArt) {
+      // 동양 미술: brushstrokes 포함 + 일본어 금지
+      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together, ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ) text, this is PURE KOREAN or CHINESE ART not Japanese';
+      console.log('ℹ️ Oriental art mode: paintingEnforcement WITH Japanese text prohibition');
     } else {
       // 일반: brushstrokes 포함
-      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
+      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
     }
     
     // 이미 회화 강조가 없는 경우에만 추가 (소문자도 체크)
