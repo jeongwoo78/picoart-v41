@@ -401,7 +401,9 @@ const ResultScreen = ({
               <div>
                 <h2>{selectedStyle.name}</h2>
                 <p className="technique-subtitle">
-                  {aiSelectedArtist || '예술 스타일'}
+                  <span className="artist-name">
+                    {aiSelectedArtist || '예술 스타일'}
+                  </span>
                 </p>
               </div>
             </div>
@@ -572,6 +574,27 @@ const ResultScreen = ({
           color: #666;
           font-size: 0.95rem;
           margin: 0.25rem 0 0 0;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+        }
+
+        .artist-name {
+          font-weight: 500;
+          color: #333;
+        }
+
+        .movement-badge {
+          display: inline-block;
+          padding: 0.25rem 0.75rem;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
         }
 
         .loading-education {
