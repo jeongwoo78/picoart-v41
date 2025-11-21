@@ -30,12 +30,14 @@ const ResultScreen = ({
   }, [aiSelectedArtist]);
 
 
-  // ========== 2차 교육 로드 (v50 - 완전 사전 제작) ==========
+  // ========== 2차 교육 로드 (v55 - 디버깅 강화) ==========
   const generate2ndEducation = () => {
     console.log('');
-    console.log('🔥 LOAD EDUCATION (v50 - Pre-written Only)');
+    console.log('🔥🔥🔥 LOAD EDUCATION START (v55) 🔥🔥🔥');
     console.log('   - category:', selectedStyle.category);
     console.log('   - aiSelectedArtist:', aiSelectedArtist);
+    console.log('   - current educationText:', educationText);
+    console.log('   - current isLoadingEducation:', isLoadingEducation);
     console.log('');
     
     setIsLoadingEducation(true);
@@ -63,13 +65,20 @@ const ResultScreen = ({
     // 결과 설정
     if (content) {
       console.log('✅ Education loaded successfully!');
+      console.log('   Content type:', typeof content);
+      console.log('   Content length:', content.length);
       console.log('   Preview:', content.substring(0, 80) + '...');
+      console.log('   Setting educationText to:', content);
       setEducationText(content);
+      console.log('   ✅ setEducationText called');
     } else {
       console.error('❌ No education content found!');
-      setEducationText(getFallbackMessage());
+      const fallback = getFallbackMessage();
+      console.log('   Using fallback:', fallback);
+      setEducationText(fallback);
     }
     
+    console.log('   Setting isLoadingEducation to false');
     setIsLoadingEducation(false);
     console.log('🏁 Loading complete');
     console.log('');
@@ -188,6 +197,36 @@ const ResultScreen = ({
     console.log('');
     
     return `이 작품은 ${selectedStyle.name} 스타일로 변환되었습니다.\n\n거장 교육 콘텐츠는 준비 중입니다.`;
+  };
+
+
+  // ========== 신고전 vs 낭만 vs 사실: 구체적 사조 매핑 ==========
+  const getSpecificMovement = (artistName) => {
+    const artist = artistName.toLowerCase();
+    
+    // 신고전주의
+    const neoclassical = ['jacques-louis-david', 'david', 'ingres', 'jean-auguste-dominique ingres'];
+    
+    // 낭만주의
+    const romantic = ['turner', 'j.m.w. turner', 'william turner', 
+                      'friedrich', 'caspar david friedrich', 
+                      'delacroix', 'eugène delacroix', 'eugene delacroix'];
+    
+    // 사실주의
+    const realist = ['millet', 'jean-françois millet', 'jean-francois millet',
+                     'manet', 'édouard manet', 'edouard manet'];
+    
+    if (neoclassical.some(name => artist.includes(name))) {
+      return '신고전주의';
+    }
+    if (romantic.some(name => artist.includes(name))) {
+      return '낭만주의';
+    }
+    if (realist.some(name => artist.includes(name))) {
+      return '사실주의';
+    }
+    
+    return ''; // 매칭 안 되면 빈 문자열
   };
 
 
@@ -404,12 +443,26 @@ const ResultScreen = ({
                   <span className="artist-name">
                     {aiSelectedArtist || '예술 스타일'}
                   </span>
+                  {selectedStyle.category === 'neoclassicism_vs_romanticism_vs_realism' && aiSelectedArtist && (
+                    <span className="style-badge-large">
+                      {getSpecificMovement(aiSelectedArtist)}
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
 
             {/* Card Content */}
             <div className="card-content">
+              {(() => {
+                console.log('');
+                console.log('🖼️ RENDERING EDUCATION CONTENT:');
+                console.log('   - isLoadingEducation:', isLoadingEducation);
+                console.log('   - educationText:', educationText);
+                console.log('   - educationText length:', educationText?.length);
+                console.log('');
+                return null;
+              })()}
               {isLoadingEducation ? (
                 <div className="loading-education">
                   <div className="spinner"></div>
@@ -583,6 +636,29 @@ const ResultScreen = ({
         .artist-name {
           font-weight: 500;
           color: #333;
+        }
+
+        .style-badge-large {
+          display: inline-block;
+          padding: 0.5rem 1.25rem;
+          background: linear-gradient(135deg, #FF6B6B 0%, #C92A2A 100%);
+          color: white;
+          border-radius: 20px;
+          font-size: 1rem;
+          font-weight: 700;
+          letter-spacing: 1px;
+          box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
+          text-transform: none;
+          animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+          0%, 100% {
+            box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
+          }
+          50% {
+            box-shadow: 0 6px 20px rgba(201, 42, 42, 0.6);
+          }
         }
 
         .movement-badge {
