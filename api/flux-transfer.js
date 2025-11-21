@@ -1173,11 +1173,12 @@ async function selectArtistWithAI(imageBase64, selectedStyle, timeoutMs = 15000)
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   
+  // 변수 선언을 함수 최상단으로 이동 (스코프 문제 해결)
+  const categoryName = selectedStyle.name;
+  const categoryType = selectedStyle.category;
+  
   try {
     let promptText;
-    
-    const categoryName = selectedStyle.name;
-    const categoryType = selectedStyle.category;
     
     if (categoryType === 'masters') {
       // 거장: 사진에 가장 잘 맞는 시기/스타일 선택
