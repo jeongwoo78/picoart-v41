@@ -1632,6 +1632,7 @@ export default async function handler(req, res) {
     let selectionMethod;
     let selectionDetails = {};
     let controlStrength = 0.80; // 기본 0.80, 레오나르도만 0.65
+    const categoryType = selectedStyle.category; // categoryType 변수 추가
     
     if (selectedStyle.category === 'oriental' && selectedStyle.id === 'japanese') {
       // 일본 우키요에 (고정)
