@@ -1215,12 +1215,12 @@ You must choose ONE of these THREE styles:
 
 Style 1: Korean Minhwa Folk Painting (민화)
 - Best for: animals (tiger, magpie, fish), flowers (peony), birds, simple subjects
-- Characteristics: Traditional folk art on AGED YELLOWED HANJI PAPER with visible texture, FADED WEATHERED colors (dusty ochre, muted red-brown, greyish green, pale indigo), thick outlines, rough folk brushwork with uneven pigment, naive primitive style, museum artifact quality (200+ years old)
+- Characteristics: Folk painting on ROUGH THICK HANJI PAPER with PROMINENT FIBER TEXTURE visible throughout, UNEVEN PIGMENT ABSORPTION creating patchy color areas, genuinely FADED OLD colors (like 200-year museum piece), TREMBLING UNSTEADY brushlines (amateur folk artist quality), thick black outlines but IRREGULAR and wobbly, colors pooling in paper fibers, authentic Joseon folk artifact NOT illustration
 - When: Photo has animals, flowers, or needs folk art treatment
 
 Style 2: Korean Pungsokdo Genre Painting (풍속도)
-- Best for: people, portraits, daily life, couples, festivals, human activities
-- Characteristics: LIGHT INK WASH TECHNIQUE (damchae 淡彩), SUBTLE DELICATE colors over ink lines, refined elegant brushwork, realistic but understated, Kim Hong-do and Shin Yun-bok style, restrained muted tones, NOT animation NOT cartoon, Joseon Dynasty hanbok traditional costume
+- Best for: people, portraits, daily life, couples, festivals, human activities  
+- Characteristics: KOREAN INK PAINTING on ROUGH TEXTURED HANJI, BLACK INK BRUSHWORK dominates (70-80%), then EXTREMELY MINIMAL pale color washes (20-30% only), visible hanji fiber texture throughout, spontaneous confident ink strokes, Kim Hong-do's elegant restraint, earth-tone washes ONLY (pale brown, grey-green, faint ochre), NOT colorful NOT bright, distinctly different from Chinese gongbi's detailed colors
 - When: Photo has people, faces, human subjects
 
 Style 3: Korean Jingyeong Landscape (진경산수)
@@ -1231,7 +1231,12 @@ Style 3: Korean Jingyeong Landscape (진경산수)
 Analyze the photo and choose the MOST suitable style.
 
 CRITICAL INSTRUCTIONS FOR PROMPT GENERATION:
-1. CLOTHING TRANSFORMATION (MANDATORY):
+1. KOREAN VS CHINESE DISTINCTION:
+   - Korean Pungsokdo: ROUGH hanji paper, spontaneous loose brushwork, 90% ink 10% color
+   - NOT Chinese Gongbi: Chinese is meticulous/tight, Korean is loose/spontaneous
+   - Korean uses MORE INK LESS COLOR than Chinese
+
+2. CLOTHING TRANSFORMATION (MANDATORY):
    - TRANSFORM modern clothing (t-shirts, jeans, sneakers) to Joseon Dynasty traditional costume
    - Hanbok, durumagi, gat hat for men, daenggi ribbon for women
    - Period-appropriate Korean traditional attire
@@ -1263,7 +1268,7 @@ Return ONLY valid JSON (no markdown):
   "selected_artist": "Korean Minhwa" or "Korean Pungsokdo" or "Korean Jingyeong Landscape",
   "selected_style": "minhwa" or "pungsokdo" or "landscape",
   "reason": "why this style fits (1 sentence)",
-  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Authentic Korean [style name] from Joseon Dynasty...' including: [for Minhwa: painted on aged yellowed hanji paper with visible grain, FADED WEATHERED colors like 200-year-old museum artifact - dusty ochre, weathered red-brown, greyish green, pale indigo, rough folk brushwork, naive primitive quality, NOT digital NOT animation NOT bright colors] [for Pungsokdo: damchae technique with extremely subtle pale color wash over ink, Kim Hong-do/Shin Yun-bok style, naturalistic restraint, NOT illustration NOT cartoon, simple everyday hanbok] [for Jingyeong: bold expressive ink brushwork]. CRITICAL ENDING: 'ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or any Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e elements, REMOVE all Japanese style, this is 100% PURE KOREAN TRADITIONAL ART not Japanese, NO text NO characters on painting unless Korean Hangul or Chinese only'."
+  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Authentic Korean [style name] from Joseon Dynasty...' including: [for Minhwa: painted on ROUGH THICK HANJI PAPER with PROMINENT FIBER TEXTURE visible throughout, UNEVEN PATCHY pigment absorption, genuinely FADED WEATHERED colors like 200-year museum artifact, TREMBLING WOBBLY folk brushlines, primitive naive quality, NOT digital NOT smooth NOT bright] [for Pungsokdo: KOREAN INK PAINTING on ROUGH HANJI with visible texture, BLACK INK BRUSHWORK dominates 70-80%, then MINIMAL PALE washes 20-30% only, earth tones ONLY (pale brown grey-green faint ochre), spontaneous confident strokes, Kim Hong-do elegance, NOT colorful Chinese gongbi, simple everyday hanbok] [for Jingyeong: bold expressive monochrome ink]. CRITICAL ENDING: 'ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or any Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e elements, REMOVE all Japanese style, this is 100% PURE KOREAN TRADITIONAL ART not Japanese, NO text NO characters on painting unless Korean Hangul or Chinese only'."
 }
 
 Keep it concise and accurate.`;
@@ -2203,13 +2208,13 @@ export default async function handler(req, res) {
     const isKoreanPungsokdo = finalPrompt.includes('Korean Pungsokdo') || finalPrompt.includes('Kim Hong-do');
     
     if (isKoreanMinhwa) {
-      // 한국 민화: 오래된 한지 질감과 바랜 색상 강조
-      paintingEnforcement = ', CRITICAL: NOT photographic, Authentic Joseon Dynasty folk painting on AGED YELLOWED HANJI PAPER with visible rough texture and grain, FADED WEATHERED colors like 200-year-old museum artifact (dusty ochre, weathered red-brown, greyish green), rough folk brushwork with uneven pigment, naive primitive quality, PRESERVE facial features, PRESERVE GENDER, TRANSFORM clothing to Joseon traditional costume, NOT digital art NOT animation NOT bright colors, 🚨 NO Japanese text or elements';
-      console.log('ℹ️ Korean Minhwa mode: aged hanji paper + weathered colors');
+      // 한국 민화: 두꺼운 한지 질감과 투박한 민속화
+      paintingEnforcement = ', CRITICAL: NOT photographic, Authentic Joseon folk painting on THICK ROUGH HANJI PAPER with PROMINENT FIBER TEXTURE throughout, UNEVEN PATCHY pigment absorption creating irregular color areas, genuinely FADED WEATHERED colors like 200-year museum piece, TREMBLING WOBBLY folk brushlines (amateur quality), thick black outlines but IRREGULAR, colors pooling in paper fibers, PRESERVE faces, PRESERVE GENDER, transform to Joseon costume, primitive naive artifact NOT digital NOT smooth, 🚨 NO Japanese';
+      console.log('ℹ️ Korean Minhwa mode: thick hanji texture + wobbly folk brushwork');
     } else if (isKoreanPungsokdo) {
-      // 한국 풍속도: 담채 기법 강조
-      paintingEnforcement = ', CRITICAL: NOT photographic, Korean Pungsokdo in style of Kim Hong-do, DAMCHAE technique with extremely subtle pale color wash over ink lines, naturalistic figure painting, PRESERVE facial features, PRESERVE GENDER, simple everyday hanbok NOT court dress, subdued historical painting NOT illustration NOT anime, 🚨 NO Japanese elements';
-      console.log('ℹ️ Korean Pungsokdo mode: damchae technique');
+      // 한국 풍속도: 수묵 위주 + 극소량 담채
+      paintingEnforcement = ', CRITICAL: NOT photographic, Authentic Korean Pungsokdo on ROUGH TEXTURED HANJI with visible fibers, BLACK INK DOMINATES 70-80% (confident spontaneous brushwork), then MINIMAL PALE washes 20-30% ONLY, earth tones EXCLUSIVELY (pale brown grey-green faint ochre), NO bright NO saturated colors, Kim Hong-do elegant restraint, distinctly different from colorful Chinese gongbi, PRESERVE faces, PRESERVE GENDER, simple everyday hanbok, historical painting NOT illustration, 🚨 NO Japanese';
+      console.log('ℹ️ Korean Pungsokdo mode: 70% ink 30% pale color on textured hanji');
     } else if (isPointillism) {
       // 점묘법: brushstrokes 제외
       paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
