@@ -217,16 +217,16 @@ const ResultScreen = ({
                      'manet', 'édouard manet', 'edouard manet'];
     
     if (neoclassical.some(name => artist.includes(name))) {
-      return '신고전주의';
+      return { text: '신고전주의', color: 'neoclassical' };
     }
     if (romantic.some(name => artist.includes(name))) {
-      return '낭만주의';
+      return { text: '낭만주의', color: 'romantic' };
     }
     if (realist.some(name => artist.includes(name))) {
-      return '사실주의';
+      return { text: '사실주의', color: 'realist' };
     }
     
-    return ''; // 매칭 안 되면 빈 문자열
+    return null; // 매칭 안 되면 null
   };
 
 
@@ -443,11 +443,14 @@ const ResultScreen = ({
                   <span className="artist-name">
                     {aiSelectedArtist || '예술 스타일'}
                   </span>
-                  {selectedStyle.category === 'neoclassicism_vs_romanticism_vs_realism' && aiSelectedArtist && (
-                    <span className="style-badge-large">
-                      {getSpecificMovement(aiSelectedArtist)}
-                    </span>
-                  )}
+                  {selectedStyle.category === 'neoclassicism_vs_romanticism_vs_realism' && aiSelectedArtist && (() => {
+                    const movement = getSpecificMovement(aiSelectedArtist);
+                    return movement ? (
+                      <span className={`style-badge ${movement.color}`}>
+                        {movement.text}
+                      </span>
+                    ) : null;
+                  })()}
                 </p>
               </div>
             </div>
@@ -625,40 +628,40 @@ const ResultScreen = ({
 
         .technique-subtitle {
           color: #666;
-          font-size: 0.95rem;
+          font-size: 1.05rem;
           margin: 0.25rem 0 0 0;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.75rem;
           flex-wrap: wrap;
         }
 
         .artist-name {
-          font-weight: 500;
-          color: #333;
+          font-weight: 600;
+          color: #222;
+          font-size: 1.1rem;
         }
 
-        .style-badge-large {
+        .style-badge {
           display: inline-block;
-          padding: 0.5rem 1.25rem;
-          background: linear-gradient(135deg, #FF6B6B 0%, #C92A2A 100%);
+          padding: 0.4rem 1rem;
           color: white;
-          border-radius: 20px;
-          font-size: 1rem;
+          border-radius: 6px;
+          font-size: 0.95rem;
           font-weight: 700;
-          letter-spacing: 1px;
-          box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
-          text-transform: none;
-          animation: badgePulse 2s ease-in-out infinite;
+          letter-spacing: 0.5px;
         }
 
-        @keyframes badgePulse {
-          0%, 100% {
-            box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
-          }
-          50% {
-            box-shadow: 0 6px 20px rgba(201, 42, 42, 0.6);
-          }
+        .style-badge.neoclassical {
+          background: #2E86AB;
+        }
+
+        .style-badge.romantic {
+          background: #A23B72;
+        }
+
+        .style-badge.realist {
+          background: #C77B58;
         }
 
         .movement-badge {
