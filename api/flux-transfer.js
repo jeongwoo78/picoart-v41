@@ -1290,9 +1290,9 @@ Style 2: Chinese Gongbi Meticulous Painting (工筆畫)
 - Characteristics: Extremely fine detailed brushwork, delicate precise lines, rich mineral pigments and brilliant colors, ornate decorative patterns, imperial court quality
 - When: Photo has people, faces, or needs detailed colorful treatment
 
-Style 3: Chinese Huaniao Bird-and-Flower (花鳥畫)
-- Best for: birds, flowers, animals, plants, natural subjects
-- Characteristics: Detailed naturalistic rendering, precise meticulous brushwork for feathers and petals, delicate soft colors, harmonious composition
+Style 3: Chinese Huaniao Bird-and-Flower Painting (花鳥畫)
+- Best for: birds, flowers, animals (dogs, cats, rabbits), fish, insects, any natural creatures
+- Characteristics: Traditional genre includes "flowers, birds, fish, insects" (花鳥魚蟲) PLUS animals, detailed naturalistic rendering, precise brushwork for fur/feathers/petals, delicate colors, symbolic meanings
 - When: Photo has birds, flowers, animals, or plants
 
 Analyze the photo and choose the MOST suitable style.
