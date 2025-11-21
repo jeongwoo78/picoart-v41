@@ -200,6 +200,260 @@ const ResultScreen = ({
   };
 
 
+  // ========== 화가 이름 한글(Full Name) 변환 ==========
+  const formatArtistName = (artistName) => {
+    if (!artistName) return '예술 스타일';
+    
+    const normalized = artistName.toLowerCase().trim();
+    
+    // 영문 이름 → 한글(Full Name) 매핑
+    const nameMap = {
+      // 고대 미술
+      'ancient-greek-sculpture': '고대 그리스 조각(Ancient Greek Sculpture)',
+      'roman-mosaic': '로마 모자이크(Roman Mosaic)',
+      
+      // 중세 미술
+      'byzantine': '비잔틴(Byzantine)',
+      'gothic': '고딕(Gothic)',
+      'romanesque': '로마네스크(Romanesque)',
+      'islamic miniature': '이슬람 세밀화(Islamic Miniature)',
+      'islamic geometry': '이슬람 기하학(Islamic Geometry)',
+      
+      // 르네상스
+      'leonardo': '레오나르도 다 빈치(Leonardo da Vinci)',
+      'leonardo da vinci': '레오나르도 다 빈치(Leonardo da Vinci)',
+      'michelangelo': '미켈란젤로(Michelangelo Buonarroti)',
+      'raphael': '라파엘로(Raffaello Sanzio)',
+      'botticelli': '보티첼리(Sandro Botticelli)',
+      'titian': '티치아노(Tiziano Vecellio)',
+      
+      // 바로크
+      'caravaggio': '카라바조(Caravaggio)',
+      'rembrandt': '렘브란트(Rembrandt van Rijn)',
+      'vermeer': '베르메르(Johannes Vermeer)',
+      'velazquez': '벨라스케스(Diego Velázquez)',
+      'rubens': '루벤스(Peter Paul Rubens)',
+      
+      // 로코코
+      'watteau': '와토(Jean-Antoine Watteau)',
+      'jean-antoine watteau': '와토(Jean-Antoine Watteau)',
+      'fragonard': '프라고나르(Jean-Honoré Fragonard)',
+      
+      // 신고전주의
+      'jacques-louis-david': '다비드(Jacques-Louis David)',
+      'david': '다비드(Jacques-Louis David)',
+      'ingres': '앵그르(Jean-Auguste-Dominique Ingres)',
+      'jean-auguste-dominique ingres': '앵그르(Jean-Auguste-Dominique Ingres)',
+      
+      // 낭만주의
+      'turner': '터너(J.M.W. Turner)',
+      'j.m.w. turner': '터너(J.M.W. Turner)',
+      'william turner': '터너(J.M.W. Turner)',
+      'friedrich': '프리드리히(Caspar David Friedrich)',
+      'caspar david friedrich': '프리드리히(Caspar David Friedrich)',
+      'delacroix': '들라크루아(Eugène Delacroix)',
+      'eugène delacroix': '들라크루아(Eugène Delacroix)',
+      'eugene delacroix': '들라크루아(Eugène Delacroix)',
+      
+      // 사실주의
+      'millet': '밀레(Jean-François Millet)',
+      'jean-françois millet': '밀레(Jean-François Millet)',
+      'jean-francois millet': '밀레(Jean-François Millet)',
+      'manet': '마네(Édouard Manet)',
+      'édouard manet': '마네(Édouard Manet)',
+      'edouard manet': '마네(Édouard Manet)',
+      
+      // 인상주의
+      'monet': '모네(Claude Monet)',
+      'claude monet': '모네(Claude Monet)',
+      'renoir': '르누아르(Pierre-Auguste Renoir)',
+      'pierre-auguste renoir': '르누아르(Pierre-Auguste Renoir)',
+      'degas': '드가(Edgar Degas)',
+      'edgar degas': '드가(Edgar Degas)',
+      'pissarro': '피사로(Camille Pissarro)',
+      'camille pissarro': '피사로(Camille Pissarro)',
+      'sisley': '시슬리(Alfred Sisley)',
+      'alfred sisley': '시슬리(Alfred Sisley)',
+      'morisot': '모리조(Berthe Morisot)',
+      'berthe morisot': '모리조(Berthe Morisot)',
+      
+      // 후기인상주의
+      'van gogh': '반 고흐(Vincent van Gogh)',
+      'vincent van gogh': '반 고흐(Vincent van Gogh)',
+      'cézanne': '세잔(Paul Cézanne)',
+      'cezanne': '세잔(Paul Cézanne)',
+      'paul cézanne': '세잔(Paul Cézanne)',
+      'paul cezanne': '세잔(Paul Cézanne)',
+      'gauguin': '고갱(Paul Gauguin)',
+      'paul gauguin': '고갱(Paul Gauguin)',
+      'seurat': '쇠라(Georges Seurat)',
+      'georges seurat': '쇠라(Georges Seurat)',
+      'signac': '시냐크(Paul Signac)',
+      'paul signac': '시냐크(Paul Signac)',
+      
+      // 야수파
+      'matisse': '마티스(Henri Matisse)',
+      'henri matisse': '마티스(Henri Matisse)',
+      'derain': '드랭(André Derain)',
+      'andré derain': '드랭(André Derain)',
+      'andre derain': '드랭(André Derain)',
+      'vlaminck': '블라맹크(Maurice de Vlaminck)',
+      'maurice de vlaminck': '블라맹크(Maurice de Vlaminck)',
+      
+      // 표현주의
+      'munch': '뭉크(Edvard Munch)',
+      'edvard munch': '뭉크(Edvard Munch)',
+      'kirchner': '키르히너(Ernst Ludwig Kirchner)',
+      'ernst ludwig kirchner': '키르히너(Ernst Ludwig Kirchner)',
+      'schiele': '에곤 실레(Egon Schiele)',
+      'egon schiele': '에곤 실레(Egon Schiele)',
+      'kandinsky': '칸딘스키(Wassily Kandinsky)',
+      'wassily kandinsky': '칸딘스키(Wassily Kandinsky)',
+      'kokoschka': '코코슈카(Oskar Kokoschka)',
+      'oskar kokoschka': '코코슈카(Oskar Kokoschka)'
+    };
+    
+    // 매핑에서 찾기
+    if (nameMap[normalized]) {
+      return nameMap[normalized];
+    }
+    
+    // 매핑에 없으면 원본 반환
+    return artistName;
+  };
+
+
+  // ========== 화가 이름 한글(영문 Full Name) 변환 ==========
+  const formatArtistName = (artistName) => {
+    if (!artistName) return '예술 스타일';
+    
+    const normalized = artistName.toLowerCase().trim();
+    
+    // 영문 이름 → 한글(Full Name) 매핑
+    const nameMap = {
+      // 고대 미술
+      'ancient-greek-sculpture': '고대 그리스 조각(Ancient Greek Sculpture)',
+      'roman-mosaic': '로마 모자이크(Roman Mosaic)',
+      
+      // 중세 미술
+      'byzantine': '비잔틴(Byzantine)',
+      'gothic': '고딕(Gothic)',
+      'romanesque': '로마네스크(Romanesque)',
+      'islamic miniature': '이슬람 세밀화(Islamic Miniature)',
+      'islamic-miniature': '이슬람 세밀화(Islamic Miniature)',
+      'islamic geometry': '이슬람 기하학(Islamic Geometry)',
+      'islamic-geometry': '이슬람 기하학(Islamic Geometry)',
+      
+      // 르네상스
+      'leonardo': '레오나르도 다 빈치(Leonardo da Vinci)',
+      'leonardo da vinci': '레오나르도 다 빈치(Leonardo da Vinci)',
+      'michelangelo': '미켈란젤로(Michelangelo Buonarroti)',
+      'raphael': '라파엘로(Raphael Sanzio)',
+      'botticelli': '보티첼리(Sandro Botticelli)',
+      'titian': '티치아노(Titian Vecellio)',
+      
+      // 바로크
+      'caravaggio': '카라바조(Caravaggio)',
+      'rembrandt': '렘브란트(Rembrandt van Rijn)',
+      'vermeer': '베르메르(Johannes Vermeer)',
+      'velazquez': '벨라스케스(Diego Velázquez)',
+      'rubens': '루벤스(Peter Paul Rubens)',
+      
+      // 로코코
+      'watteau': '와토(Jean-Antoine Watteau)',
+      'jean-antoine watteau': '와토(Jean-Antoine Watteau)',
+      'fragonard': '프라고나르(Jean-Honoré Fragonard)',
+      
+      // 신고전주의
+      'jacques-louis david': '다비드(Jacques-Louis David)',
+      'david': '다비드(Jacques-Louis David)',
+      'ingres': '앵그르(Jean-Auguste-Dominique Ingres)',
+      'jean-auguste-dominique ingres': '앵그르(Jean-Auguste-Dominique Ingres)',
+      
+      // 낭만주의
+      'turner': '터너(J.M.W. Turner)',
+      'j.m.w. turner': '터너(J.M.W. Turner)',
+      'william turner': '터너(J.M.W. Turner)',
+      'friedrich': '프리드리히(Caspar David Friedrich)',
+      'caspar david friedrich': '프리드리히(Caspar David Friedrich)',
+      'delacroix': '들라크루아(Eugène Delacroix)',
+      'eugène delacroix': '들라크루아(Eugène Delacroix)',
+      'eugene delacroix': '들라크루아(Eugène Delacroix)',
+      
+      // 사실주의
+      'millet': '밀레(Jean-François Millet)',
+      'jean-françois millet': '밀레(Jean-François Millet)',
+      'jean-francois millet': '밀레(Jean-François Millet)',
+      'manet': '마네(Édouard Manet)',
+      'édouard manet': '마네(Édouard Manet)',
+      'edouard manet': '마네(Édouard Manet)',
+      
+      // 인상주의
+      'monet': '모네(Claude Monet)',
+      'claude monet': '모네(Claude Monet)',
+      'renoir': '르누아르(Pierre-Auguste Renoir)',
+      'pierre-auguste renoir': '르누아르(Pierre-Auguste Renoir)',
+      'degas': '드가(Edgar Degas)',
+      'edgar degas': '드가(Edgar Degas)',
+      'pissarro': '피사로(Camille Pissarro)',
+      'camille pissarro': '피사로(Camille Pissarro)',
+      'sisley': '시슬리(Alfred Sisley)',
+      'alfred sisley': '시슬리(Alfred Sisley)',
+      'morisot': '모리조(Berthe Morisot)',
+      'berthe morisot': '모리조(Berthe Morisot)',
+      
+      // 후기인상주의
+      'van gogh': '반 고흐(Vincent van Gogh)',
+      'vincent van gogh': '반 고흐(Vincent van Gogh)',
+      'van-gogh': '반 고흐(Vincent van Gogh)',
+      'cézanne': '세잔(Paul Cézanne)',
+      'cezanne': '세잔(Paul Cézanne)',
+      'paul cézanne': '세잔(Paul Cézanne)',
+      'paul cezanne': '세잔(Paul Cézanne)',
+      'gauguin': '고갱(Paul Gauguin)',
+      'paul gauguin': '고갱(Paul Gauguin)',
+      'seurat': '쇠라(Georges Seurat)',
+      'georges seurat': '쇠라(Georges Seurat)',
+      'signac': '시냑(Paul Signac)',
+      'paul signac': '시냑(Paul Signac)',
+      
+      // 야수파
+      'matisse': '마티스(Henri Matisse)',
+      'henri matisse': '마티스(Henri Matisse)',
+      'derain': '드랭(André Derain)',
+      'andré derain': '드랭(André Derain)',
+      'andre derain': '드랭(André Derain)',
+      'vlaminck': '블라맹크(Maurice de Vlaminck)',
+      'maurice de vlaminck': '블라맹크(Maurice de Vlaminck)',
+      
+      // 표현주의
+      'munch': '뭉크(Edvard Munch)',
+      'edvard munch': '뭉크(Edvard Munch)',
+      'kirchner': '키르히너(Ernst Ludwig Kirchner)',
+      'ernst ludwig kirchner': '키르히너(Ernst Ludwig Kirchner)',
+      'schiele': '실레(Egon Schiele)',
+      'egon schiele': '실레(Egon Schiele)',
+      'kokoschka': '코코슈카(Oskar Kokoschka)',
+      'oskar kokoschka': '코코슈카(Oskar Kokoschka)',
+      'kandinsky': '칸딘스키(Wassily Kandinsky)',
+      'wassily kandinsky': '칸딘스키(Wassily Kandinsky)',
+      
+      // 거장 (향후 추가)
+      'klimt': '클림트(Gustav Klimt)',
+      'gustav klimt': '클림트(Gustav Klimt)',
+      'picasso': '피카소(Pablo Picasso)',
+      'pablo picasso': '피카소(Pablo Picasso)',
+      'dalí': '달리(Salvador Dalí)',
+      'dali': '달리(Salvador Dalí)',
+      'salvador dalí': '달리(Salvador Dalí)',
+      'salvador dali': '달리(Salvador Dalí)',
+    };
+    
+    // 매핑된 이름 반환, 없으면 원본 반환
+    return nameMap[normalized] || artistName;
+  };
+
+
   // ========== 신고전 vs 낭만 vs 사실: 구체적 사조 매핑 ==========
   const getSpecificMovement = (artistName) => {
     const artist = artistName.toLowerCase();
@@ -441,7 +695,7 @@ const ResultScreen = ({
                 <h2>{selectedStyle.name}</h2>
                 <p className="technique-subtitle">
                   <span className="artist-name">
-                    {aiSelectedArtist || '예술 스타일'}
+                    {formatArtistName(aiSelectedArtist)}
                   </span>
                   {selectedStyle.category === 'neoclassicism_vs_romanticism_vs_realism' && aiSelectedArtist && (() => {
                     const movement = getSpecificMovement(aiSelectedArtist);
@@ -720,7 +974,7 @@ const ResultScreen = ({
           color: #333;
           line-height: 1.8;
           font-size: 1rem;
-          margin: 0 0 1.26em 0;
+          margin: 0 0 0.8em 0;
         }
         
         .technique-explanation p:last-child {
