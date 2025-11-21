@@ -5,6 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import BeforeAfter from './BeforeAfter';
 import { orientalEducation } from '../data/educationContent';
+import { movementsEducation } from '../data/movementsEducation';
 
 
 const ResultScreen = ({ 
@@ -46,8 +47,20 @@ const ResultScreen = ({
         }
       }
       
-      // 미술사조/거장은 AI로 생성
-      console.log('🤖 Generating AI education...');
+      // 미술사조는 사전 제작 콘텐츠 사용 (AI 호출 없음)
+      if (selectedStyle.category !== 'masters' && selectedStyle.category !== 'oriental') {
+        console.log('📜 Loading pre-written movements education...');
+        const content = getMovementsEducation();
+        
+        if (content) {
+          setEducationText(content);
+          setIsLoadingEducation(false);
+          return;
+        }
+      }
+      
+      // 거장만 AI로 생성
+      console.log('🤖 Generating AI education for masters...');
       const prompt = buildPrompt();
       
       // 백엔드 API 호출
@@ -78,6 +91,26 @@ const ResultScreen = ({
     } finally {
       setIsLoadingEducation(false);
     }
+  };
+
+
+  // ========== 미술사조 교육 콘텐츠 ==========
+  const getMovementsEducation = () => {
+    const category = selectedStyle.category;
+    
+    console.log('🎨 MOVEMENTS EDUCATION:');
+    console.log('   - category:', category);
+    
+    // movementsEducation에서 해당 카테고리 찾기
+    const education = movementsEducation[category];
+    
+    if (education) {
+      console.log('✅ Found movements education:', category);
+      return education.desc;
+    }
+    
+    console.log('⚠️ No movements education found');
+    return null;
   };
 
 
@@ -359,9 +392,18 @@ const ResultScreen = ({
               ) : (
                 <div className="technique-explanation">
                   <h3>🖌️ 적용된 예술 기법</h3>
-                  <p style={{ whiteSpace: 'pre-line' }}>
-                    {educationText}
-                  </p>
+                  {educationText.split('\n\n').map((paragraph, index) => (
+                    paragraph.trim() && (
+                      <p key={index}>
+                        {paragraph.trim().split('\n').map((line, lineIndex) => (
+                          <React.Fragment key={lineIndex}>
+                            {line}
+                            {lineIndex < paragraph.trim().split('\n').length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </p>
+                    )
+                  ))}
                 </div>
               )}
             </div>
