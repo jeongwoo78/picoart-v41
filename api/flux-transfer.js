@@ -1129,12 +1129,12 @@ const fallbackPrompts = {
   // ========================================
   korean: {
     name: '한국 전통화',
-    prompt: 'Korean traditional painting in authentic Joseon Dynasty style. CRITICAL INSTRUCTIONS: 1) GENDER PRESERVATION - carefully preserve exact gender and facial features from original photo (male stays male with masculine face, female stays female with feminine features), 2) TRANSFORM modern clothing to Joseon Dynasty traditional costume (hanbok, durumagi, gat hat, daenggi ribbon for women, traditional Korean attire), 3) Choose appropriate Korean style: [Minhwa folk art for animals/flowers: light subtle Obangsaek colors NOT overly saturated, soft gentle pigments, cheerful but restrained palette] [Pungsokdo genre painting for people/daily life: LIGHT INK WASH technique (damchae), subtle delicate colors over ink lines, refined elegant brushwork, realistic but understated, Kim Hong-do and Shin Yun-bok style NOT animation NOT cartoon, restrained muted tones] [Jingyeong landscape for nature/mountains: expressive ink with minimal color], 4) SINGLE UNIFIED COMPOSITION - all figures together in one cohesive scene. ABSOLUTELY NO Japanese hiragana or katakana. This is PURE KOREAN ART, not Japanese ukiyo-e.'
+    prompt: 'Korean traditional painting in authentic Joseon Dynasty style. CRITICAL INSTRUCTIONS: 1) GENDER PRESERVATION - carefully preserve exact gender and facial features from original photo (male stays male with masculine face, female stays female with feminine features), 2) TRANSFORM modern clothing to Joseon Dynasty traditional costume (hanbok, durumagi, gat hat, daenggi ribbon for women, traditional Korean attire), 3) Choose appropriate Korean style: [Minhwa folk art for animals/flowers: light subtle Obangsaek colors NOT overly saturated, soft gentle pigments, cheerful but restrained palette] [Pungsokdo genre painting for people/daily life: LIGHT INK WASH technique (damchae), subtle delicate colors over ink lines, refined elegant brushwork, realistic but understated, Kim Hong-do and Shin Yun-bok style NOT animation NOT cartoon, restrained muted tones] [Jingyeong landscape for nature/mountains: expressive ink with minimal color], 4) SINGLE UNIFIED COMPOSITION - all figures together in one cohesive scene. 🚨 CRITICAL: ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or ANY Japanese text whatsoever, NO vertical Japanese writing, NO Japanese ukiyo-e style elements, REMOVE ALL Japanese visual elements, NO text NO characters on painting, this is 100% PURE KOREAN TRADITIONAL ART not Japanese ukiyo-e at all.'
   },
   
   chinese: {
     name: '중국 전통화',
-    prompt: 'Chinese traditional painting in authentic classical style. CRITICAL INSTRUCTIONS: 1) GENDER PRESERVATION - carefully preserve exact gender and facial features from original photo (male stays male with masculine face, female stays female with feminine features), 2) Choose appropriate Chinese style based on photo subject (Shuimohua ink wash for landscapes/nature with monochrome gradations, Gongbi meticulous painting for people/portraits with fine detailed brushwork and rich colors, Huaniao bird-and-flower for animals/plants with precise naturalistic rendering), 3) Use Chinese aesthetic principles, 4) SINGLE UNIFIED COMPOSITION - all figures and elements together in one cohesive continuous scene, NOT fragmented into separate layers or groups. ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ). This is PURE CHINESE ART.'
+    prompt: 'Chinese traditional painting in authentic classical style. CRITICAL INSTRUCTIONS: 1) GENDER PRESERVATION - carefully preserve exact gender and facial features from original photo (male stays male with masculine face, female stays female with feminine features), 2) Choose appropriate Chinese style based on photo subject (Shuimohua ink wash for landscapes/nature with monochrome gradations, Gongbi meticulous painting for people/portraits with fine detailed brushwork and rich colors, Huaniao bird-and-flower for animals/plants with precise naturalistic rendering), 3) Use Chinese aesthetic principles, 4) SINGLE UNIFIED COMPOSITION - all figures and elements together in one cohesive continuous scene, NOT fragmented into separate layers or groups. 🚨 CRITICAL: ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or ANY Japanese text whatsoever, NO vertical Japanese writing, NO Japanese ukiyo-e style elements, REMOVE ALL Japanese visual elements, NO text NO characters on painting, this is 100% PURE CHINESE TRADITIONAL ART not Japanese at all.'
   },
   
   japanese: {
@@ -1242,11 +1242,20 @@ CRITICAL INSTRUCTIONS FOR PROMPT GENERATION:
    - If FEMALE in photo → prompt MUST start with "CRITICAL GENDER RULE: This photo shows FEMALE person, ABSOLUTELY PRESERVE FEMININE FEATURES - soft face, feminine features, female body structure, DO NOT masculinize, KEEP FEMALE GENDER EXACTLY."
    - This gender instruction MUST be the FIRST thing in your generated prompt before any style description
 
-2. JAPANESE TEXT PROHIBITION (CRITICAL):
-   - ABSOLUTELY NO Japanese hiragana (ひらがな) - NEVER ALLOWED
-   - ABSOLUTELY NO Japanese katakana (カタカナ) - NEVER ALLOWED
-   - Any Japanese text = COMPLETE FAILURE
-   - This is KOREAN ART, not Japanese art
+2. JAPANESE TEXT PROHIBITION (CRITICAL - HIGHEST PRIORITY):
+   - 🚨 ABSOLUTELY NO Japanese hiragana (ひらがな) - NEVER EVER ALLOWED
+   - 🚨 ABSOLUTELY NO Japanese katakana (カタカナ) - NEVER EVER ALLOWED
+   - 🚨 NO Japanese characters whatsoever
+   - 🚨 NO vertical Japanese text
+   - 🚨 NO Japanese ukiyo-e style elements
+   - 🚨 REMOVE ALL Japanese visual elements
+   - Any Japanese text or style = COMPLETE TOTAL FAILURE
+   - This is 100% PURE KOREAN ART, NOT Japanese art AT ALL
+
+3. TEXT PROHIBITION (ADDITIONAL):
+   - NO text, NO characters, NO writing on the painting
+   - If text is absolutely necessary, use ONLY Korean Hangul or Chinese characters
+   - NEVER use Japanese writing system
 
 Return ONLY valid JSON (no markdown):
 {
@@ -1254,7 +1263,7 @@ Return ONLY valid JSON (no markdown):
   "selected_artist": "Korean Minhwa" or "Korean Pungsokdo" or "Korean Jingyeong Landscape",
   "selected_style": "minhwa" or "pungsokdo" or "landscape",
   "reason": "why this style fits (1 sentence)",
-  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Korean [style name]...' including: [for Minhwa: light subtle Obangsaek NOT overly saturated] [for Pungsokdo: light ink wash damchae, subtle colors, NOT animation NOT cartoon, Kim Hong-do/Shin Yun-bok style, TRANSFORM to Joseon hanbok] [for Jingyeong: expressive ink]. MUST include 'ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ), this is PURE KOREAN ART' at the end."
+  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Korean [style name]...' including: [for Minhwa: light subtle Obangsaek NOT overly saturated] [for Pungsokdo: light ink wash damchae, subtle colors, NOT animation NOT cartoon, Kim Hong-do/Shin Yun-bok style, TRANSFORM to Joseon hanbok] [for Jingyeong: expressive ink]. CRITICAL ENDING: 'ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or any Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e elements, REMOVE all Japanese style, this is 100% PURE KOREAN TRADITIONAL ART not Japanese, NO text NO characters on painting unless Korean Hangul or Chinese only'."
 }
 
 Keep it concise and accurate.`;
@@ -1290,11 +1299,20 @@ CRITICAL INSTRUCTIONS FOR PROMPT GENERATION:
    - If FEMALE in photo → prompt MUST start with "CRITICAL GENDER RULE: This photo shows FEMALE person, ABSOLUTELY PRESERVE FEMININE FEATURES - soft face, feminine features, female body structure, DO NOT masculinize, KEEP FEMALE GENDER EXACTLY."
    - This gender instruction MUST be the FIRST thing in your generated prompt before any style description
 
-2. JAPANESE TEXT PROHIBITION (CRITICAL):
-   - ABSOLUTELY NO Japanese hiragana (ひらがな) - NEVER ALLOWED
-   - ABSOLUTELY NO Japanese katakana (カタカナ) - NEVER ALLOWED
-   - Any Japanese text = COMPLETE FAILURE
-   - This is CHINESE ART, not Japanese art
+2. JAPANESE TEXT PROHIBITION (CRITICAL - HIGHEST PRIORITY):
+   - 🚨 ABSOLUTELY NO Japanese hiragana (ひらがな) - NEVER EVER ALLOWED
+   - 🚨 ABSOLUTELY NO Japanese katakana (カタカナ) - NEVER EVER ALLOWED
+   - 🚨 NO Japanese characters whatsoever
+   - 🚨 NO vertical Japanese text
+   - 🚨 NO Japanese ukiyo-e style elements
+   - 🚨 REMOVE ALL Japanese visual elements
+   - Any Japanese text or style = COMPLETE TOTAL FAILURE
+   - This is 100% PURE CHINESE ART, NOT Japanese art AT ALL
+
+3. TEXT PROHIBITION (ADDITIONAL):
+   - NO text, NO characters, NO writing on the painting
+   - If text is absolutely necessary, use ONLY Chinese characters
+   - NEVER use Japanese writing system
 
 Return ONLY valid JSON (no markdown):
 {
@@ -1302,7 +1320,7 @@ Return ONLY valid JSON (no markdown):
   "selected_artist": "Chinese Ink Wash" or "Chinese Gongbi" or "Chinese Huaniao",
   "selected_style": "ink_wash" or "gongbi" or "huaniao",
   "reason": "why this style fits (1 sentence)",
-  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Chinese [style name]...' with all characteristics. MUST include 'ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ), this is PURE CHINESE ART' at the end."
+  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Chinese [style name]...' with all characteristics. CRITICAL ENDING: 'ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or any Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e elements, REMOVE all Japanese style, this is 100% PURE CHINESE TRADITIONAL ART not Japanese, NO text NO characters on painting unless Chinese characters only'."
 }
 
 Keep it concise and accurate.`;
@@ -2184,9 +2202,9 @@ export default async function handler(req, res) {
       paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
       console.log('ℹ️ Pointillism mode: paintingEnforcement WITHOUT brushstrokes');
     } else if (isOrientalArt) {
-      // 동양 미술: brushstrokes 포함 + 일본어 금지
-      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together, ABSOLUTELY NO Japanese hiragana (ひらがな) or katakana (カタカナ) text, this is PURE KOREAN or CHINESE ART not Japanese';
-      console.log('ℹ️ Oriental art mode: paintingEnforcement WITH Japanese text prohibition');
+      // 동양 미술: brushstrokes 포함 + 일본어 금지 극강화
+      paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together, 🚨 ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or ANY Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e style elements, REMOVE ALL Japanese visual elements, NO text NO characters on painting, this is 100% PURE KOREAN or CHINESE TRADITIONAL ART not Japanese';
+      console.log('ℹ️ Oriental art mode: paintingEnforcement WITH STRONG Japanese prohibition');
     } else {
       // 일반: brushstrokes 포함
       paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, fully oil painting with thick visible brushstrokes and canvas texture, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
