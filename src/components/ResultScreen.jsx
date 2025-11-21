@@ -209,8 +209,13 @@ const ResultScreen = ({
     // 영문 이름 → 한글(Full Name) 매핑
     const nameMap = {
       // 고대 미술
-      'ancient-greek-sculpture': '고대 그리스 조각(Ancient Greek Sculpture)',
+      'ancient-greek-sculpture': '고대 조각(Ancient Sculpture)',
+      'ancient-sculpture': '고대 조각(Ancient Sculpture)',
+      'classical-sculpture': '고대 조각(Ancient Sculpture)',
+      'greek-sculpture': '고대 조각(Ancient Sculpture)',
       'roman-mosaic': '로마 모자이크(Roman Mosaic)',
+      'ancient-mosaic': '로마 모자이크(Roman Mosaic)',
+      'mosaic': '로마 모자이크(Roman Mosaic)',
       
       // 중세 미술
       'byzantine': '비잔틴(Byzantine)',
@@ -843,7 +848,7 @@ const ResultScreen = ({
           color: #333;
           line-height: 1.8;
           font-size: 1rem;
-          margin: 0 0 0.8em 0;
+          margin: 0 0 0.5em 0;
         }
         
         .technique-explanation p:last-child {
