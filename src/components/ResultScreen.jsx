@@ -783,7 +783,7 @@ const ResultScreen = ({
 
         .card-header {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           gap: 0.75rem;
           padding-bottom: 1.5rem;
           border-bottom: 2px solid #e0e0e0;
@@ -793,6 +793,7 @@ const ResultScreen = ({
         .technique-icon {
           font-size: 3.5rem;
           min-width: 3.5rem;
+          flex-shrink: 0;
           filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
         }
 
@@ -800,6 +801,7 @@ const ResultScreen = ({
           margin: 0;
           color: #333;
           font-size: 1.75rem;
+          line-height: 1.2;
         }
 
         .technique-subtitle {
