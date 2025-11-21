@@ -937,7 +937,8 @@ const ResultScreen = ({
           }
 
           .technique-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
+            min-width: 2.5rem;
           }
 
           .card-header h2 {
