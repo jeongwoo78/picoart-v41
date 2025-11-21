@@ -82,7 +82,7 @@ const ResultScreen = ({
     
     console.log('');
     console.log('========================================');
-    console.log('🎨 MOVEMENTS EDUCATION (v50):');
+    console.log('🎨 MOVEMENTS EDUCATION (v52):');
     console.log('========================================');
     console.log('   - category:', category);
     console.log('   - aiSelectedArtist (raw):', aiSelectedArtist);
@@ -90,33 +90,65 @@ const ResultScreen = ({
     console.log('========================================');
     console.log('');
     
-    // artist 이름 정규화: 괄호 제거, trim, 소문자 변환
-    // 예: "Byzantine (비잔틴)" → "byzantine"
-    // 예: "CARAVAGGIO" → "caravaggio"
-    let artist = (aiSelectedArtist || '')
-      .replace(/\s*\([^)]*\)/g, '')  // 괄호와 내용 제거
-      .trim()
-      .toLowerCase();
+    // 화가 이름 정규화
+    let artistName = (aiSelectedArtist || '')
+      .replace(/\s*\([^)]*\)/g, '')  // 괄호 제거
+      .trim();
     
-    console.log('   - normalized artist:', artist);
-    console.log('   - movementsEducation[artist]:', movementsEducation[artist]);
+    if (!artistName) {
+      console.log('⚠️ No artist name provided');
+      return null;
+    }
+    
+    // 여러 매칭 패턴 시도
+    const words = artistName.split(/\s+/);
+    const patterns = [];
+    
+    // 패턴 1: 전체 이름 (소문자, 공백 제거)
+    patterns.push(artistName.toLowerCase().replace(/\s+/g, ''));
+    
+    // 패턴 2: 전체 이름 (소문자, 하이픈)
+    patterns.push(artistName.toLowerCase().replace(/\s+/g, '-'));
+    
+    // 패턴 3: 마지막 단어 (성)
+    if (words.length > 1) {
+      patterns.push(words[words.length - 1].toLowerCase());
+    }
+    
+    // 패턴 4: 첫 단어 (이름)
+    patterns.push(words[0].toLowerCase());
+    
+    // 패턴 5: 전체 소문자
+    patterns.push(artistName.toLowerCase());
+    
+    console.log('   - trying patterns:', patterns);
     console.log('');
     
-    // 2차 교육: AI가 선택한 화가별 상세 설명
-    const education = movementsEducation[artist];
+    // 각 패턴으로 매칭 시도
+    let education = null;
+    let matchedPattern = null;
+    
+    for (const pattern of patterns) {
+      if (movementsEducation[pattern]) {
+        education = movementsEducation[pattern];
+        matchedPattern = pattern;
+        break;
+      }
+    }
     
     if (education && education.description) {
-      console.log('✅ Found artist education:', artist);
+      console.log('✅ Found artist education with pattern:', matchedPattern);
+      console.log('✅ Original name:', artistName);
+      console.log('✅ Matched key:', matchedPattern);
       console.log('✅ description length:', education.description.length);
-      console.log('✅ description preview:', education.description.substring(0, 100));
       console.log('========================================');
       console.log('');
       return education.description;
     }
     
-    console.log('⚠️ No artist education found for:', artist);
+    console.log('⚠️ No artist education found for:', artistName);
+    console.log('⚠️ Tried patterns:', patterns);
     console.log('⚠️ Available keys (first 15):', Object.keys(movementsEducation).slice(0, 15));
-    console.log('⚠️ Total keys:', Object.keys(movementsEducation).length);
     console.log('========================================');
     console.log('');
     
