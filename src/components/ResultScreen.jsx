@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import BeforeAfter from './BeforeAfter';
 import { orientalEducation } from '../data/educationContent';
-import { movementsEducation } from '../data/movementsEducation';
+import { movementsEducation, movementsOverview } from '../data/movementsEducation';
 
 
 const ResultScreen = ({ 
@@ -30,67 +30,49 @@ const ResultScreen = ({
   }, [aiSelectedArtist]);
 
 
-  // ========== 2차 교육 생성 ==========
-  const generate2ndEducation = async () => {
-    try {
-      setIsLoadingEducation(true);
-      
-      // 동양화는 미리 작성된 콘텐츠 사용 (AI 호출 없음)
-      if (selectedStyle.category === 'oriental') {
-        console.log('📜 Loading pre-written oriental education...');
-        const content = getOrientalEducation();
-        
-        if (content) {
-          setEducationText(content);
-          setIsLoadingEducation(false);
-          return;
-        }
-      }
-      
-      // 미술사조는 사전 제작 콘텐츠 사용 (AI가 선택한 화가)
-      if (selectedStyle.category !== 'masters' && selectedStyle.category !== 'oriental') {
-        console.log('📜 Loading pre-written movements education...');
-        const content = getMovementsEducation();
-        
-        if (content) {
-          setEducationText(content);
-          setIsLoadingEducation(false);
-          return;
-        }
-      }
-      
-      // 거장은 AI로 생성 (또는 추후 mastersEducation 사용)
-      console.log('🤖 Generating AI education for masters...');
-      const prompt = buildPrompt();
-      
-      // 백엔드 API 호출
-      const response = await fetch('/api/generate-education', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      if (data.success && data.text) {
-        console.log('✅ AI education generated successfully');
-        setEducationText(data.text);
-      } else {
-        throw new Error('Invalid response format');
-      }
-      
-    } catch (error) {
-      console.error('❌ 2nd education generation failed:', error);
-      setEducationText(getFallbackMessage());
-    } finally {
-      setIsLoadingEducation(false);
+  // ========== 2차 교육 로드 (v50 - 완전 사전 제작) ==========
+  const generate2ndEducation = () => {
+    console.log('');
+    console.log('🔥 LOAD EDUCATION (v50 - Pre-written Only)');
+    console.log('   - category:', selectedStyle.category);
+    console.log('   - aiSelectedArtist:', aiSelectedArtist);
+    console.log('');
+    
+    setIsLoadingEducation(true);
+    
+    let content = null;
+    
+    // 1. 동양화 (oriental)
+    if (selectedStyle.category === 'oriental') {
+      console.log('📜 Loading oriental education...');
+      content = getOrientalEducation();
     }
+    
+    // 2. 미술사조 (movements)
+    else if (selectedStyle.category !== 'masters') {
+      console.log('📜 Loading movements education...');
+      content = getMovementsEducation();
+    }
+    
+    // 3. 거장 (masters)
+    else {
+      console.log('📜 Loading masters education...');
+      content = getMastersEducation();
+    }
+    
+    // 결과 설정
+    if (content) {
+      console.log('✅ Education loaded successfully!');
+      console.log('   Preview:', content.substring(0, 80) + '...');
+      setEducationText(content);
+    } else {
+      console.error('❌ No education content found!');
+      setEducationText(getFallbackMessage());
+    }
+    
+    setIsLoadingEducation(false);
+    console.log('🏁 Loading complete');
+    console.log('');
   };
 
 
@@ -100,38 +82,84 @@ const ResultScreen = ({
     
     console.log('');
     console.log('========================================');
-    console.log('🎨 MOVEMENTS EDUCATION (v49):');
+    console.log('🎨 MOVEMENTS EDUCATION (v50):');
     console.log('========================================');
     console.log('   - category:', category);
     console.log('   - aiSelectedArtist (raw):', aiSelectedArtist);
+    console.log('   - aiSelectedArtist type:', typeof aiSelectedArtist);
     console.log('========================================');
     console.log('');
     
     // artist 이름 정규화: 괄호 제거, trim, 소문자 변환
     // 예: "Byzantine (비잔틴)" → "byzantine"
+    // 예: "CARAVAGGIO" → "caravaggio"
     let artist = (aiSelectedArtist || '')
       .replace(/\s*\([^)]*\)/g, '')  // 괄호와 내용 제거
       .trim()
       .toLowerCase();
     
     console.log('   - normalized artist:', artist);
+    console.log('   - movementsEducation[artist]:', movementsEducation[artist]);
     console.log('');
     
     // 2차 교육: AI가 선택한 화가별 상세 설명
     const education = movementsEducation[artist];
     
-    if (education) {
+    if (education && education.description) {
       console.log('✅ Found artist education:', artist);
+      console.log('✅ description length:', education.description.length);
+      console.log('✅ description preview:', education.description.substring(0, 100));
       console.log('========================================');
       console.log('');
       return education.description;
     }
     
     console.log('⚠️ No artist education found for:', artist);
-    console.log('⚠️ Available keys:', Object.keys(movementsEducation).slice(0, 10), '...');
+    console.log('⚠️ Available keys (first 15):', Object.keys(movementsEducation).slice(0, 15));
+    console.log('⚠️ Total keys:', Object.keys(movementsEducation).length);
     console.log('========================================');
     console.log('');
+    
+    // Fallback: 1차 교육 사용
+    if (movementsOverview && movementsOverview[category]) {
+      console.log('📚 Using 1st education as fallback for category:', category);
+      return movementsOverview[category].desc;
+    }
+    
     return null;
+  };
+
+
+  // ========== 동양화 교육 콘텐츠 (v30) ==========
+  const getOrientalEducation = () => {
+
+
+  // ========== 거장 교육 콘텐츠 (v50 - 향후 별도 파일 연결) ==========
+  const getMastersEducation = () => {
+    const artist = (aiSelectedArtist || selectedStyle.name || '')
+      .replace(/\s*\([^)]*\)/g, '')
+      .trim()
+      .toLowerCase();
+    
+    console.log('');
+    console.log('========================================');
+    console.log('🎨 MASTERS EDUCATION (v50):');
+    console.log('========================================');
+    console.log('   - selectedStyle.name:', selectedStyle.name);
+    console.log('   - aiSelectedArtist:', aiSelectedArtist);
+    console.log('   - normalized artist:', artist);
+    console.log('========================================');
+    console.log('');
+    
+    // TODO: mastersEducation.js 파일 만들고 여기서 import
+    // import { mastersEducation } from '../data/mastersEducation';
+    // return mastersEducation[artist]?.description;
+    
+    console.log('⚠️ Masters education not yet implemented');
+    console.log('⚠️ Using fallback message');
+    console.log('');
+    
+    return `이 작품은 ${selectedStyle.name} 스타일로 변환되었습니다.\n\n거장 교육 콘텐츠는 준비 중입니다.`;
   };
 
 
@@ -253,59 +281,6 @@ const ResultScreen = ({
     console.log('========================================');
     console.log('');
     return null;
-  };
-
-
-  // ========== 프롬프트 생성 (미술사조/거장) ==========
-  const buildPrompt = () => {
-    const category = selectedStyle.category;
-    
-    // 고대 미술, 비잔틴·이슬람
-    if (category === 'ancient' || category === 'byzantineIslamic') {
-      return `당신은 미술사 전문가입니다.
-사용자가 선택한 미술사조는 "${selectedStyle.name}"입니다.
-
-고대 미술과 비잔틴·이슬람 미술은 특정 화가가 아닌 시대와 양식으로 정의됩니다.
-
-다음 형식으로 정확히 3-4문장으로 작성하세요:
-
-1문장: "당신의 사진에는 ${selectedStyle.name}의 {대표 기법명과 특징} 기법이 적용되었습니다."
-2문장: "${selectedStyle.name}은 {시대 범위}의 {문화권} 미술로, {핵심 특징과 추구한 가치를 상세히} 설명."
-3문장: "대표 유물로는 {유물1}, {유물2}, {유물3} 등이 있으며, {유물들의 공통 의미를 한 문장으로}."
-4문장(선택): "{현대에 미친 영향이나 당신 사진과의 연결을 한 문장으로}"`;
-    }
-    
-    // 미술사조 (특정 화가 있음)
-    if (category === 'impressionism' || category === 'postImpressionism' || 
-        category === 'fauvism' || category === 'expressionism' || 
-        category === 'renaissance' || category === 'baroque' || 
-        category === 'rococo' || category === 'neoclassicism_vs_romanticism' || category === 'realism') {
-      return `당신은 미술사 전문가입니다.
-사용자가 선택한 미술사조는 "${selectedStyle.name}"이고, 
-당신이 선택한 화가는 "${aiSelectedArtist || selectedStyle.name}"입니다.
-
-다음 형식으로 정확히 3-4문장으로 작성하세요:
-
-1문장: "당신의 사진에는 {화가명}의 {대표 기법명} 기법이 적용되었습니다."
-2문장: "{화가명}({생몰연도})은 {국적} 출신 {화풍} 화가로, {핵심 특징 상세 설명}이 특징입니다."
-3문장: "대표작으로는 "{작품1}", "{작품2}", "{작품3}" 등이 있으며, {작품들의 공통점이나 화가의 예술 철학 한 줄}."
-4문장(선택): "{화가의 인상적인 일화나 영향, 또는 당신 사진과의 연결을 한 문장으로}"`;
-    }
-    
-    // 거장
-    if (category === 'masters') {
-      return `당신은 미술사 전문가입니다.
-사용자가 선택한 거장은 "${selectedStyle.name}"입니다.
-
-다음 형식으로 정확히 3-4문장으로 작성하세요:
-
-1문장: "당신의 사진에는 {화가명}의 {특정 시기나 스타일의} {구체적 기법명} 기법이 적용되었습니다."
-2문장: "{화가명}({생몰연도})은 {국적} 출신 {화풍} 화가로, {핵심 특징과 예술적 추구를 상세히} 설명."
-3문장: "대표작으로는 "{작품1}", "{작품2}", "{작품3}" 등이 있으며, {작품들의 특징을 한 문장으로}."
-4문장(선택): "{화가의 인상적인 일화나 당신 사진과의 연결을 한 문장으로}"`;
-    }
-    
-    return '';
   };
 
 
