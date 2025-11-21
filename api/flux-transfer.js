@@ -1215,8 +1215,8 @@ You must choose ONE of these THREE styles:
 
 Style 1: Korean Minhwa Folk Painting (민화)
 - Best for: animals (tiger, magpie, fish), flowers (peony), birds, simple subjects
-- Characteristics: THICK BLACK OUTLINES around all shapes, LIGHT SUBTLE Obangsaek colors (NOT overly saturated, soft gentle pigments, cheerful but restrained palette), completely FLAT naive composition, childlike playful aesthetic
-- When: Photo has animals, flowers, or needs cheerful colorful treatment
+- Characteristics: Traditional folk art on AGED YELLOWED HANJI PAPER with visible texture, FADED WEATHERED colors (dusty ochre, muted red-brown, greyish green, pale indigo), thick outlines, rough folk brushwork with uneven pigment, naive primitive style, museum artifact quality (200+ years old)
+- When: Photo has animals, flowers, or needs folk art treatment
 
 Style 2: Korean Pungsokdo Genre Painting (풍속도)
 - Best for: people, portraits, daily life, couples, festivals, human activities
@@ -1263,7 +1263,7 @@ Return ONLY valid JSON (no markdown):
   "selected_artist": "Korean Minhwa" or "Korean Pungsokdo" or "Korean Jingyeong Landscape",
   "selected_style": "minhwa" or "pungsokdo" or "landscape",
   "reason": "why this style fits (1 sentence)",
-  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Korean [style name]...' including: [for Minhwa: light subtle Obangsaek NOT overly saturated] [for Pungsokdo: light ink wash damchae, subtle colors, NOT animation NOT cartoon, Kim Hong-do/Shin Yun-bok style, TRANSFORM to Joseon hanbok] [for Jingyeong: expressive ink]. CRITICAL ENDING: 'ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or any Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e elements, REMOVE all Japanese style, this is 100% PURE KOREAN TRADITIONAL ART not Japanese, NO text NO characters on painting unless Korean Hangul or Chinese only'."
+  "prompt": "Complete FLUX prompt starting with GENDER RULE if person present, then 'Authentic Korean [style name] from Joseon Dynasty...' including: [for Minhwa: painted on aged yellowed hanji paper with visible grain, FADED WEATHERED colors like 200-year-old museum artifact - dusty ochre, weathered red-brown, greyish green, pale indigo, rough folk brushwork, naive primitive quality, NOT digital NOT animation NOT bright colors] [for Pungsokdo: damchae technique with extremely subtle pale color wash over ink, Kim Hong-do/Shin Yun-bok style, naturalistic restraint, NOT illustration NOT cartoon, simple everyday hanbok] [for Jingyeong: bold expressive ink brushwork]. CRITICAL ENDING: 'ABSOLUTELY NO Japanese hiragana (ひらがな) katakana (カタカナ) or any Japanese text, NO vertical Japanese writing, NO Japanese ukiyo-e elements, REMOVE all Japanese style, this is 100% PURE KOREAN TRADITIONAL ART not Japanese, NO text NO characters on painting unless Korean Hangul or Chinese only'."
 }
 
 Keep it concise and accurate.`;
@@ -2197,7 +2197,20 @@ export default async function handler(req, res) {
                           finalPrompt.toLowerCase().includes('pointillist');
     
     let paintingEnforcement;
-    if (isPointillism) {
+    
+    // 한국 민화 특별 처리
+    const isKoreanMinhwa = finalPrompt.includes('Korean Minhwa') || finalPrompt.includes('Korean folk painting');
+    const isKoreanPungsokdo = finalPrompt.includes('Korean Pungsokdo') || finalPrompt.includes('Kim Hong-do');
+    
+    if (isKoreanMinhwa) {
+      // 한국 민화: 오래된 한지 질감과 바랜 색상 강조
+      paintingEnforcement = ', CRITICAL: NOT photographic, Authentic Joseon Dynasty folk painting on AGED YELLOWED HANJI PAPER with visible rough texture and grain, FADED WEATHERED colors like 200-year-old museum artifact (dusty ochre, weathered red-brown, greyish green), rough folk brushwork with uneven pigment, naive primitive quality, PRESERVE facial features, PRESERVE GENDER, TRANSFORM clothing to Joseon traditional costume, NOT digital art NOT animation NOT bright colors, 🚨 NO Japanese text or elements';
+      console.log('ℹ️ Korean Minhwa mode: aged hanji paper + weathered colors');
+    } else if (isKoreanPungsokdo) {
+      // 한국 풍속도: 담채 기법 강조
+      paintingEnforcement = ', CRITICAL: NOT photographic, Korean Pungsokdo in style of Kim Hong-do, DAMCHAE technique with extremely subtle pale color wash over ink lines, naturalistic figure painting, PRESERVE facial features, PRESERVE GENDER, simple everyday hanbok NOT court dress, subdued historical painting NOT illustration NOT anime, 🚨 NO Japanese elements';
+      console.log('ℹ️ Korean Pungsokdo mode: damchae technique');
+    } else if (isPointillism) {
       // 점묘법: brushstrokes 제외
       paintingEnforcement = ', CRITICAL: NOT photographic NOT photo-realistic, PRESERVE facial features expressions and identity of people in photo, PRESERVE GENDER accurately (male stays male with masculine features, female stays female with feminine features), TRANSFORM modern clothing and accessories to period-appropriate historical costume and style, unified composition all figures together';
       console.log('ℹ️ Pointillism mode: paintingEnforcement WITHOUT brushstrokes');
