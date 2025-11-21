@@ -650,6 +650,8 @@ const ResultScreen = ({
           font-size: 0.95rem;
           font-weight: 700;
           letter-spacing: 0.5px;
+          vertical-align: middle;
+          transform: translateY(-1px);
         }
 
         .style-badge.neoclassical {
