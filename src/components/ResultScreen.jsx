@@ -47,7 +47,7 @@ const ResultScreen = ({
         }
       }
       
-      // 미술사조는 사전 제작 콘텐츠 사용 (AI 호출 없음)
+      // 미술사조는 사전 제작 콘텐츠 사용 (AI가 선택한 화가)
       if (selectedStyle.category !== 'masters' && selectedStyle.category !== 'oriental') {
         console.log('📜 Loading pre-written movements education...');
         const content = getMovementsEducation();
@@ -59,7 +59,7 @@ const ResultScreen = ({
         }
       }
       
-      // 거장만 AI로 생성
+      // 거장은 AI로 생성 (또는 추후 mastersEducation 사용)
       console.log('🤖 Generating AI education for masters...');
       const prompt = buildPrompt();
       
@@ -94,22 +94,43 @@ const ResultScreen = ({
   };
 
 
-  // ========== 미술사조 교육 콘텐츠 ==========
+  // ========== 미술사조 교육 콘텐츠 (v49 - 동양화 방식) ==========
   const getMovementsEducation = () => {
     const category = selectedStyle.category;
     
-    console.log('🎨 MOVEMENTS EDUCATION:');
+    console.log('');
+    console.log('========================================');
+    console.log('🎨 MOVEMENTS EDUCATION (v49):');
+    console.log('========================================');
     console.log('   - category:', category);
+    console.log('   - aiSelectedArtist (raw):', aiSelectedArtist);
+    console.log('========================================');
+    console.log('');
     
-    // movementsEducation에서 해당 카테고리 찾기
-    const education = movementsEducation[category];
+    // artist 이름 정규화: 괄호 제거, trim, 소문자 변환
+    // 예: "Byzantine (비잔틴)" → "byzantine"
+    let artist = (aiSelectedArtist || '')
+      .replace(/\s*\([^)]*\)/g, '')  // 괄호와 내용 제거
+      .trim()
+      .toLowerCase();
+    
+    console.log('   - normalized artist:', artist);
+    console.log('');
+    
+    // 2차 교육: AI가 선택한 화가별 상세 설명
+    const education = movementsEducation[artist];
     
     if (education) {
-      console.log('✅ Found movements education:', category);
-      return education.desc;
+      console.log('✅ Found artist education:', artist);
+      console.log('========================================');
+      console.log('');
+      return education.description;
     }
     
-    console.log('⚠️ No movements education found');
+    console.log('⚠️ No artist education found for:', artist);
+    console.log('⚠️ Available keys:', Object.keys(movementsEducation).slice(0, 10), '...');
+    console.log('========================================');
+    console.log('');
     return null;
   };
 

@@ -1,17 +1,17 @@
-// PicoArt v31 - 교육 콘텐츠 통합 (3개 파일로 분리)
+// PicoArt v49 - 교육 콘텐츠 통합 (3개 파일로 분리)
 
 // 3개 파일로 분리:
-// 1. movementsEducation.js - 서양 미술 9개 사조
+// 1. movementsEducation.js - 서양 미술 10개 사조 (1차+2차 통합)
 // 2. mastersEducation.js - 서양 거장 6명
-// 3. orientalEducation.js - 동양화 6개 장르
+// 3. orientalEducation.js - 동양화 7개 장르
 
-import { movementsEducation } from './movementsEducation';
+import { movementsOverview } from './movementsEducation';
 import { mastersEducation } from './mastersEducation';
 import { orientalOverview, orientalEducation } from './orientalEducation';
 
 // 기존 구조 유지 (하위 호환성)
 export const educationContent = {
-  movements: movementsEducation,
+  movements: movementsOverview,  // v49: 1차 교육 (사조 overview)
   masters: mastersEducation,
   oriental: orientalOverview
 };
@@ -20,4 +20,4 @@ export const educationContent = {
 export { orientalEducation };
 
 // 개별 export (필요시)
-export { movementsEducation, mastersEducation, orientalOverview };
+export { movementsOverview, mastersEducation, orientalOverview };
