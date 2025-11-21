@@ -315,7 +315,54 @@ const ResultScreen = ({
       'kandinsky': '칸딘스키(Wassily Kandinsky)',
       'wassily kandinsky': '칸딘스키(Wassily Kandinsky)',
       'kokoschka': '코코슈카(Oskar Kokoschka)',
-      'oskar kokoschka': '코코슈카(Oskar Kokoschka)'
+      'oskar kokoschka': '코코슈카(Oskar Kokoschka)',
+      
+      // 동양화 - 한국
+      'korean-jingyeong': '진경산수화(Korean True-View Landscape)',
+      'korean_jingyeong': '진경산수화(Korean True-View Landscape)',
+      'jingyeong': '진경산수화(True-View Landscape)',
+      'true-view': '진경산수화(True-View Landscape)',
+      'true-view-landscape': '진경산수화(True-View Landscape)',
+      'korean-landscape': '진경산수화(Korean Landscape)',
+      
+      'korean-minhwa': '민화(Korean Folk Painting)',
+      'korean_minhwa': '민화(Korean Folk Painting)',
+      'minhwa': '민화(Folk Painting)',
+      'folk-painting': '민화(Folk Painting)',
+      'korean-folk': '민화(Korean Folk)',
+      
+      'korean-genre': '풍속화(Korean Genre Painting)',
+      'korean_genre': '풍속화(Korean Genre Painting)',
+      'genre-painting': '풍속화(Genre Painting)',
+      'korean-genre-painting': '풍속화(Korean Genre Painting)',
+      'pungsokdo': '풍속화(Pungsokdo)',
+      
+      // 동양화 - 중국
+      'chinese-ink': '수묵산수화(Chinese Ink Landscape)',
+      'chinese_ink': '수묵산수화(Chinese Ink Landscape)',
+      'ink-landscape': '수묵산수화(Ink Landscape)',
+      'ink-painting': '수묵산수화(Ink Painting)',
+      'shanshui': '수묵산수화(Shanshui)',
+      'chinese-landscape': '수묵산수화(Chinese Landscape)',
+      
+      'chinese-gongbi': '공필화(Chinese Gongbi)',
+      'chinese_gongbi': '공필화(Chinese Gongbi)',
+      'gongbi': '공필화(Gongbi)',
+      'gongbi-painting': '공필화(Gongbi Painting)',
+      
+      'chinese-huaniao': '화조화(Chinese Bird-and-Flower)',
+      'chinese_huaniao': '화조화(Chinese Bird-and-Flower)',
+      'huaniao': '화조화(Bird-and-Flower)',
+      'bird-and-flower': '화조화(Bird-and-Flower)',
+      'flower-and-bird': '화조화(Flower-and-Bird)',
+      
+      // 동양화 - 일본
+      'japanese-ukiyoe': '우키요에(Japanese Ukiyo-e)',
+      'japanese_ukiyoe': '우키요에(Japanese Ukiyo-e)',
+      'ukiyoe': '우키요에(Ukiyo-e)',
+      'ukiyo-e': '우키요에(Ukiyo-e)',
+      'japanese-woodblock': '우키요에(Japanese Woodblock)',
+      'woodblock-print': '우키요에(Woodblock Print)'
     };
     
     // 매핑에서 찾기
