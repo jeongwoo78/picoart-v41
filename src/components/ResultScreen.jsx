@@ -130,10 +130,6 @@ const ResultScreen = ({
   };
 
 
-  // ========== 동양화 교육 콘텐츠 (v30) ==========
-  const getOrientalEducation = () => {
-
-
   // ========== 거장 교육 콘텐츠 (v50 - 향후 별도 파일 연결) ==========
   const getMastersEducation = () => {
     const artist = (aiSelectedArtist || selectedStyle.name || '')
