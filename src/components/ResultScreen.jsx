@@ -718,7 +718,7 @@ const ResultScreen = ({
           color: #333;
           line-height: 1.8;
           font-size: 1rem;
-          margin: 0 0 0.9em 0;
+          margin: 0 0 1.26em 0;
         }
         
         .technique-explanation p:last-child {
