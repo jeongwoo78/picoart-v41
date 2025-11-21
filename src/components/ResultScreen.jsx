@@ -550,7 +550,11 @@ const ResultScreen = ({
           color: #333;
           line-height: 1.8;
           font-size: 1rem;
-          margin: 0;
+          margin: 0 0 0.9em 0;
+        }
+        
+        .technique-explanation p:last-child {
+          margin-bottom: 0;
         }
 
         .action-buttons {
